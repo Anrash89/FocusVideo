@@ -3,111 +3,188 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Школа Фокусов "Magic Pro" | Видеоуроки</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <title>Школа Фокусов "Magic Pro" | Детская Магия</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bungee+Inline&family=Rubik+Marker+Hatch&family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
-        /* Общие стили */
+        /* Общие стили и анимации */
         :root {
-            --primary-color: #2c3e50;
-            --accent-color: #e74c3c;
-            --bg-light: #ecf0f1;
-            --text-color: #34495e;
-            --box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            --color-blue: #3498db;
-            --color-red: #e74c3c;
-            --color-yellow: #f1c40f;
-            --color-green: #2ecc71;
+            --primary-color: #f39c12; /* Яркий оранжевый/золотой */
+            --secondary-color: #3498db; /* Небесно-голубой */
+            --accent-color: #e74c3c; /* Красный, как в фокусах */
+            --bg-light: #ecf0f1; /* Светлый фон */
+            --card-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        @keyframes cardPop {
+            0% { transform: scale(0.9); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        @keyframes confetti {
+            0% { transform: translateY(-100%); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: translateY(0); opacity: 1; }
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
-            font-family: 'Montserrat', sans-serif;
-            background-color: var(--bg-light);
-            color: var(--text-color);
-            line-height: 1.6;
+            font-family: 'Nunito', sans-serif;
+            background: linear-gradient(135deg, var(--bg-light) 0%, #fff 100%);
+            color: #333;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
 
         /* Шапка */
         header {
             background-color: var(--primary-color);
             color: #fff;
-            padding: 20px 40px;
-            box-shadow: var(--box-shadow);
-        }
-
-        header h1 { font-size: 1.8em; font-weight: 700; }
-
-        /* Основной контейнер с сеткой */
-        .container {
-            display: grid;
-            grid-template-columns: 300px 1fr;
-            min-height: calc(100vh - 80px);
-        }
-
-        /* Навигация (Сайдбар) */
-        .sidebar {
-            background-color: #fff;
             padding: 20px;
-            border-right: 1px solid #ddd;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            font-family: 'Bungee Inline', cursive;
         }
-
-        .sidebar h2 {
-            font-size: 1.2em;
-            margin-bottom: 20px;
-            color: var(--primary-color);
-            border-bottom: 2px solid var(--accent-color);
-            padding-bottom: 10px;
+        header h1 {
+            font-size: 2.5em;
+            text-shadow: 3px 3px 0 #c0392b;
         }
-
-        .course-list button {
-            display: block;
-            width: 100%;
-            text-align: left;
-            padding: 12px 15px;
-            margin-bottom: 8px;
-            background-color: #f8f8f8;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            color: var(--text-color);
-            font-weight: 600;
-            transition: background-color 0.2s, transform 0.2s;
-        }
-
-        .course-list button:hover {
-            background-color: #e0e0e0;
-            transform: translateX(5px);
-        }
-
-        .course-list button.active {
-            background-color: var(--accent-color);
-            color: #fff;
-        }
-        /* Цветовые акценты для наборов */
-        .course-list button[data-color="blue"] { border-left: 5px solid var(--color-blue); }
-        .course-list button[data-color="red"] { border-left: 5px solid var(--color-red); }
-        .course-list button[data-color="yellow"] { border-left: 5px solid var(--color-yellow); }
-        .course-list button[data-color="green"] { border-left: 5px solid var(--color-green); }
-
 
         /* Основное содержание */
-        .main-content {
-            padding: 40px;
-            overflow-y: auto;
+        main {
+            padding: 30px;
+            flex-grow: 1;
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
         }
 
-        /* Видео-плеер */
-        /* Используем стили из вашего кода для корректного отображения Kinescope */
-        .video-player-container-kinescope {
-            position: relative;
-            padding-top: 56.6%; /* Соотношение 16:9 */
-            width: 100%;
-            margin-bottom: 30px;
-            box-shadow: var(--box-shadow);
-            border-radius: 12px;
-            overflow: hidden;
+        /* Стили для стартовой страницы (Выбор набора) */
+        #course-selection h2 {
+            font-family: 'Rubik Marker Hatch', cursive;
+            color: var(--secondary-color);
+            font-size: 2.5em;
+            margin-bottom: 40px;
+            text-align: center;
+            animation: confetti 1s ease-out;
         }
+
+        .course-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+        }
+
+        .course-card {
+            background-color: #fff;
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: var(--card-shadow);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            animation: cardPop 0.5s ease-out;
+            border-bottom: 8px solid var(--primary-color);
+        }
+
+        .course-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+            border-bottom-color: var(--accent-color);
+        }
+
+        .course-card h3 {
+            font-size: 1.5em;
+            color: var(--primary-color);
+            margin-top: 10px;
+            margin-bottom: 5px;
+        }
+        
+        .course-card p {
+            color: #7f8c8d;
+        }
+
+        .card-icon {
+            font-size: 3em;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        /* Стили для страницы уроков */
+        #lesson-page h2 {
+            font-family: 'Rubik Marker Hatch', cursive;
+            color: var(--primary-color);
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+
+        #lesson-list {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 30px;
+        }
+
+        .lesson-item {
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 15px 25px;
+            margin-bottom: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border-left: 8px solid var(--secondary-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .lesson-item:hover {
+            transform: translateX(5px);
+            background-color: #f8f8f8;
+        }
+
+        .lesson-item.active {
+            border-left: 8px solid var(--accent-color);
+            font-weight: 700;
+            background-color: #ffe8e8;
+        }
+
+        .lesson-item .duration {
+            font-size: 0.9em;
+            color: var(--accent-color);
+            font-weight: 700;
+        }
+
+        /* Кнопка "Назад" */
+        #back-button {
+            background-color: var(--secondary-color);
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-bottom: 20px;
+            font-weight: 700;
+            transition: background-color 0.2s;
+        }
+        #back-button:hover {
+            background-color: #2980b9;
+        }
+
+        /* Видео-плеер Kinescope */
+        .video-player-container-kinescope {
+            margin-top: 30px;
+            margin-bottom: 30px;
+            box-shadow: var(--card-shadow);
+            border-radius: 15px;
+            overflow: hidden;
+            /* Стили для адаптивности вашего кода */
+            position: relative; 
+            padding-top: 56.6%;
+            width: 100%;
+        }
+
         .video-player-container-kinescope iframe {
             position: absolute;
             width: 100%;
@@ -117,234 +194,192 @@
             border: none;
         }
 
-
-        /* Список уроков */
-        #lesson-title {
-            font-size: 1.5em;
-            margin-bottom: 20px;
-            color: var(--primary-color);
+        /* Скрыть элементы по умолчанию */
+        .hidden {
+            display: none !important;
         }
 
-        #lesson-list-content {
-            list-style: none;
-            padding: 0;
-        }
-
-        #lesson-list-content li {
-            background-color: #fff;
-            padding: 15px 20px;
-            border-radius: 8px;
-            margin-bottom: 10px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-left: 5px solid #bdc3c7;
-            cursor: pointer;
-            transition: border-left-color 0.2s, background-color 0.2s;
-        }
-
-        #lesson-list-content li:hover {
-            border-left-color: var(--accent-color);
-            background-color: #fafafa;
-        }
-
-        #lesson-list-content li.current {
-             border-left-color: var(--accent-color);
-             font-weight: 600;
-        }
-
-        .lesson-info span {
-            font-size: 0.9em;
-            color: #7f8c8d;
-        }
-
-        /* Адаптивность для мобильных устройств */
-        @media (max-width: 900px) {
-            .container {
-                grid-template-columns: 1fr;
-            }
-
-            .sidebar {
-                border-right: none;
-                border-bottom: 1px solid #ddd;
-            }
-
-            .sidebar h2 {
-                text-align: center;
-            }
-
-            .main-content {
-                padding: 20px;
-            }
-
-            header {
-                padding: 15px 20px;
-            }
+        /* Адаптивность */
+        @media (max-width: 600px) {
+            header h1 { font-size: 2em; }
+            #course-selection h2 { font-size: 2em; }
+            main { padding: 20px; }
+            .course-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
 
     <header>
-        <h1>Школа Фокусов "Magic Pro"</h1>
+        <h1>Magic Pro School 🎩</h1>
     </header>
 
-    <div class="container">
-        <div class="sidebar">
-            <h2>Наборы Фокусов</h2>
-            <nav class="course-list">
-                <button data-id="set_75" data-color="none" class="active">75 фокусов</button>
-                <button data-id="set_blue" data-color="blue">10 фокусов (синий)</button>
-                <button data-id="set_red" data-color="red">10 фокусов (красный)</button>
-                <button data-id="set_yellow" data-color="yellow">10 фокусов (желтый)</button>
-                <button data-id="set_green" data-color="green">10 фокусов (зеленый)</button>
-            </nav>
-        </div>
-
-        <div class="main-content">
-            
-            <h2 id="set-header">75 фокусов</h2>
-            <p id="lesson-status" style="margin-bottom: 25px; color: var(--accent-color); font-weight: 600;">Урок 1 из 75: Левитация монеты</p>
-
-            <div class="video-player-container-kinescope">
-                <iframe 
-                    id="kinescope-player"
-                    src="https://kinescope.io/embed/mQEuZrksxN6CtvCggyoCj8" 
-                    allow="autoplay; fullscreen; picture-in-picture; encrypted-media; gyroscope; accelerometer; clipboard-write; screen-wake-lock;" 
-                    frameborder="0" 
-                    allowfullscreen>
-                </iframe>
+    <main>
+        <section id="course-selection">
+            <h2>✨ Выберите свой волшебный набор! ✨</h2>
+            <div class="course-grid">
+                <div class="course-card" data-id="set_75">
+                    <span class="card-icon">🃏</span>
+                    <h3>75 Фокусов (База)</h3>
+                    <p>Стань настоящим мастером магии!</p>
+                </div>
+                <div class="course-card" data-id="set_blue">
+                    <span class="card-icon">🔵</span>
+                    <h3>10 Фокусов (Синий)</h3>
+                    <p>Для фокусов с водой и льдом.</p>
+                </div>
+                <div class="course-card" data-id="set_red">
+                    <span class="card-icon">🔴</span>
+                    <h3>10 Фокусов (Красный)</h3>
+                    <p>Огненная магия и исчезновения.</p>
+                </div>
+                <div class="course-card" data-id="set_yellow">
+                    <span class="card-icon">🟡</span>
+                    <h3>10 Фокусов (Желтый)</h3>
+                    <p>Солнечные трюки и свет.</p>
+                </div>
+                <div class="course-card" data-id="set_green">
+                    <span class="card-icon">🟢</span>
+                    <h3>10 Фокусов (Зеленый)</h3>
+                    <p>Лесная магия и растения.</p>
+                </div>
             </div>
+        </section>
 
-            <div class="lesson-list">
-                <h3 id="lesson-title">Все уроки в наборе</h3>
-                <ul id="lesson-list-content">
-                    </ul>
+        <section id="lesson-page" class="hidden">
+            <button id="back-button" onclick="showCourseSelection()">
+                &larr; Назад к выбору наборов
+            </button>
+            <h2 id="lesson-page-title">Набор:</h2>
+
+            <ul id="lesson-list">
+                </ul>
+
+            <div id="video-area" class="hidden">
+                <p style="margin-top: 20px; font-weight: 700;">Смотрим урок: <span id="current-lesson-name" style="color: var(--accent-color);"></span></p>
+                <div class="video-player-container-kinescope">
+                    <iframe 
+                        id="kinescope-player"
+                        src="https://kinescope.io/embed/mQEuZrksxN6CtvCggyoCj8" 
+                        allow="autoplay; fullscreen; picture-in-picture; encrypted-media; gyroscope; accelerometer; clipboard-write; screen-wake-lock;" 
+                        frameborder="0" 
+                        allowfullscreen>
+                    </iframe>
+                </div>
             </div>
-
-        </div>
-    </div>
+        </section>
+    </main>
 
     <script>
         // 1. ДАННЫЕ О КУРСАХ
+        const KINESCOPE_ID = 'mQEuZrksxN6CtvCggyoCj8'; // Ваш ID для демонстрации
+
         const courses = {
             set_75: {
-                title: '75 фокусов',
-                totalLessons: 75,
+                title: '75 Фокусов (База)',
                 lessons: [
-                    { name: '1. Левитация монеты', duration: '1:45', current: true, videoId: 'mQEuZrksxN6CtvCggyoCj8' },
-                    { name: '2. Быстрое перемещение карты', duration: '1:59', videoId: 'mQEuZrksxN6CtvCggyoCj8' },
-                    { name: '3. Исчезновение платка', duration: '2:10', videoId: 'mQEuZrksxN6CtvCggyoCj8' },
-                    // Имитация остальных уроков
-                    { name: '... (72 других урока в наборе) ...', duration: '...', videoId: 'mQEuZrksxN6CtvCggyoCj8' },
+                    { name: '1. Левитация монеты', duration: '1:45', videoId: KINESCOPE_ID },
+                    { name: '2. Быстрое перемещение карты', duration: '1:59', videoId: KINESCOPE_ID },
+                    { name: '3. Исчезновение платка', duration: '2:10', videoId: KINESCOPE_ID },
+                    { name: '4. Фокус с кольцом на веревке', duration: '1:30', videoId: KINESCOPE_ID },
+                    { name: '... (71 других урока) ...', duration: '...', videoId: KINESCOPE_ID },
                 ]
             },
             set_blue: {
-                title: '10 фокусов (синий)',
-                totalLessons: 10,
+                title: '10 Фокусов (Синий)',
                 lessons: [
-                    { name: '1. Трюк с синей картой', duration: '1:30', current: true, videoId: 'mQEuZrksxN6CtvCggyoCj8' },
-                    { name: '2. Основы веера', duration: '2:00', videoId: 'mQEuZrksxN6CtvCggyoCj8' },
-                    { name: '... (8 других уроков) ...', duration: '...', videoId: 'mQEuZrksxN6CtvCggyoCj8' },
+                    { name: '1. Трюк с синей картой', duration: '1:30', videoId: KINESCOPE_ID },
+                    { name: '2. Основы веера', duration: '2:00', videoId: KINESCOPE_ID },
+                    { name: '3. Синий огонь', duration: '1:10', videoId: KINESCOPE_ID },
+                    { name: '... (7 других уроков) ...', duration: '...', videoId: KINESCOPE_ID },
                 ]
             },
-            set_red: {
-                title: '10 фокусов (красный)',
-                totalLessons: 10,
-                lessons: [
-                    { name: '1. Секрет красной монеты', duration: '1:15', current: true, videoId: 'mQEuZrksxN6CtvCggyoCj8' },
-                    { name: '2. Красные шарики', duration: '1:40', videoId: 'mQEuZrksxN6CtvCggyoCj8' },
-                    { name: '... (8 других уроков) ...', duration: '...', videoId: 'mQEuZrksxN6CtvCggyoCj8' },
-                ]
-            },
-            set_yellow: {
-                title: '10 фокусов (желтый)',
-                totalLessons: 10,
-                lessons: [
-                    { name: '1. Желтый шелковый платок', duration: '1:35', current: true, videoId: 'mQEuZrksxN6CtvCggyoCj8' },
-                    { name: '2. Исчезающая птица', duration: '2:20', videoId: 'mQEuZrksxN6CtvCggyoCj8' },
-                    { name: '... (8 других уроков) ...', duration: '...', videoId: 'mQEuZrksxN6CtvCggyoCj8' },
-                ]
-            },
-            set_green: {
-                title: '10 фокусов (зеленый)',
-                totalLessons: 10,
-                lessons: [
-                    { name: '1. Зеленый палец', duration: '1:40', current: true, videoId: 'mQEuZrksxN6CtvCggyoCj8' },
-                    { name: '2. Ловкость рук', duration: '1:50', videoId: 'mQEuZrksxN6CtvCggyoCj8' },
-                    { name: '... (8 других уроков) ...', duration: '...', videoId: 'mQEuZrksxN6CtvCggyoCj8' },
-                ]
-            }
+            // (КРАСНЫЙ, ЖЕЛТЫЙ, ЗЕЛЕНЫЙ - для краткости используют те же данные)
+            set_red: { title: '10 Фокусов (Красный)', lessons: courses.set_blue.lessons },
+            set_yellow: { title: '10 Фокусов (Желтый)', lessons: courses.set_blue.lessons },
+            set_green: { title: '10 Фокусов (Зеленый)', lessons: courses.set_blue.lessons },
         };
 
-        // 2. ФУНКЦИИ УПРАВЛЕНИЯ КОНТЕНТОМ
-        function renderLessons(courseId) {
-            const course = courses[courseId];
-            const lessonListElement = document.getElementById('lesson-list-content');
-            lessonListElement.innerHTML = ''; // Очистка старого списка
+        // 2. ФУНКЦИИ ПЕРЕКЛЮЧЕНИЯ СТРАНИЦ
+        const courseSelectionPage = document.getElementById('course-selection');
+        const lessonPage = document.getElementById('lesson-page');
+        const videoArea = document.getElementById('video-area');
+        const lessonList = document.getElementById('lesson-list');
+        const lessonPageTitle = document.getElementById('lesson-page-title');
+        const currentLessonNameDisplay = document.getElementById('current-lesson-name');
+        const kinescopePlayer = document.getElementById('kinescope-player');
 
-            // Обновление заголовков
-            document.getElementById('set-header').textContent = course.title;
-            const currentLesson = course.lessons.find(l => l.current) || course.lessons[0];
-            document.getElementById('lesson-status').textContent = `Урок ${course.lessons.indexOf(currentLesson) + 1} из ${course.totalLessons}: ${currentLesson.name}`;
+        let currentCourseId = null; 
+
+        function showCourseSelection() {
+            courseSelectionPage.classList.remove('hidden');
+            lessonPage.classList.add('hidden');
+            videoArea.classList.add('hidden'); // Скрываем плеер
+            currentCourseId = null;
+        }
+
+        function showLessonPage(courseId) {
+            currentCourseId = courseId;
+            courseSelectionPage.classList.add('hidden');
+            lessonPage.classList.remove('hidden');
+            videoArea.classList.add('hidden'); // Скрываем плеер по умолчанию
+
+            const course = courses[courseId];
+            lessonPageTitle.textContent = `Набор: ${course.title}`;
+            renderLessonList(course);
+        }
+
+        function renderLessonList(course) {
+            lessonList.innerHTML = '';
             
-            // Генерация списка уроков
             course.lessons.forEach((lesson, index) => {
                 const li = document.createElement('li');
-                li.className = lesson.current ? 'current' : '';
-                li.setAttribute('data-lesson-index', index); // Для переключения уроков
-                li.setAttribute('data-course-id', courseId); // Для определения курса
-                
+                li.className = 'lesson-item';
                 li.innerHTML = `
-                    <span class="lesson-title">${lesson.name}</span>
-                    <span class="lesson-info">${lesson.duration}</span>
+                    <span>${lesson.name}</span>
+                    <span class="duration">${lesson.duration}</span>
                 `;
                 
                 // Добавление обработчика для клика по уроку
                 li.addEventListener('click', () => {
-                    // Здесь должна быть логика переключения видео
-                    // Для демо: просто обновляем статус урока
-                    alert(`Загрузка урока: "${lesson.name}" из набора "${course.title}"`);
-                    
-                    // Обновляем текущий статус в данных
-                    course.lessons.forEach(l => l.current = false);
-                    lesson.current = true;
-                    
-                    // Перерисовываем список
-                    renderLessons(courseId);
+                    playLesson(lesson, li);
                 });
 
-                lessonListElement.appendChild(li);
+                lessonList.appendChild(li);
             });
         }
 
-        function switchCourse(courseId, targetButton) {
-            // Удаление активного класса со всех кнопок
-            document.querySelectorAll('.course-list button').forEach(btn => {
-                btn.classList.remove('active');
+        function playLesson(lesson, clickedElement) {
+            // 1. Анимация и выделение активного урока
+            document.querySelectorAll('.lesson-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            clickedElement.classList.add('active');
+
+            // 2. Отображение и обновление плеера
+            videoArea.classList.remove('hidden');
+            currentLessonNameDisplay.textContent = lesson.name;
+            
+            // Вставляем ID видео в плеер (обновление SRC)
+            // Примечание: В реальном проекте здесь будет lesson.videoId, но для демо используем один ID
+            kinescopePlayer.src = `https://kinescope.io/embed/${lesson.videoId}`;
+            
+            // Прокрутка страницы к плееру
+            videoArea.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // 3. ИНИЦИАЛИЗАЦИЯ
+        document.addEventListener('DOMContentLoaded', () => {
+            // Настройка обработчиков для карточек на главной
+            document.querySelectorAll('.course-card').forEach(card => {
+                card.addEventListener('click', (event) => {
+                    const courseId = event.currentTarget.getAttribute('data-id');
+                    showLessonPage(courseId);
+                });
             });
             
-            // Добавление активного класса к нажатой кнопке
-            targetButton.classList.add('active');
-
-            // Обновление списка уроков
-            renderLessons(courseId);
-        }
-
-        // 3. ИНИЦИАЛИЗАЦИЯ (Запуск при загрузке страницы)
-        document.addEventListener('DOMContentLoaded', () => {
-            const courseButtons = document.querySelectorAll('.course-list button');
-
-            // Настройка обработчиков для кнопок навигации
-            courseButtons.forEach(button => {
-                button.addEventListener('click', (event) => {
-                    const courseId = event.target.getAttribute('data-id');
-                    switchCourse(courseId, event.target);
-                });
-            });
-
-            // Загрузка первого набора по умолчанию
-            renderLessons('set_75'); 
+            // Установка начального состояния
+            showCourseSelection();
         });
     </script>
 </body>
