@@ -271,9 +271,24 @@
         </section>
     </main>
 
-    <script>
+<script>
         // 1. ДАННЫЕ О КУРСАХ
-        const DEFAULT_KINESCOPE_ID = 'mQEuZrksxN6CtvCggyoCj8'; // Ваш общий ID для демонстрации других наборов
+        const DEFAULT_KINESCOPE_ID = 'mQEuZrksxN6CtvCggyoCj8'; 
+        
+        // Массив уроков для набора 'Синий' (будет переиспользован для Красного, Желтого, Зеленого)
+        const blueLessons = [
+            { name: '1. Трюк с синей картой', duration: '1:30', videoId: DEFAULT_KINESCOPE_ID },
+            { name: '2. Основы веера', duration: '2:00', videoId: DEFAULT_KINESCOPE_ID },
+            { name: '3. Синий огонь', duration: '1:10', videoId: DEFAULT_KINESCOPE_ID },
+            { name: '4. Водный шар', duration: '1:40', videoId: DEFAULT_KINESCOPE_ID },
+            { name: '5. Исчезающая вода', duration: '1:50', videoId: DEFAULT_KINESCOPE_ID },
+            { name: '6. Синий шелк', duration: '1:25', videoId: DEFAULT_KINESCOPE_ID },
+            { name: '7. Фокус с монетой и водой', duration: '1:35', videoId: DEFAULT_KINESCOPE_ID },
+            { name: '8. Синяя резинка', duration: '1:05', videoId: DEFAULT_KINESCOPE_ID },
+            { name: '9. Синий карандаш', duration: '1:15', videoId: DEFAULT_KINESCOPE_ID },
+            { name: '10. Загадка с синим кубиком', duration: '2:10', videoId: DEFAULT_KINESCOPE_ID },
+        ];
+
 
         const courses = {
             set_75: {
@@ -354,28 +369,15 @@
                     { name: 'Фокус с иллюзией левитации', duration: '1:50', videoId: DEFAULT_KINESCOPE_ID },
                     { name: 'Фокус с вопросами', duration: '2:00', videoId: DEFAULT_KINESCOPE_ID },
                     { name: 'Фокус с числами', duration: '1:45', videoId: DEFAULT_KINESCOPE_ID },
+                    { name: 'Фокус с кольцом', duration: '1:25', videoId: DEFAULT_KINESCOPE_ID },
                     { name: 'Советы от Романа Magic.', duration: '3:00', videoId: DEFAULT_KINESCOPE_ID }
                 ]
             },
-            set_blue: {
-                title: '10 Фокусов (Синий)',
-                lessons: [
-                    { name: '1. Трюк с синей картой', duration: '1:30', videoId: DEFAULT_KINESCOPE_ID },
-                    { name: '2. Основы веера', duration: '2:00', videoId: DEFAULT_KINESCOPE_ID },
-                    { name: '3. Синий огонь', duration: '1:10', videoId: DEFAULT_KINESCOPE_ID },
-                    { name: '4. Водный шар', duration: '1:40', videoId: DEFAULT_KINESCOPE_ID },
-                    { name: '5. Исчезающая вода', duration: '1:50', videoId: DEFAULT_KINESCOPE_ID },
-                    { name: '6. Синий шелк', duration: '1:25', videoId: DEFAULT_KINESCOPE_ID },
-                    { name: '7. Фокус с монетой и водой', duration: '1:35', videoId: DEFAULT_KINESCOPE_ID },
-                    { name: '8. Синяя резинка', duration: '1:05', videoId: DEFAULT_KINESCOPE_ID },
-                    { name: '9. Синий карандаш', duration: '1:15', videoId: DEFAULT_KINESCOPE_ID },
-                    { name: '10. Загадка с синим кубиком', duration: '2:10', videoId: DEFAULT_KINESCOPE_ID },
-                ]
-            },
-            // Используем данные "Синего" набора для демонстрации других цветных наборов
-            set_red: { title: '10 Фокусов (Красный)', lessons: courses.set_blue.lessons },
-            set_yellow: { title: '10 Фокусов (Желтый)', lessons: courses.set_blue.lessons },
-            set_green: { title: '10 Фокусов (Зеленый)', lessons: courses.set_blue.lessons },
+            set_blue: { title: '10 Фокусов (Синий)', lessons: blueLessons },
+            // Теперь нет ошибки, так как blueLessons определен выше как отдельный массив
+            set_red: { title: '10 Фокусов (Красный)', lessons: blueLessons }, 
+            set_yellow: { title: '10 Фокусов (Желтый)', lessons: blueLessons },
+            set_green: { title: '10 Фокусов (Зеленый)', lessons: blueLessons },
         };
 
         // 2. ФУНКЦИИ ПЕРЕКЛЮЧЕНИЯ СТРАНИЦ
@@ -409,7 +411,6 @@
             lessonPage.classList.remove('hidden');
             videoArea.classList.add('hidden'); 
             
-            // Сброс src плеера при переходе, чтобы не было ошибок
             kinescopePlayer.src = ''; 
 
             const course = courses[courseId];
@@ -437,26 +438,21 @@
         }
 
         function playLesson(lesson, clickedElement) {
-            // 1. Анимация и выделение активного урока
             document.querySelectorAll('.lesson-item').forEach(item => {
                 item.classList.remove('active');
             });
             clickedElement.classList.add('active');
 
-            // 2. Отображение и обновление плеера
             videoArea.classList.remove('hidden');
             currentLessonNameDisplay.textContent = lesson.name;
             
-            // Вставляем ID видео в плеер (обновление SRC)
             kinescopePlayer.src = `https://kinescope.io/embed/${lesson.videoId}`;
             
-            // Прокрутка страницы к плееру
             videoArea.scrollIntoView({ behavior: 'smooth' });
         }
 
         // 3. ИНИЦИАЛИЗАЦИЯ (Запуск при загрузке страницы)
         document.addEventListener('DOMContentLoaded', () => {
-            // Инициализируем элементы DOM ТОЛЬКО после полной загрузки документа
             initializeDOMElements(); 
             
             const courseCards = document.querySelectorAll('.course-card');
@@ -469,7 +465,6 @@
                 });
             });
             
-            // Устанавливаем начальное состояние
             showCourseSelection();
         });
     </script>
