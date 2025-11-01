@@ -260,7 +260,7 @@
                 <div class="video-player-container-kinescope">
                     <iframe 
                         id="kinescope-player"
-                        src="https://kinescope.io/embed/mQEuZrksxN6CtvCggyoCj8" 
+                        src="" 
                         allow="autoplay; fullscreen; picture-in-picture; encrypted-media; gyroscope; accelerometer; clipboard-write; screen-wake-lock;" 
                         frameborder="0" 
                         allowfullscreen>
@@ -271,58 +271,69 @@
     </main>
 
     <script>
-        // 1. ДАННЫЕ О КУРСАХ
+        // 1. ДАННЫЕ О КУРСАХ - ПЕРЕМЕЩЕНЫ В САМОЕ НАЧАЛО ДЛЯ ИСПРАВЛЕНИЯ ОШИБКИ
         const KINESCOPE_ID = 'mQEuZrksxN6CtvCggyoCj8'; // Ваш ID для демонстрации
 
         const courses = {
             set_75: {
                 title: '75 Фокусов (База)',
                 lessons: [
-                    { name: '1. Левитация монеты', duration: '1:45', videoId: KINESCOPE_ID },
-                    { name: '2. Быстрое перемещение карты', duration: '1:59', videoId: KINESCOPE_ID },
-                    { name: '3. Исчезновение платка', duration: '2:10', videoId: KINESCOPE_ID },
-                    { name: '4. Фокус с кольцом на веревке', duration: '1:30', videoId: KINESCOPE_ID },
-                    { name: '... (71 других урока) ...', duration: '...', videoId: KINESCOPE_ID },
+                    { name: '1. Левитация монеты', duration: '1:45', videoId: KINESCOPE_ID, lessonId: 1 },
+                    { name: '2. Быстрое перемещение карты', duration: '1:59', videoId: KINESCOPE_ID, lessonId: 2 },
+                    { name: '3. Исчезновение платка', duration: '2:10', videoId: KINESCOPE_ID, lessonId: 3 },
+                    { name: '4. Фокус с кольцом на веревке', duration: '1:30', videoId: KINESCOPE_ID, lessonId: 4 },
+                    { name: '... (71 других урока) ...', duration: '...', videoId: KINESCOPE_ID, lessonId: 75 },
                 ]
             },
             set_blue: {
                 title: '10 Фокусов (Синий)',
                 lessons: [
-                    { name: '1. Трюк с синей картой', duration: '1:30', videoId: KINESCOPE_ID },
-                    { name: '2. Основы веера', duration: '2:00', videoId: KINESCOPE_ID },
-                    { name: '3. Синий огонь', duration: '1:10', videoId: KINESCOPE_ID },
-                    { name: '... (7 других уроков) ...', duration: '...', videoId: KINESCOPE_ID },
+                    { name: '1. Трюк с синей картой', duration: '1:30', videoId: KINESCOPE_ID, lessonId: 1 },
+                    { name: '2. Основы веера', duration: '2:00', videoId: KINESCOPE_ID, lessonId: 2 },
+                    { name: '3. Синий огонь', duration: '1:10', videoId: KINESCOPE_ID, lessonId: 3 },
+                    { name: '... (7 других уроков) ...', duration: '...', videoId: KINESCOPE_ID, lessonId: 10 },
                 ]
             },
-            // (КРАСНЫЙ, ЖЕЛТЫЙ, ЗЕЛЕНЫЙ - для краткости используют те же данные)
+            // Использование данных "Синего" набора для других цветов:
             set_red: { title: '10 Фокусов (Красный)', lessons: courses.set_blue.lessons },
             set_yellow: { title: '10 Фокусов (Желтый)', lessons: courses.set_blue.lessons },
             set_green: { title: '10 Фокусов (Зеленый)', lessons: courses.set_blue.lessons },
         };
 
         // 2. ФУНКЦИИ ПЕРЕКЛЮЧЕНИЯ СТРАНИЦ
-        const courseSelectionPage = document.getElementById('course-selection');
-        const lessonPage = document.getElementById('lesson-page');
-        const videoArea = document.getElementById('video-area');
-        const lessonList = document.getElementById('lesson-list');
-        const lessonPageTitle = document.getElementById('lesson-page-title');
-        const currentLessonNameDisplay = document.getElementById('current-lesson-name');
-        const kinescopePlayer = document.getElementById('kinescope-player');
+        // Объявляем переменные для элементов DOM в области видимости скрипта
+        let courseSelectionPage;
+        let lessonPage;
+        let videoArea;
+        let lessonList;
+        let lessonPageTitle;
+        let currentLessonNameDisplay;
+        let kinescopePlayer;
 
-        let currentCourseId = null; 
+        // Инициализация элементов DOM должна происходить после загрузки документа
+        function initializeDOMElements() {
+            courseSelectionPage = document.getElementById('course-selection');
+            lessonPage = document.getElementById('lesson-page');
+            videoArea = document.getElementById('video-area');
+            lessonList = document.getElementById('lesson-list');
+            lessonPageTitle = document.getElementById('lesson-page-title');
+            currentLessonNameDisplay = document.getElementById('current-lesson-name');
+            kinescopePlayer = document.getElementById('kinescope-player');
+        }
 
         function showCourseSelection() {
             courseSelectionPage.classList.remove('hidden');
             lessonPage.classList.add('hidden');
-            videoArea.classList.add('hidden'); // Скрываем плеер
-            currentCourseId = null;
+            videoArea.classList.add('hidden'); 
         }
 
         function showLessonPage(courseId) {
-            currentCourseId = courseId;
             courseSelectionPage.classList.add('hidden');
             lessonPage.classList.remove('hidden');
-            videoArea.classList.add('hidden'); // Скрываем плеер по умолчанию
+            videoArea.classList.add('hidden'); 
+            
+            // Сброс src плеера при переходе, чтобы не было ошибок
+            kinescopePlayer.src = ''; 
 
             const course = courses[courseId];
             lessonPageTitle.textContent = `Набор: ${course.title}`;
@@ -332,7 +343,7 @@
         function renderLessonList(course) {
             lessonList.innerHTML = '';
             
-            course.lessons.forEach((lesson, index) => {
+            course.lessons.forEach((lesson) => {
                 const li = document.createElement('li');
                 li.className = 'lesson-item';
                 li.innerHTML = `
@@ -340,7 +351,6 @@
                     <span class="duration">${lesson.duration}</span>
                 `;
                 
-                // Добавление обработчика для клика по уроку
                 li.addEventListener('click', () => {
                     playLesson(lesson, li);
                 });
@@ -361,24 +371,28 @@
             currentLessonNameDisplay.textContent = lesson.name;
             
             // Вставляем ID видео в плеер (обновление SRC)
-            // Примечание: В реальном проекте здесь будет lesson.videoId, но для демо используем один ID
             kinescopePlayer.src = `https://kinescope.io/embed/${lesson.videoId}`;
             
             // Прокрутка страницы к плееру
             videoArea.scrollIntoView({ behavior: 'smooth' });
         }
 
-        // 3. ИНИЦИАЛИЗАЦИЯ
+        // 3. ИНИЦИАЛИЗАЦИЯ (Запуск при загрузке страницы)
         document.addEventListener('DOMContentLoaded', () => {
-            // Настройка обработчиков для карточек на главной
-            document.querySelectorAll('.course-card').forEach(card => {
+            // Инициализируем элементы DOM ТОЛЬКО после полной загрузки документа
+            initializeDOMElements(); 
+            
+            const courseButtons = document.querySelectorAll('.course-card');
+
+            // Настройка обработчиков для карточек навигации
+            courseButtons.forEach(card => {
                 card.addEventListener('click', (event) => {
                     const courseId = event.currentTarget.getAttribute('data-id');
                     showLessonPage(courseId);
                 });
             });
             
-            // Установка начального состояния
+            // Устанавливаем начальное состояние
             showCourseSelection();
         });
     </script>
