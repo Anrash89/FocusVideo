@@ -6,20 +6,20 @@
     <title>Школа Фокусов "Magic Pro" | Видеоуроки</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        /* Общие стили и сброс */
+        /* Общие стили */
         :root {
-            --primary-color: #2c3e50; /* Темно-синий/почти черный */
-            --accent-color: #e74c3c; /* Красный (как в фокусах) */
-            --bg-light: #ecf0f1; /* Светло-серый фон */
-            --text-color: #34495e; /* Темный текст */
+            --primary-color: #2c3e50;
+            --accent-color: #e74c3c;
+            --bg-light: #ecf0f1;
+            --text-color: #34495e;
             --box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            --color-blue: #3498db;
+            --color-red: #e74c3c;
+            --color-yellow: #f1c40f;
+            --color-green: #2ecc71;
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
             font-family: 'Montserrat', sans-serif;
@@ -36,16 +36,13 @@
             box-shadow: var(--box-shadow);
         }
 
-        header h1 {
-            font-size: 1.8em;
-            font-weight: 700;
-        }
+        header h1 { font-size: 1.8em; font-weight: 700; }
 
         /* Основной контейнер с сеткой */
         .container {
             display: grid;
-            grid-template-columns: 300px 1fr; /* Навигация и Контент */
-            min-height: calc(100vh - 80px); /* Высота без шапки */
+            grid-template-columns: 300px 1fr;
+            min-height: calc(100vh - 80px);
         }
 
         /* Навигация (Сайдбар) */
@@ -63,27 +60,36 @@
             padding-bottom: 10px;
         }
 
-        .course-list a {
+        .course-list button {
             display: block;
+            width: 100%;
+            text-align: left;
             padding: 12px 15px;
             margin-bottom: 8px;
             background-color: #f8f8f8;
+            border: none;
             border-radius: 6px;
-            text-decoration: none;
+            cursor: pointer;
             color: var(--text-color);
             font-weight: 600;
             transition: background-color 0.2s, transform 0.2s;
         }
 
-        .course-list a:hover {
+        .course-list button:hover {
             background-color: #e0e0e0;
             transform: translateX(5px);
         }
 
-        .course-list a.active {
+        .course-list button.active {
             background-color: var(--accent-color);
             color: #fff;
         }
+        /* Цветовые акценты для наборов */
+        .course-list button[data-color="blue"] { border-left: 5px solid var(--color-blue); }
+        .course-list button[data-color="red"] { border-left: 5px solid var(--color-red); }
+        .course-list button[data-color="yellow"] { border-left: 5px solid var(--color-yellow); }
+        .course-list button[data-color="green"] { border-left: 5px solid var(--color-green); }
+
 
         /* Основное содержание */
         .main-content {
@@ -92,39 +98,39 @@
         }
 
         /* Видео-плеер */
-        .video-player-container {
+        /* Используем стили из вашего кода для корректного отображения Kinescope */
+        .video-player-container-kinescope {
             position: relative;
+            padding-top: 56.6%; /* Соотношение 16:9 */
             width: 100%;
-            padding-top: 56.25%; /* Соотношение сторон 16:9 */
-            background: #000;
-            border-radius: 12px;
-            overflow: hidden;
             margin-bottom: 30px;
             box-shadow: var(--box-shadow);
+            border-radius: 12px;
+            overflow: hidden;
         }
-
-        .video-player-container iframe {
+        .video-player-container-kinescope iframe {
             position: absolute;
-            top: 0;
-            left: 0;
             width: 100%;
             height: 100%;
+            top: 0;
+            left: 0;
             border: none;
         }
 
+
         /* Список уроков */
-        .lesson-list h3 {
+        #lesson-title {
             font-size: 1.5em;
             margin-bottom: 20px;
             color: var(--primary-color);
         }
 
-        .lesson-list ul {
+        #lesson-list-content {
             list-style: none;
             padding: 0;
         }
 
-        .lesson-list li {
+        #lesson-list-content li {
             background-color: #fff;
             padding: 15px 20px;
             border-radius: 8px;
@@ -137,12 +143,12 @@
             transition: border-left-color 0.2s, background-color 0.2s;
         }
 
-        .lesson-list li:hover {
+        #lesson-list-content li:hover {
             border-left-color: var(--accent-color);
             background-color: #fafafa;
         }
 
-        .lesson-list li.current {
+        #lesson-list-content li.current {
              border-left-color: var(--accent-color);
              font-weight: 600;
         }
@@ -155,7 +161,7 @@
         /* Адаптивность для мобильных устройств */
         @media (max-width: 900px) {
             .container {
-                grid-template-columns: 1fr; /* В одну колонку */
+                grid-template-columns: 1fr;
             }
 
             .sidebar {
@@ -187,58 +193,159 @@
         <div class="sidebar">
             <h2>Наборы Фокусов</h2>
             <nav class="course-list">
-                <a href="#" class="active">Набор 1: "Базовый трюк" (75 уроков)</a>
-                <a href="#">Набор 2: "Иллюзии с картами" (75 уроков)</a>
-                <a href="#">Набор 3: "Монеты и исчезновения" (75 уроков)</a>
-                <a href="#">Набор 4: "Магия с веревками" (75 уроков)</a>
-                <a href="#">Набор 5: "Сценическая магия" (75 уроков)</a>
+                <button data-id="set_75" data-color="none" class="active">75 фокусов</button>
+                <button data-id="set_blue" data-color="blue">10 фокусов (синий)</button>
+                <button data-id="set_red" data-color="red">10 фокусов (красный)</button>
+                <button data-id="set_yellow" data-color="yellow">10 фокусов (желтый)</button>
+                <button data-id="set_green" data-color="green">10 фокусов (зеленый)</button>
             </nav>
         </div>
 
         <div class="main-content">
             
-            <h2>Набор 1: "Базовый трюк"</h2>
-            <p style="margin-bottom: 25px; color: var(--accent-color); font-weight: 600;">Урок 1 из 75: Левитация монеты</p>
+            <h2 id="set-header">75 фокусов</h2>
+            <p id="lesson-status" style="margin-bottom: 25px; color: var(--accent-color); font-weight: 600;">Урок 1 из 75: Левитация монеты</p>
 
-            <div class="video-player-container">
+            <div class="video-player-container-kinescope">
                 <iframe 
-                    src="https://player.kinescope.io/latest/mQEuZrksxN6CtvCggyoCj8" 
-                    allow="autoplay; fullscreen; picture-in-picture; encrypted-media; gyroscope; accelerometer" 
-                    width="100%" 
-                    height="100%" 
+                    id="kinescope-player"
+                    src="https://kinescope.io/embed/mQEuZrksxN6CtvCggyoCj8" 
+                    allow="autoplay; fullscreen; picture-in-picture; encrypted-media; gyroscope; accelerometer; clipboard-write; screen-wake-lock;" 
                     frameborder="0" 
                     allowfullscreen>
                 </iframe>
             </div>
 
             <div class="lesson-list">
-                <h3>Все уроки в наборе</h3>
-                <ul>
-                    <li class="current">
-                        <span class="lesson-title">1. Левитация монеты (Текущий урок)</span>
-                        <span class="lesson-info">1:45</span>
-                    </li>
-                    <li>
-                        <span class="lesson-title">2. Быстрое перемещение карты</span>
-                        <span class="lesson-info">1:59</span>
-                    </li>
-                    <li>
-                        <span class="lesson-title">3. Исчезновение платка</span>
-                        <span class="lesson-info">2:10</span>
-                    </li>
-                    <li>
-                        <span class="lesson-title">4. Фокус с кольцом на веревке</span>
-                        <span class="lesson-info">1:30</span>
-                    </li>
-                    <li>
-                        <span class="lesson-title">... (71 других урока в наборе) ...</span>
-                        <span class="lesson-info"></span>
-                    </li>
-                </ul>
+                <h3 id="lesson-title">Все уроки в наборе</h3>
+                <ul id="lesson-list-content">
+                    </ul>
             </div>
 
         </div>
     </div>
 
+    <script>
+        // 1. ДАННЫЕ О КУРСАХ
+        const courses = {
+            set_75: {
+                title: '75 фокусов',
+                totalLessons: 75,
+                lessons: [
+                    { name: '1. Левитация монеты', duration: '1:45', current: true, videoId: 'mQEuZrksxN6CtvCggyoCj8' },
+                    { name: '2. Быстрое перемещение карты', duration: '1:59', videoId: 'mQEuZrksxN6CtvCggyoCj8' },
+                    { name: '3. Исчезновение платка', duration: '2:10', videoId: 'mQEuZrksxN6CtvCggyoCj8' },
+                    // Имитация остальных уроков
+                    { name: '... (72 других урока в наборе) ...', duration: '...', videoId: 'mQEuZrksxN6CtvCggyoCj8' },
+                ]
+            },
+            set_blue: {
+                title: '10 фокусов (синий)',
+                totalLessons: 10,
+                lessons: [
+                    { name: '1. Трюк с синей картой', duration: '1:30', current: true, videoId: 'mQEuZrksxN6CtvCggyoCj8' },
+                    { name: '2. Основы веера', duration: '2:00', videoId: 'mQEuZrksxN6CtvCggyoCj8' },
+                    { name: '... (8 других уроков) ...', duration: '...', videoId: 'mQEuZrksxN6CtvCggyoCj8' },
+                ]
+            },
+            set_red: {
+                title: '10 фокусов (красный)',
+                totalLessons: 10,
+                lessons: [
+                    { name: '1. Секрет красной монеты', duration: '1:15', current: true, videoId: 'mQEuZrksxN6CtvCggyoCj8' },
+                    { name: '2. Красные шарики', duration: '1:40', videoId: 'mQEuZrksxN6CtvCggyoCj8' },
+                    { name: '... (8 других уроков) ...', duration: '...', videoId: 'mQEuZrksxN6CtvCggyoCj8' },
+                ]
+            },
+            set_yellow: {
+                title: '10 фокусов (желтый)',
+                totalLessons: 10,
+                lessons: [
+                    { name: '1. Желтый шелковый платок', duration: '1:35', current: true, videoId: 'mQEuZrksxN6CtvCggyoCj8' },
+                    { name: '2. Исчезающая птица', duration: '2:20', videoId: 'mQEuZrksxN6CtvCggyoCj8' },
+                    { name: '... (8 других уроков) ...', duration: '...', videoId: 'mQEuZrksxN6CtvCggyoCj8' },
+                ]
+            },
+            set_green: {
+                title: '10 фокусов (зеленый)',
+                totalLessons: 10,
+                lessons: [
+                    { name: '1. Зеленый палец', duration: '1:40', current: true, videoId: 'mQEuZrksxN6CtvCggyoCj8' },
+                    { name: '2. Ловкость рук', duration: '1:50', videoId: 'mQEuZrksxN6CtvCggyoCj8' },
+                    { name: '... (8 других уроков) ...', duration: '...', videoId: 'mQEuZrksxN6CtvCggyoCj8' },
+                ]
+            }
+        };
+
+        // 2. ФУНКЦИИ УПРАВЛЕНИЯ КОНТЕНТОМ
+        function renderLessons(courseId) {
+            const course = courses[courseId];
+            const lessonListElement = document.getElementById('lesson-list-content');
+            lessonListElement.innerHTML = ''; // Очистка старого списка
+
+            // Обновление заголовков
+            document.getElementById('set-header').textContent = course.title;
+            const currentLesson = course.lessons.find(l => l.current) || course.lessons[0];
+            document.getElementById('lesson-status').textContent = `Урок ${course.lessons.indexOf(currentLesson) + 1} из ${course.totalLessons}: ${currentLesson.name}`;
+            
+            // Генерация списка уроков
+            course.lessons.forEach((lesson, index) => {
+                const li = document.createElement('li');
+                li.className = lesson.current ? 'current' : '';
+                li.setAttribute('data-lesson-index', index); // Для переключения уроков
+                li.setAttribute('data-course-id', courseId); // Для определения курса
+                
+                li.innerHTML = `
+                    <span class="lesson-title">${lesson.name}</span>
+                    <span class="lesson-info">${lesson.duration}</span>
+                `;
+                
+                // Добавление обработчика для клика по уроку
+                li.addEventListener('click', () => {
+                    // Здесь должна быть логика переключения видео
+                    // Для демо: просто обновляем статус урока
+                    alert(`Загрузка урока: "${lesson.name}" из набора "${course.title}"`);
+                    
+                    // Обновляем текущий статус в данных
+                    course.lessons.forEach(l => l.current = false);
+                    lesson.current = true;
+                    
+                    // Перерисовываем список
+                    renderLessons(courseId);
+                });
+
+                lessonListElement.appendChild(li);
+            });
+        }
+
+        function switchCourse(courseId, targetButton) {
+            // Удаление активного класса со всех кнопок
+            document.querySelectorAll('.course-list button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Добавление активного класса к нажатой кнопке
+            targetButton.classList.add('active');
+
+            // Обновление списка уроков
+            renderLessons(courseId);
+        }
+
+        // 3. ИНИЦИАЛИЗАЦИЯ (Запуск при загрузке страницы)
+        document.addEventListener('DOMContentLoaded', () => {
+            const courseButtons = document.querySelectorAll('.course-list button');
+
+            // Настройка обработчиков для кнопок навигации
+            courseButtons.forEach(button => {
+                button.addEventListener('click', (event) => {
+                    const courseId = event.target.getAttribute('data-id');
+                    switchCourse(courseId, event.target);
+                });
+            });
+
+            // Загрузка первого набора по умолчанию
+            renderLessons('set_75'); 
+        });
+    </script>
 </body>
 </html>
