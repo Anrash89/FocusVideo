@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Школа Фокусов "Magic Pro" | Видеоуроки</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Общие стили и сброс */
+        :root {
+            --primary-color: #2c3e50; /* Темно-синий/почти черный */
+            --accent-color: #e74c3c; /* Красный (как в фокусах) */
+            --bg-light: #ecf0f1; /* Светло-серый фон */
+            --text-color: #34495e; /* Темный текст */
+            --box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        /* Шапка */
+        header {
+            background-color: var(--primary-color);
+            color: #fff;
+            padding: 20px 40px;
+            box-shadow: var(--box-shadow);
+        }
+
+        header h1 {
+            font-size: 1.8em;
+            font-weight: 700;
+        }
+
+        /* Основной контейнер с сеткой */
+        .container {
+            display: grid;
+            grid-template-columns: 300px 1fr; /* Навигация и Контент */
+            min-height: calc(100vh - 80px); /* Высота без шапки */
+        }
+
+        /* Навигация (Сайдбар) */
+        .sidebar {
+            background-color: #fff;
+            padding: 20px;
+            border-right: 1px solid #ddd;
+        }
+
+        .sidebar h2 {
+            font-size: 1.2em;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 10px;
+        }
+
+        .course-list a {
+            display: block;
+            padding: 12px 15px;
+            margin-bottom: 8px;
+            background-color: #f8f8f8;
+            border-radius: 6px;
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 600;
+            transition: background-color 0.2s, transform 0.2s;
+        }
+
+        .course-list a:hover {
+            background-color: #e0e0e0;
+            transform: translateX(5px);
+        }
+
+        .course-list a.active {
+            background-color: var(--accent-color);
+            color: #fff;
+        }
+
+        /* Основное содержание */
+        .main-content {
+            padding: 40px;
+            overflow-y: auto;
+        }
+
+        /* Видео-плеер */
+        .video-player-container {
+            position: relative;
+            width: 100%;
+            padding-top: 56.25%; /* Соотношение сторон 16:9 */
+            background: #000;
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 30px;
+            box-shadow: var(--box-shadow);
+        }
+
+        .video-player-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* Список уроков */
+        .lesson-list h3 {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+        }
+
+        .lesson-list ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .lesson-list li {
+            background-color: #fff;
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-left: 5px solid #bdc3c7;
+            cursor: pointer;
+            transition: border-left-color 0.2s, background-color 0.2s;
+        }
+
+        .lesson-list li:hover {
+            border-left-color: var(--accent-color);
+            background-color: #fafafa;
+        }
+
+        .lesson-list li.current {
+             border-left-color: var(--accent-color);
+             font-weight: 600;
+        }
+
+        .lesson-info span {
+            font-size: 0.9em;
+            color: #7f8c8d;
+        }
+
+        /* Адаптивность для мобильных устройств */
+        @media (max-width: 900px) {
+            .container {
+                grid-template-columns: 1fr; /* В одну колонку */
+            }
+
+            .sidebar {
+                border-right: none;
+                border-bottom: 1px solid #ddd;
+            }
+
+            .sidebar h2 {
+                text-align: center;
+            }
+
+            .main-content {
+                padding: 20px;
+            }
+
+            header {
+                padding: 15px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Школа Фокусов "Magic Pro"</h1>
+    </header>
+
+    <div class="container">
+        <div class="sidebar">
+            <h2>Наборы Фокусов</h2>
+            <nav class="course-list">
+                <a href="#" class="active">Набор 1: "Базовый трюк" (75 уроков)</a>
+                <a href="#">Набор 2: "Иллюзии с картами" (75 уроков)</a>
+                <a href="#">Набор 3: "Монеты и исчезновения" (75 уроков)</a>
+                <a href="#">Набор 4: "Магия с веревками" (75 уроков)</a>
+                <a href="#">Набор 5: "Сценическая магия" (75 уроков)</a>
+            </nav>
+        </div>
+
+        <div class="main-content">
+            
+            <h2>Набор 1: "Базовый трюк"</h2>
+            <p style="margin-bottom: 25px; color: var(--accent-color); font-weight: 600;">Урок 1 из 75: Левитация монеты</p>
+
+            <div class="video-player-container">
+                <iframe 
+                    src="https://player.kinescope.io/latest/mQEuZrksxN6CtvCggyoCj8" 
+                    allow="autoplay; fullscreen; picture-in-picture; encrypted-media; gyroscope; accelerometer" 
+                    width="100%" 
+                    height="100%" 
+                    frameborder="0" 
+                    allowfullscreen>
+                </iframe>
+            </div>
+
+            <div class="lesson-list">
+                <h3>Все уроки в наборе</h3>
+                <ul>
+                    <li class="current">
+                        <span class="lesson-title">1. Левитация монеты (Текущий урок)</span>
+                        <span class="lesson-info">1:45</span>
+                    </li>
+                    <li>
+                        <span class="lesson-title">2. Быстрое перемещение карты</span>
+                        <span class="lesson-info">1:59</span>
+                    </li>
+                    <li>
+                        <span class="lesson-title">3. Исчезновение платка</span>
+                        <span class="lesson-info">2:10</span>
+                    </li>
+                    <li>
+                        <span class="lesson-title">4. Фокус с кольцом на веревке</span>
+                        <span class="lesson-info">1:30</span>
+                    </li>
+                    <li>
+                        <span class="lesson-title">... (71 других урока в наборе) ...</span>
+                        <span class="lesson-info"></span>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+</html>
