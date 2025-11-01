@@ -179,9 +179,10 @@
             box-shadow: var(--card-shadow);
             border-radius: 15px;
             overflow: hidden;
-            /* Стили для адаптивности вашего кода */
+            /* Используем 177.34% для вертикальных видео, если они такие.
+               Если видео стандартные 16:9, измените на 56.25% */
             position: relative; 
-            padding-top: 56.6%;
+            padding-top: 177.34%; /* Учтено ваше соотношение сторон */
             width: 100%;
         }
 
@@ -271,37 +272,113 @@
     </main>
 
     <script>
-        // 1. ДАННЫЕ О КУРСАХ - ПЕРЕМЕЩЕНЫ В САМОЕ НАЧАЛО ДЛЯ ИСПРАВЛЕНИЯ ОШИБКИ
-        const KINESCOPE_ID = 'mQEuZrksxN6CtvCggyoCj8'; // Ваш ID для демонстрации
+        // 1. ДАННЫЕ О КУРСАХ
+        const DEFAULT_KINESCOPE_ID = 'mQEuZrksxN6CtvCggyoCj8'; // Ваш общий ID для демонстрации других наборов
 
         const courses = {
             set_75: {
                 title: '75 Фокусов (База)',
                 lessons: [
-                    { name: '1. Левитация монеты', duration: '1:45', videoId: KINESCOPE_ID, lessonId: 1 },
-                    { name: '2. Быстрое перемещение карты', duration: '1:59', videoId: KINESCOPE_ID, lessonId: 2 },
-                    { name: '3. Исчезновение платка', duration: '2:10', videoId: KINESCOPE_ID, lessonId: 3 },
-                    { name: '4. Фокус с кольцом на веревке', duration: '1:30', videoId: KINESCOPE_ID, lessonId: 4 },
-                    { name: '... (71 других урока) ...', duration: '...', videoId: KINESCOPE_ID, lessonId: 75 },
+                    { name: 'О наборе', duration: '1:00', videoId: 'jpcpPJFxh4HW6Y1D9hHjoL' },
+                    { name: 'Фокус с волшебной палочкой и горшочком', duration: '1:30', videoId: 'k1JaAhww3pHUX1kTXSpZrS' },
+                    { name: 'Фокус с волшебной палочкой и сердечком №1', duration: '1:45', videoId: 'kPfMYDT72KwJZiCaSjLZVf' },
+                    { name: 'Фокус с волшебной палочкой №1', duration: '1:20', videoId: 'mM5cJcqFQExpJJLdHLeu9F' },
+                    { name: 'Фокус с волшебной палочкой и сердечком №2', duration: '1:50', videoId: 'hqmJ7SV2o8t7Wc8kwhCUo6' },
+                    { name: 'Фокус с волшебной палочкой №2', duration: '1:10', videoId: DEFAULT_KINESCOPE_ID },
+                    { name: 'Фокус с волшебной палочкой №3', duration: '1:05', videoId: DEFAULT_KINESCOPE_ID },
+                    { name: 'Фокус с сердечками №1', duration: '1:15', videoId: DEFAULT_KINESCOPE_ID },
+                    { name: 'Фокус с башенкой с шариком', duration: '2:00', videoId: DEFAULT_KINESCOPE_ID },
+                    { name: 'Фокус с разделителем верёвки', duration: '1:40', videoId: DEFAULT_KINESCOPE_ID },
+                    { name: 'Фокус с верёвкой №1', duration: '1:35', videoId: DEFAULT_KINESCOPE_ID },
+                    { name: 'Фокус с разноцветными платками', duration: '1:55', videoId: DEFAULT_KINESCOPE_ID },
+                    { name: 'Фокус с платком и напальчником', duration: '1:25', videoId: DEFAULT_KINESCOPE_ID },
+                    { name: 'Фокус с сердечками №2', duration: '1:10', videoId: DEFAULT_KINESCOPE_ID },
+                    { name: 'Фокус с сердечками №3', duration: '1:00', videoId: DEFAULT_KINESCOPE_ID },
+                    { name: 'Фокус с сердечками №4', duration: '1:20', videoId: DEFAULT_KINESCOPE_ID },
+                    { name: 'Фокус с сердечками №5', duration: '1:30', videoId: DEFAULT_KINESCOPE_ID },
+                    { name: 'Фокус с числовыми картами', duration: '2:10', videoId: DEFAULT_KINESCOPE_ID },
+                    { name: 'Фокус с баночкой с кубиками', duration: '1:40', videoId: DEFAULT_KINESCOPE_ID },
+                    { name: 'Фокус с игральным кубиком', duration: '1:50', videoId: DEFAULT_KINESCOPE_ID },
+                    { name: 'Фокус с двойными картами', duration: '2:05', videoId: DEFAULT_KINESCOPE_ID },
+                    { name: 'Фокус с картой со створкой', duration: '1:30', videoId: DEFAULT_KINESCOPE_ID },
+                    { name: 'Фокус со сложенной купюрой', duration: '1:15', videoId: DEFAULT_KINESCOPE_ID },
+                    { name: 'Фокус с картой и купюрой', duration: '1:40', videoId: DEFAULT_KINESCOPE_ID },
+                    { name: 'Фокус с купюрой', duration: '1:00', videoId: DEFAULT_KINESCOPE_ID },
+                    { name: 'Фокус с купюрой со скрепками', duration: '1:25', videoId: DEFAULT_KINESCOPE_ID },
+                    { name: 'Фокус со скрепками', duration: '1:10', videoId: DEFAULT_KINESCOPE_ID },
+                    { name: 'Фокус со стаканами и шариками', duration: '2:30', videoId: DEFAULT_KINESCOPE_ID },
+                    { name: 'Фокус с кольцом и цепочкой', duration: '1:50', videoId: DEFAULT_KINESCOPE_ID },
+                    { name: 'Фокус с монеткой №1', duration: '1:10', videoId: DEFAULT_KINESCOPE_ID },
+                    { name: 'Фокус с резинкой и скрепкой №1', duration: '1:45', videoId: DEFAULT_KINESCOPE_ID },
+                    { name: 'Фокус с резинкой и скрепкой №2', duration: '1:35', videoId: DEFAULT_KINESCOPE_ID },
+                    { name: 'Фокус с резинками №1', duration: '1:05', videoId: DEFAULT_KINESCOPE_ID },
+                    { name: 'Фокус с резинками №2', duration: '1:15', videoId: DEFAULT_KINESCOPE_ID },
+                    { name: 'Фокус с резинками и купюрой', duration: '2:00', videoId: DEFAULT_KINESCOPE_ID },
+                    { name: 'Фокус с резинкой и купюрой', duration: '1:30', videoId: DEFAULT_KINESCOPE_ID },
+                    { name: 'Фокус с резинкой', duration: '1:00', videoId: DEFAULT_KINESCOPE_ID },
+                    { name: 'Фокус с резинками №3', duration: '1:20', videoId: DEFAULT_KINESCOPE_ID },
+                    { name: 'Фокус с резинками №4', duration: '1:25', videoId: DEFAULT_KINESCOPE_ID },
+                    { name: 'Фокус с резинками №5', duration: '1:10', videoId: DEFAULT_KINESCOPE_ID },
+                    { name: 'Фокус с картой с леской и спичкой', duration: '1:50', videoId: DEFAULT_KINESCOPE_ID },
+                    { name: 'Фокус с верёвкой и спичечным коробком', duration: '2:10', videoId: DEFAULT_KINESCOPE_ID },
+                    { name: 'Фокус со спичечным коробком №1', duration: '1:15', videoId: DEFAULT_KINESCOPE_ID },
+                    { name: 'Три загадки со спичками', duration: '2:20', videoId: DEFAULT_KINESCOPE_ID },
+                    { name: 'Фокус со спичкой №1', duration: '1:05', videoId: DEFAULT_KINESCOPE_ID },
+                    { name: 'Фокус со спичкой №2', duration: '1:10', videoId: DEFAULT_KINESCOPE_ID },
+                    { name: 'Фокус со спичечным коробком №2', duration: '1:30', videoId: DEFAULT_KINESCOPE_ID },
+                    { name: 'Фокус со спичечным коробком и воздушным шариком', duration: '1:50', videoId: DEFAULT_KINESCOPE_ID },
+                    { name: 'Фокус с воздушным шариком', duration: '1:40', videoId: DEFAULT_KINESCOPE_ID },
+                    { name: 'Фокус с монеткой и стаканом №1', duration: '2:00', videoId: DEFAULT_KINESCOPE_ID },
+                    { name: 'Фокус с монеткой №2', duration: '1:15', videoId: DEFAULT_KINESCOPE_ID },
+                    { name: 'Фокус с монеткой и стаканом №2', duration: '1:30', videoId: DEFAULT_KINESCOPE_ID },
+                    { name: 'Фокус с карандашом №1', duration: '1:05', videoId: DEFAULT_KINESCOPE_ID },
+                    { name: 'Фокус с волшебной палочкой №4', duration: '1:20', videoId: DEFAULT_KINESCOPE_ID },
+                    { name: 'Фокус с разноцветными предметами', duration: '1:50', videoId: DEFAULT_KINESCOPE_ID },
+                    { name: 'Фокус со стаканами и предсказанием №1', duration: '2:10', videoId: DEFAULT_KINESCOPE_ID },
+                    { name: 'Фокус со стаканами и предсказанием №2', duration: '1:40', videoId: DEFAULT_KINESCOPE_ID },
+                    { name: 'Фокус с использованием рук №1', duration: '1:15', videoId: DEFAULT_KINESCOPE_ID },
+                    { name: 'Фокус с использованием рук №2', duration: '1:25', videoId: DEFAULT_KINESCOPE_ID },
+                    { name: 'Фокус со стаканом с жидкостью', duration: '1:55', videoId: DEFAULT_KINESCOPE_ID },
+                    { name: 'Фокус с напальчником', duration: '1:00', videoId: DEFAULT_KINESCOPE_ID },
+                    { name: 'Фокус с использованием пальцев №1', duration: '1:10', videoId: DEFAULT_KINESCOPE_ID },
+                    { name: 'Фокус с использованием пальцев №2', duration: '1:20', videoId: DEFAULT_KINESCOPE_ID },
+                    { name: 'Фокус с использованием пальцев №3', duration: '1:30', videoId: DEFAULT_KINESCOPE_ID },
+                    { name: 'Фокус с использованием пальцев №4', duration: '1:40', videoId: DEFAULT_KINESCOPE_ID },
+                    { name: 'Фокус с использованием пальцев №5', duration: '1:50', videoId: DEFAULT_KINESCOPE_ID },
+                    { name: 'Фокус с листом бумаги', duration: '1:15', videoId: DEFAULT_KINESCOPE_ID },
+                    { name: 'Три способа достать купюру из-под бутылки', duration: '2:00', videoId: DEFAULT_KINESCOPE_ID },
+                    { name: 'Фокус с верёвкой №2', duration: '1:30', videoId: DEFAULT_KINESCOPE_ID },
+                    { name: 'Фокус с карандашом №2', duration: '1:05', videoId: DEFAULT_KINESCOPE_ID },
+                    { name: 'Фокус с использованием пальцев №6', duration: '1:20', videoId: DEFAULT_KINESCOPE_ID },
+                    { name: 'Фокус с монеткой №3', duration: '1:10', videoId: DEFAULT_KINESCOPE_ID },
+                    { name: 'Фокус с иллюзией левитации', duration: '1:50', videoId: DEFAULT_KINESCOPE_ID },
+                    { name: 'Фокус с вопросами', duration: '2:00', videoId: DEFAULT_KINESCOPE_ID },
+                    { name: 'Фокус с числами', duration: '1:45', videoId: DEFAULT_KINESCOPE_ID },
+                    { name: 'Советы от Романа Magic.', duration: '3:00', videoId: DEFAULT_KINESCOPE_ID }
                 ]
             },
             set_blue: {
                 title: '10 Фокусов (Синий)',
                 lessons: [
-                    { name: '1. Трюк с синей картой', duration: '1:30', videoId: KINESCOPE_ID, lessonId: 1 },
-                    { name: '2. Основы веера', duration: '2:00', videoId: KINESCOPE_ID, lessonId: 2 },
-                    { name: '3. Синий огонь', duration: '1:10', videoId: KINESCOPE_ID, lessonId: 3 },
-                    { name: '... (7 других уроков) ...', duration: '...', videoId: KINESCOPE_ID, lessonId: 10 },
+                    { name: '1. Трюк с синей картой', duration: '1:30', videoId: DEFAULT_KINESCOPE_ID },
+                    { name: '2. Основы веера', duration: '2:00', videoId: DEFAULT_KINESCOPE_ID },
+                    { name: '3. Синий огонь', duration: '1:10', videoId: DEFAULT_KINESCOPE_ID },
+                    { name: '4. Водный шар', duration: '1:40', videoId: DEFAULT_KINESCOPE_ID },
+                    { name: '5. Исчезающая вода', duration: '1:50', videoId: DEFAULT_KINESCOPE_ID },
+                    { name: '6. Синий шелк', duration: '1:25', videoId: DEFAULT_KINESCOPE_ID },
+                    { name: '7. Фокус с монетой и водой', duration: '1:35', videoId: DEFAULT_KINESCOPE_ID },
+                    { name: '8. Синяя резинка', duration: '1:05', videoId: DEFAULT_KINESCOPE_ID },
+                    { name: '9. Синий карандаш', duration: '1:15', videoId: DEFAULT_KINESCOPE_ID },
+                    { name: '10. Загадка с синим кубиком', duration: '2:10', videoId: DEFAULT_KINESCOPE_ID },
                 ]
             },
-            // Использование данных "Синего" набора для других цветов:
+            // Используем данные "Синего" набора для демонстрации других цветных наборов
             set_red: { title: '10 Фокусов (Красный)', lessons: courses.set_blue.lessons },
             set_yellow: { title: '10 Фокусов (Желтый)', lessons: courses.set_blue.lessons },
             set_green: { title: '10 Фокусов (Зеленый)', lessons: courses.set_blue.lessons },
         };
 
         // 2. ФУНКЦИИ ПЕРЕКЛЮЧЕНИЯ СТРАНИЦ
-        // Объявляем переменные для элементов DOM в области видимости скрипта
         let courseSelectionPage;
         let lessonPage;
         let videoArea;
@@ -382,10 +459,10 @@
             // Инициализируем элементы DOM ТОЛЬКО после полной загрузки документа
             initializeDOMElements(); 
             
-            const courseButtons = document.querySelectorAll('.course-card');
+            const courseCards = document.querySelectorAll('.course-card');
 
             // Настройка обработчиков для карточек навигации
-            courseButtons.forEach(card => {
+            courseCards.forEach(card => {
                 card.addEventListener('click', (event) => {
                     const courseId = event.currentTarget.getAttribute('data-id');
                     showLessonPage(courseId);
