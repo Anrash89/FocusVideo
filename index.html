@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Школа Фокусов "Magic Pro" | Детская Магия</title>
+    <title>Школа Фокусов "Pro" | Детские Трюки</title>
     <link href="https://fonts.googleapis.com/css2?family=Bungee+Inline&family=Rubik+Marker+Hatch&family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         /* Общие стили и анимации */
@@ -55,7 +55,7 @@
         main {
             padding: 30px;
             flex-grow: 1;
-            max-width: 1200px;
+            max-width: 800px; /* Уменьшаем для фокусировки на контенте */
             width: 100%;
             margin: 0 auto;
         }
@@ -111,8 +111,8 @@
             margin-bottom: 10px;
         }
 
-        /* Стили для страницы уроков */
-        #lesson-page h2 {
+        /* Стили для страницы списка уроков */
+        #lesson-list-view h2 {
             font-family: 'Rubik Marker Hatch', cursive;
             color: var(--primary-color);
             font-size: 2em;
@@ -157,7 +157,7 @@
         }
 
         /* Кнопка "Назад" */
-        #back-button {
+        .back-button {
             background-color: var(--secondary-color);
             color: #fff;
             border: none;
@@ -168,7 +168,7 @@
             font-weight: 700;
             transition: background-color 0.2s;
         }
-        #back-button:hover {
+        .back-button:hover {
             background-color: #2980b9;
         }
 
@@ -179,7 +179,6 @@
             box-shadow: var(--card-shadow);
             border-radius: 15px;
             overflow: hidden;
-            /* Указанное вами вертикальное соотношение сторон */
             position: relative; 
             padding-top: 177.34%; 
             width: 100%;
@@ -211,159 +210,87 @@
 <body>
 
     <header>
-        <h1>Magic Pro School 🎩</h1>
+        <h1>Школа Фокусов Pro 🃏</h1>
     </header>
 
     <main>
         <section id="course-selection">
-            <h2>✨ Выберите свой волшебный набор! ✨</h2>
+            <h2>✨ Выберите свой набор трюков! ✨</h2>
             <div class="course-grid">
                 <div class="course-card" data-id="set_75">
-                    <span class="card-icon">🃏</span>
-                    <h3>75 Фокусов (База)</h3>
-                    <p>Стань настоящим мастером магии!</p>
+                    <span class="card-icon">📚</span>
+                    <h3>75 Трюков (База)</h3>
+                    <p>Стань настоящим мастером иллюзий!</p>
                 </div>
                 <div class="course-card" data-id="set_blue">
                     <span class="card-icon">🔵</span>
-                    <h3>10 Фокусов (Синий)</h3>
-                    <p>Для фокусов с водой и льдом.</p>
+                    <h3>10 Взрывных Фокусов</h3>
+                    <p>Трюки с платками, картами и купюрами.</p>
                 </div>
                 <div class="course-card" data-id="set_red">
                     <span class="card-icon">🔴</span>
-                    <h3>10 Фокусов (Красный)</h3>
-                    <p>Огненная магия и исчезновения.</p>
+                    <h3>10 Взрывных Фокусов</h3>
+                    <p>С кольцами, цепочками и шариками.</p>
                 </div>
                 <div class="course-card" data-id="set_yellow">
                     <span class="card-icon">🟡</span>
-                    <h3>10 Фокусов (Желтый)</h3>
-                    <p>Солнечные трюки и свет.</p>
+                    <h3>10 Взрывных Фокусов</h3>
+                    <p>Трюки с резинками и предметами.</p>
                 </div>
                 <div class="course-card" data-id="set_green">
                     <span class="card-icon">🟢</span>
-                    <h3>10 Фокусов (Зеленый)</h3>
-                    <p>Лесная магия и растения.</p>
+                    <h3>10 Взрывных Фокусов</h3>
+                    <p>Фокусы с тростью и использованием рук.</p>
                 </div>
             </div>
         </section>
 
-        <section id="lesson-page" class="hidden">
-            <button id="back-button" onclick="showCourseSelection()">
+        <section id="lesson-list-view" class="hidden">
+            <button class="back-button" onclick="showCourseSelection()">
                 &larr; Назад к выбору наборов
             </button>
-            <h2 id="lesson-page-title">Набор:</h2>
+            <h2 id="lesson-list-title">Набор:</h2>
 
             <ul id="lesson-list">
-                </ul>
+            </ul>
+        </section>
 
-            <div id="video-area" class="hidden">
-                <p style="margin-top: 20px; font-weight: 700;">Смотрим урок: <span id="current-lesson-name" style="color: var(--accent-color);"></span></p>
-                <div class="video-player-container-kinescope">
-                    <iframe 
-                        id="kinescope-player"
-                        src="" 
-                        allow="autoplay; fullscreen; picture-in-picture; encrypted-media; gyroscope; accelerometer; clipboard-write; screen-wake-lock;" 
-                        frameborder="0" 
-                        allowfullscreen>
-                    </iframe>
-                </div>
+        <section id="video-player-view" class="hidden">
+            <button class="back-button" onclick="goBackToLessonList()">
+                &larr; Назад к списку уроков
+            </button>
+            
+            <p style="margin-top: 20px; font-weight: 700;">Смотрим урок: <span id="current-lesson-name" style="color: var(--accent-color);"></span></p>
+            <div class="video-player-container-kinescope">
+                <iframe 
+                    id="kinescope-player"
+                    src="" 
+                    allow="autoplay; fullscreen; picture-in-picture; encrypted-media; gyroscope; accelerometer; clipboard-write; screen-wake-lock;" 
+                    frameborder="0" 
+                    allowfullscreen>
+                </iframe>
             </div>
         </section>
     </main>
 
     <script>
-        // 1. ДАННЫЕ О КУРСАХ
-        const DEFAULT_KINESCOPE_ID = 'mQEuZrksxN6CtvCggyoCj8'; // Ваш общий ID
+        // 1. ДАННЫЕ О КУРСАХ И ID
+        const DEFAULT_KINESCOPE_ID = 'mQEuZrksxN6CtvCggyoCj8'; 
 
-        // ВСЕ УНИКАЛЬНЫЕ ID (77 ШТ.), ПРЕДОСТАВЛЕННЫЕ ПОСЛЕДОВАТЕЛЬНО:
+        // ВСЕ УНИКАЛЬНЫЕ ID (77 ШТ.)
         const fullLessonIDs = [
-            'jpcpPJFxh4HW6Y1D9hHjoL', // 1. О наборе
-            'k1JaAhww3pHUX1kTXSpZrS', // 2. Фокус с волшебной палочкой и горшочком
-            'kPfMYDT72KwJZiCaSjLZVf', // 3. Фокус с волшебной палочкой и сердечком №1
-            'mM5cJcqFQExpJJLdHLeu9F', // 4. Фокус с волшебной палочкой №1
-            'hqmJ7SV2o8t7Wc8kwhCUo6', // 5. Фокус с волшебной палочкой и сердечком №2
-            'xve7TxMQPXS4oQdtVxoUHA', // 6. Фокус с волшебной палочкой №2
-            '6XmcciytVD2jKAaqczNuZF', // 7. Фокус с волшебной палочкой №3
-            'iGZz39Su2HQfvWepfd5qwQ', // 8. Фокус с сердечками №1
-            'nusJSraxAkMkd5MmWX5cGw', // 9. Фокус с башенкой с шариком
-            '6SU1iGSa5x2S8eXkMEuJBG', // 10. Фокус с разделителем верёвки
-            'iKGjdCgeabcJXDEjQNNAK8', // 11. Фокус с верёвкой №1
-            '5xKeaaiLFiuXdLb28bbVfT', // 12. Фокус с разноцветными платками
-            '28sD2cfA3UPawSathTuN64', // 13. Фокус с платком и напальчником
-            'gYyruCRJAEJiNTZaYsbad1', // 14. Фокус с сердечками №2
-            '08RWJAGm8LXk1UdRD2pWxL', // 15. Фокус с сердечками №3
-            'jEehUbqXtXxLGHNfyCzsrq', // 16. Фокус с сердечками №4
-            'r1gGTMMWgWGk5Ww8aHV2wn', // 17. Фокус с сердечками №5
-            '96weXMNabgpaQ9pNxG3TY7', // 18. Фокус с числовыми картами
-            '2vt9UQyUuWGt4sZZLANxbr', // 19. Фокус с баночкой с кубиками
-            'ti4JcS84xo3hW4NXsuoCYA', // 20. Фокус с игральным кубиком
-            'tkJUsUoXsmjeKawiSAfYYn', // 21. Фокус с двойными картами
-            '8aDSJ5BAvkgjudrNJqzFq5', // 22. Фокус с картой со створкой
-            'nRZJ6Kdj8qLSpkzkEhLJCF', // 23. Фокус со сложенной купюрой
-            'eJU4jJANwowgwRyeDeqPvE', // 24. Фокус с картой и купюрой
-            't2JEg9qj1WFsMPbhCuQ2Xo', // 25. Фокус с купюрой
-            '2uAfH9TqBSwBuaTQC14WyS', // 26. Фокус с купюрой со скрепками
-            'akrZp6rNfkZXrzmrk5rLWz', // 27. Фокус со скрепками
-            'bQYvim6wrhBwQLUnMhPtpN', // 28. Фокус со стаканами и шариками
-            'b7WySegBP8YkUcEwQ32Efp', // 29. Фокус с кольцом и цепочкой
-            's87JMNTs8xbxfTjtA6DVTw', // 30. Фокус с монеткой №1
-            'bMhC6r9fNUZxyUrvobuwW6', // 31. Фокус с резинкой и скрепкой №1
-            'tWcs2E99XBHADSCf2Tqwv8', // 32. Фокус с резинкой и скрепкой №2
-            'eMonpTCdcKPdmrhxRvKYdu', // 33. Фокус с резинками №1
-            'vFvEzxfs6kModJbr54FNBS', // 34. Фокус с резинками №2
-            'jHkEc7yG8zzFJHVa8sVuG9', // 35. Фокус с резинками и купюрой
-            '7igUgoFy146g2tBucd5Fb8', // 36. Фокус с резинкой и купюрой
-            'gwdrB9BTW6DuVq1cq48E73', // 37. Фокус с резинкой
-            'dPPTunNESfWfnX15j8Vbiu', // 38. Фокус с резинками №3
-            'ig5N4nXsGTTP1RAwcAEcSy', // 39. Фокус с резинками №4
-            'o5U8BEV3T6AMW4xJntHaJr', // 40. Фокус с резинками №5
-            'cmKjSwWfHdfytPRNvPRpCw', // 41. Фокус с картой с леской и спичкой
-            'uZmrePV1oo3f3pKptu75J2', // 42. Фокус с верёвкой и спичечным коробком
-            '8VEK2Xt6WisK1ySW781Hfv', // 43. Фокус со спичечным коробком №1
-            'gXJeau3WGQMCzHe3Wuoc3A', // 44. Три загадки со спичками
-            '7a5fGzu4u7hp5r8ZFYEc3M', // 45. Фокус со спичкой №1
-            'hJkZjbQhJ2HWg4gehq5qga', // 46. Фокус со спичкой №2
-            '9wEgBi4MfeGMdHFXcTEWi6', // 47. Фокус со спичечным коробком №2
-            '9WXoWVDwj2wTUFwurNXM1u', // 48. Фокус со спичечным коробком и воздушным шариком
-            'gJ6iQcfUjfcnMznVxo2vRj', // 49. Фокус с воздушным шариком
-            '4Wy11DZkeswybVRzRLGEzJ', // 50. Фокус с монеткой и стаканом №1
-            '5uPNcWckVwjmeYHWStnd8Y', // 51. Фокус с монеткой №2
-            'uV3KfKjTREzfs2V5qVq64w', // 52. Фокус с монеткой и стаканом №2
-            'izXRD8iR4NG2EjJmKYQQoP', // 53. Фокус с карандашом №1
-            'eRVnXbG1n8C2k4f7VQzUe8', // 54. Фокус с волшебной палочкой №4
-            'uDCfpW9XPPLTPdbEjP3gwK', // 55. Фокус с разноцветными предметами
-            'eVF5juQSvBy2aaN5yW216A', // 56. Фокус со стаканами и предсказанием №1
-            'dHbunwLinxFmB1LBU8hkMh', // 57. Фокус со стаканами и предсказанием №2
-            '0svSSpnxeYE5d6BiJM4un5', // 58. Фокус с использованием рук №1
-            'gLVzD5h6qQAPPrgxfww3Fs', // 59. Фокус с использованием рук №2
-            'tgw2iqKswKrf8As1T1jgqd', // 60. Фокус со стаканом с жидкостью
-            'qDv1cRdwcRJgNCXa6mj8ZC', // 61. Фокус с напальчником
-            'tnUdotVehaxeYRgiKiod8e', // 62. Фокус с использованием пальцев №1
-            'iXSgu2Enr8RSWPbWxr1enr', // 63. Фокус с использованием пальцев №2
-            'ft5RbmsZmN3BqB9RtoAPVH', // 64. Фокус с использованием пальцев №3
-            'bh4XHc29jDLcxpb99wk9LB', // 65. Фокус с использованием пальцев №4
-            'e6X1Cs3zmsHzLY33MMwz8N', // 66. Фокус с использованием пальцев №5
-            'pgpNvTxQ1FLLP9FM5roxoL', // 67. Фокус с листом бумаги
-            '9jhMogSF59a48Xy7Q8Xm7X', // 68. Три способа достать купюру из-под бутылки
-            'fUA3qWb8qTnTvwbomeDogJ', // 69. Фокус с верёвкой №2
-            'qHoLDuyGh55BjM7nu4NvhN', // 70. Фокус с карандашом №2
-            'u4ac45TBvaaGHSkPPbJqPF', // 71. Фокус с использованием пальцев №6
-            '2quUkxPBwwEjMc8iY46e8K', // 72. Фокус с монеткой №3
-            'cyCtHcuLRu2RE8PMKkRTGw', // 73. Фокус с иллюзией левитации
-            '8zLeoK8uM6V8t5LF7SGL22', // 74. Фокус с вопросами
-            'oShURD5ZQHudFUeoiYyk39', // 75. Фокус с числами
-            '82M4ZLgH1azym4RTPKif3z', // 76. Фокус с кольцом
-            'dihwkyDyTUcF3qTgN4AbS9', // 77. Советы от Романа Magic.
+            'jpcpPJFxh4HW6Y1D9hHjoL', 'k1JaAhww3pHUX1kTXSpZrS', 'kPfMYDT72KwJZiCaSjLZVf', 'mM5cJcqFQExpJJLdHLeu9F', 'hqmJ7SV2o8t7Wc8kwhCUo6', 'xve7TxMQPXS4oQdtVxoUHA', '6XmcciytVD2jKAaqczNuZF', 'iGZz39Su2HQfvWepfd5qwQ', 'nusJSraxAkMkd5MmWX5cGw', '6SU1iGSa5x2S8eXkMEuJBG', 'iKGjdCgeabcJXDEjQNNAK8', '5xKeaaiLFiuXdLb28bbVfT', '28sD2cfA3UPawSathTuN64', 'gYyruCRJAEJiNTZaYsbad1', '08RWJAGm8LXk1UdRD2pWxL', 'jEehUbqXtXxLGHNfyCzsrq', 'r1gGTMMWgWGk5Ww8aHV2wn', '96weXMNabgpaQ9pNxG3TY7', '2vt9UQyUuWGt4sZZLANxbr', 'ti4JcS84xo3hW4NXsuoCYA', 'tkJUsUoXsmjeKawiSAfYYn', '8aDSJ5BAvkgjudrNJqzFq5', 'nRZJ6Kdj8qLSpkzkEhLJCF', 'eJU4jJANwowgwRyeDeqPvE', 't2JEg9qj1WFsMPbhCuQ2Xo', '2uAfH9TqBSwBuaTQC14WyS', 'akrZp6rNfkZXrzmrk5rLWz', 'bQYvim6wrhBwQLUnMhPtpN', 'b7WySegBP8YkUcEwQ32Efp', 's87JMNTs8xbxfTjtA6DVTw', 'bMhC6r9fNUZxyUrvobuwW6', 'tWcs2E99XBHADSCf2Tqwv8', 'eMonpTCdcKPdmrhxRvKYdu', 'vFvEzxfs6kModJbr54FNBS', 'jHkEc7yG8zzFJHVa8sVuG9', '7igUgoFy146g2tBucd5Fb8', 'gwdrB9BTW6DuVq1cq48E73', 'dPPTunNESfWfnX15j8Vbiu', 'ig5N4nXsGTTP1RAwcAEcSy', 'o5U8BEV3T6AMW4xJntHaJr', 'cmKjSwWfHdfytPRNvPRpCw', 'uZmrePV1oo3f3pKptu75J2', '8VEK2Xt6WisK1ySW781Hfv', 'gXJeau3WGQMCzHe3Wuoc3A', '7a5fGzu4u7hp5r8ZFYEc3M', 'hJkZjbQhJ2HWg4gehq5qga', '9wEgBi4MfeGMdHFXcTEWi6', '9WXoWVDwj2wTUFwurNXM1u', 'gJ6iQcfUjfcnMznVxo2vRj', '4Wy11DZkeswybVRzRLGEzJ', '5uPNcWckVwjmeYHWStnd8Y', 'uV3KfKjTREzfs2V5qVq64w', 'izXRD8iR4NG2EjJmKYQQoP', 'eRVnXbG1n8C2k4f7VQzUe8', 'uDCfpW9XPPLTPdbEjP3gwK', 'eVF5juQSvBy2aaN5yW216A', 'dHbunwLinxFmB1LBU8hkMh', '0svSSpnxeYE5d6BiJM4un5', 'gLVzD5h6qQAPPrgxfww3Fs', 'tgw2iqKswKrf8As1T1jgqd', 'qDv1cRdwcRJgNCXa6mj8ZC', 'tnUdotVehaxeYRgiKiod8e', 'iXSgu2Enr8RSWPbWxr1enr', 'ft5RbmsZmN3BqB9RtoAPVH', 'bh4XHc29jDLcxpb99wk9LB', 'e6X1Cs3zmsHzLY33MMwz8N', 'pgpNvTxQ1FLLP9FM5roxoL', '9jhMogSF59a48Xy7Q8Xm7X', 'fUA3qWb8qTnTvwbomeDogJ', 'qHoLDuyGh55BjM7nu4NvhN', 'u4ac45TBvaaGHSkPPbJqPF', '2quUkxPBwwEjMc8iY46e8K', 'cyCtHcuLRu2RE8PMKkRTGw', '8zLeoK8uM6V8t5LF7SGL22', 'oShURD5ZQHudFUeoiYyk39', '82M4ZLgH1azym4RTPKif3z', 'dihwkyDyTUcF3qTgN4AbS9',
         ];
 
-        // Список уроков для набора "75 Фокусов"
+        // Обновленные имена уроков (77 шт.), без "волшебный/магия"
         const fullLessonNames = [
             'О наборе',
-            'Фокус с волшебной палочкой и горшочком',
-            'Фокус с волшебной палочкой и сердечком №1',
-            'Фокус с волшебной палочкой №1',
-            'Фокус с волшебной палочкой и сердечком №2',
-            'Фокус с волшебной палочкой №2',
-            'Фокус с волшебной палочкой №3',
+            'Фокус с палочкой и горшочком', 
+            'Фокус с палочкой и сердечком №1', 
+            'Фокус с палочкой №1', 
+            'Фокус с палочкой и сердечком №2', 
+            'Фокус с палочкой №2', 
+            'Фокус с палочкой №3', 
             'Фокус с сердечками №1',
             'Фокус с башенкой с шариком',
             'Фокус с разделителем верёвки',
@@ -410,7 +337,7 @@
             'Фокус с монеткой №2',
             'Фокус с монеткой и стаканом №2',
             'Фокус с карандашом №1',
-            'Фокус с волшебной палочкой №4',
+            'Фокус с палочкой №4', 
             'Фокус с разноцветными предметами',
             'Фокус со стаканами и предсказанием №1',
             'Фокус со стаканами и предсказанием №2',
@@ -433,79 +360,159 @@
             'Фокус с вопросами',
             'Фокус с числами',
             'Фокус с кольцом',
-            'Советы от Романа Magic.'
+            'Советы от Романа Про.'
         ];
         
-        // Создаем массив уроков с уникальными ID
+        // Массив уроков для "75 Трюков (База)"
         const fullLessons = fullLessonNames.map((name, index) => {
             const id = fullLessonIDs[index];
             return {
                 name: name,
-                duration: '1:30', // Установлено среднее время для демо
+                duration: '1:30',
                 videoId: id
             };
         });
 
-        // Массив уроков для набора 'Синий' (будет переиспользован для Красного, Желтого, Зеленого)
+        // Набор "10 взрывных фокусов" (Желтый)
+        const yellowLessons = [
+            { name: 'Фокус с разделителем верёвки', duration: '1:30', videoId: DEFAULT_KINESCOPE_ID },
+            { name: 'Фокус с разноцветными платками', duration: '1:30', videoId: DEFAULT_KINESCOPE_ID },
+            { name: 'Фокус с баночкой с кубиками', duration: '1:30', videoId: DEFAULT_KINESCOPE_ID },
+            { name: 'Фокус с купюрой со скрепками', duration: '1:30', videoId: DEFAULT_KINESCOPE_ID },
+            { name: 'Фокус с карточкой клоуна', duration: '1:30', videoId: DEFAULT_KINESCOPE_ID },
+            { name: 'Фокус с резинкой №1', duration: '1:30', videoId: DEFAULT_KINESCOPE_ID },
+            { name: 'Фокус с резинками №1', duration: '1:30', videoId: DEFAULT_KINESCOPE_ID },
+            { name: 'Фокус с калькулятором', duration: '1:30', videoId: DEFAULT_KINESCOPE_ID },
+            { name: 'Фокус с резинкой №2', duration: '1:30', videoId: DEFAULT_KINESCOPE_ID },
+            { name: 'Фокус с резинками №2', duration: '1:30', videoId: DEFAULT_KINESCOPE_ID },
+        ];
+
+        // Набор "10 взрывных фокусов" (Зеленый)
+        const greenLessons = [
+            { name: 'Фокус со стаканами и шариками', duration: '1:30', videoId: DEFAULT_KINESCOPE_ID },
+            { name: 'Фокус с картой с леской и спичкой', duration: '1:30', videoId: DEFAULT_KINESCOPE_ID },
+            { name: 'Фокус с печеньем', duration: '1:30', videoId: DEFAULT_KINESCOPE_ID },
+            { name: 'Фокус с тростью', duration: '1:30', videoId: DEFAULT_KINESCOPE_ID }, 
+            { name: 'Фокус с карточкой сердечка', duration: '1:30', videoId: DEFAULT_KINESCOPE_ID },
+            { name: 'Фокус с резинкой №1', duration: '1:30', videoId: DEFAULT_KINESCOPE_ID },
+            { name: 'Фокус с резинками №1', duration: '1:30', videoId: DEFAULT_KINESCOPE_ID },
+            { name: 'Фокус с резинками №2', duration: '1:30', videoId: DEFAULT_KINESCOPE_ID },
+            { name: 'Фокус с резинкой №2', duration: '1:30', videoId: DEFAULT_KINESCOPE_ID },
+            { name: 'Фокус с использованием рук', duration: '1:30', videoId: DEFAULT_KINESCOPE_ID },
+            { name: 'Фокус с калькулятором', duration: '1:30', videoId: DEFAULT_KINESCOPE_ID },
+        ];
+
+        // Набор "10 взрывных фокусов" (Синий)
         const blueLessons = [
-            { name: '1. Трюк с синей картой', duration: '1:30', videoId: DEFAULT_KINESCOPE_ID },
-            { name: '2. Основы веера', duration: '2:00', videoId: DEFAULT_KINESCOPE_ID },
-            { name: '3. Синий огонь', duration: '1:10', videoId: DEFAULT_KINESCOPE_ID },
-            { name: '4. Водный шар', duration: '1:40', videoId: DEFAULT_KINESCOPE_ID },
-            { name: '5. Исчезающая вода', duration: '1:50', videoId: DEFAULT_KINESCOPE_ID },
-            { name: '6. Синий шелк', duration: '1:25', videoId: DEFAULT_KINESCOPE_ID },
-            { name: '7. Фокус с монетой и водой', duration: '1:35', videoId: DEFAULT_KINESCOPE_ID },
-            { name: '8. Синяя резинка', duration: '1:05', videoId: DEFAULT_KINESCOPE_ID },
-            { name: '9. Синий карандаш', duration: '1:15', videoId: DEFAULT_KINESCOPE_ID },
-            { name: '10. Загадка с синим кубиком', duration: '2:10', videoId: DEFAULT_KINESCOPE_ID },
+            { name: 'Фокус с башенкой с шариком', duration: '1:30', videoId: DEFAULT_KINESCOPE_ID },
+            { name: 'Фокус с платком и напальчником', duration: '1:30', videoId: DEFAULT_KINESCOPE_ID },
+            { name: 'Фокус с двойными картами', duration: '1:30', videoId: DEFAULT_KINESCOPE_ID },
+            { name: 'Фокус с карточкой “Дай пять”', duration: '1:30', videoId: DEFAULT_KINESCOPE_ID },
+            { name: 'Фокус с колодой в футляре', duration: '1:30', videoId: DEFAULT_KINESCOPE_ID },
+            { name: 'Фокус с купюрой и бумажкой №1', duration: '1:30', videoId: DEFAULT_KINESCOPE_ID },
+            { name: 'Фокус с купюрой и бумажкой №2', duration: '1:30', videoId: DEFAULT_KINESCOPE_ID },
+            { name: 'Фокус с резинкой №1', duration: '1:30', videoId: DEFAULT_KINESCOPE_ID },
+            { name: 'Фокус с использованием рук', duration: '1:30', videoId: DEFAULT_KINESCOPE_ID },
+            { name: 'Фокус с резинкой №2', duration: '1:30', videoId: DEFAULT_KINESCOPE_ID },
+            { name: 'Фокус с резинкой №3', duration: '1:30', videoId: DEFAULT_KINESCOPE_ID },
+        ];
+
+        // Набор "10 взрывных фокусов" (Красный)
+        const redLessons = [
+            { name: 'Фокус с числовыми картами', duration: '1:30', videoId: DEFAULT_KINESCOPE_ID },
+            { name: 'Фокус с кольцом и цепочкой', duration: '1:30', videoId: DEFAULT_KINESCOPE_ID },
+            { name: 'Фокус с кошельком с картами', duration: '1:30', videoId: DEFAULT_KINESCOPE_ID },
+            { name: 'Фокус с баночкой с кубиком', duration: '1:30', videoId: DEFAULT_KINESCOPE_ID },
+            { name: 'Фокус с поролоновыми шариками и кубиком №1', duration: '1:30', videoId: DEFAULT_KINESCOPE_ID },
+            { name: 'Фокус с поролоновыми шариками №1', duration: '1:30', videoId: DEFAULT_KINESCOPE_ID },
+            { name: 'Фокус с поролоновыми шариками №2', duration: '1:30', videoId: DEFAULT_KINESCOPE_ID },
+            { name: 'Фокус с поролоновыми шариками №3', duration: '1:30', videoId: DEFAULT_KINESCOPE_ID },
+            { name: 'Фокус с поролоновыми шариками и кубиком №2', duration: '1:30', videoId: DEFAULT_KINESCOPE_ID },
+            { name: 'Фокус с выбором предмета', duration: '1:30', videoId: DEFAULT_KINESCOPE_ID },
+            { name: 'Фокус с резинками', duration: '1:30', videoId: DEFAULT_KINESCOPE_ID },
+            { name: 'Фокус с резинками и прищепкой', duration: '1:30', videoId: DEFAULT_KINESCOPE_ID },
+            { name: 'Фокус с кольцом и монеткой', duration: '1:30', videoId: DEFAULT_KINESCOPE_ID },
+            { name: 'Фокус с резинками', duration: '1:30', videoId: DEFAULT_KINESCOPE_ID },
         ];
 
 
         const courses = {
-            set_75: { title: '75 Фокусов (База)', lessons: fullLessons },
-            set_blue: { title: '10 Фокусов (Синий)', lessons: blueLessons },
-            set_red: { title: '10 Фокусов (Красный)', lessons: blueLessons }, 
-            set_yellow: { title: '10 Фокусов (Желтый)', lessons: blueLessons },
-            set_green: { title: '10 Фокусов (Зеленый)', lessons: blueLessons },
+            set_75: { title: '75 Трюков (База)', lessons: fullLessons },
+            set_blue: { title: '10 Взрывных Фокусов (Синий)', lessons: blueLessons },
+            set_red: { title: '10 Взрывных Фокусов (Красный)', lessons: redLessons }, 
+            set_yellow: { title: '10 Взрывных Фокусов (Желтый)', lessons: yellowLessons },
+            set_green: { title: '10 Взрывных Фокусов (Зеленый)', lessons: greenLessons },
         };
 
-        // 2. ФУНКЦИИ ПЕРЕКЛЮЧЕНИЯ СТРАНИЦ
+        // 2. ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ И НАВИГАЦИЯ
         let courseSelectionPage;
-        let lessonPage;
-        let videoArea;
+        let lessonListView;
+        let videoPlayerView;
         let lessonList;
-        let lessonPageTitle;
+        let lessonListTitle;
         let currentLessonNameDisplay;
         let kinescopePlayer;
+        let currentCourseId = null; // Храним текущий набор для возврата
 
         // Инициализация элементов DOM
         function initializeDOMElements() {
             courseSelectionPage = document.getElementById('course-selection');
-            lessonPage = document.getElementById('lesson-page');
-            videoArea = document.getElementById('video-area');
+            lessonListView = document.getElementById('lesson-list-view');
+            videoPlayerView = document.getElementById('video-player-view');
             lessonList = document.getElementById('lesson-list');
-            lessonPageTitle = document.getElementById('lesson-page-title');
+            lessonListTitle = document.getElementById('lesson-list-title');
             currentLessonNameDisplay = document.getElementById('current-lesson-name');
             kinescopePlayer = document.getElementById('kinescope-player');
         }
 
+        // 1. Показать главную страницу
         function showCourseSelection() {
             courseSelectionPage.classList.remove('hidden');
-            lessonPage.classList.add('hidden');
-            videoArea.classList.add('hidden'); 
+            lessonListView.classList.add('hidden');
+            videoPlayerView.classList.add('hidden'); 
         }
 
-        function showLessonPage(courseId) {
+        // 2. Показать список уроков для набора
+        function showLessonList(courseId) {
+            currentCourseId = courseId; // Сохраняем ID
             courseSelectionPage.classList.add('hidden');
-            lessonPage.classList.remove('hidden');
-            videoArea.classList.add('hidden'); 
+            lessonListView.classList.remove('hidden');
+            videoPlayerView.classList.add('hidden'); 
             
-            kinescopePlayer.src = ''; 
-
             const course = courses[courseId];
-            lessonPageTitle.textContent = `Набор: ${course.title}`;
+            lessonListTitle.textContent = `Набор: ${course.title}`;
             renderLessonList(course);
         }
+
+        // 3. Показать видеоурок
+        function playLesson(lesson, clickedElement) {
+            // Сброс активного класса и установка нового
+            document.querySelectorAll('.lesson-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            clickedElement.classList.add('active');
+
+            lessonListView.classList.add('hidden');
+            videoPlayerView.classList.remove('hidden');
+
+            currentLessonNameDisplay.textContent = lesson.name;
+            
+            // Загрузка видео
+            kinescopePlayer.src = `https://kinescope.io/embed/${lesson.videoId}`;
+            
+            // Прокрутка к началу видео (актуально для мобильных)
+            videoPlayerView.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // 4. Вернуться к списку уроков
+        function goBackToLessonList() {
+            if (currentCourseId) {
+                showLessonList(currentCourseId);
+            } else {
+                showCourseSelection();
+            }
+        }
+
 
         function renderLessonList(course) {
             lessonList.innerHTML = '';
@@ -526,21 +533,7 @@
             });
         }
 
-        function playLesson(lesson, clickedElement) {
-            document.querySelectorAll('.lesson-item').forEach(item => {
-                item.classList.remove('active');
-            });
-            clickedElement.classList.add('active');
-
-            videoArea.classList.remove('hidden');
-            currentLessonNameDisplay.textContent = lesson.name;
-            
-            kinescopePlayer.src = `https://kinescope.io/embed/${lesson.videoId}`;
-            
-            videoArea.scrollIntoView({ behavior: 'smooth' });
-        }
-
-        // 3. ИНИЦИАЛИЗАЦИЯ (Запуск при загрузке страницы)
+        // 3. ИНИЦИАЛИЗАЦИЯ
         document.addEventListener('DOMContentLoaded', () => {
             initializeDOMElements(); 
             
@@ -550,7 +543,7 @@
             courseCards.forEach(card => {
                 card.addEventListener('click', (event) => {
                     const courseId = event.currentTarget.getAttribute('data-id');
-                    showLessonPage(courseId);
+                    showLessonList(courseId);
                 });
             });
             
