@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Школа Фокусов Романа Magic | Детские Трюки</title>
+    <title>Школа Фокусов "Pro" | Детские Трюки</title>
     <link href="https://fonts.googleapis.com/css2?family=Bungee+Inline&family=Rubik+Marker+Hatch&family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         /* Общие стили и анимации */
@@ -55,7 +55,7 @@
         main {
             padding: 30px;
             flex-grow: 1;
-            max-width: 800px; /* Уменьшаем для фокусировки на контенте */
+            max-width: 800px;
             width: 100%;
             margin: 0 auto;
         }
@@ -86,7 +86,7 @@
             transition: all 0.3s ease;
             animation: cardPop 0.5s ease-out;
             border-bottom: 8px solid var(--primary-color);
-            display: flex; /* Для выравнивания содержимого */
+            display: flex;
             flex-direction: column;
             justify-content: space-between;
         }
@@ -102,7 +102,7 @@
             color: var(--primary-color);
             margin-top: 10px;
             margin-bottom: 5px;
-            min-height: 2.5em; /* Обеспечиваем одинаковую высоту заголовков */
+            min-height: 2.5em;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -110,7 +110,7 @@
         
         .course-card p {
             color: #7f8c8d;
-            margin-top: auto; /* Прижимает параграф к низу, если заголовок короче */
+            margin-top: auto;
         }
 
         /* Стили для изображений в карточках */
@@ -118,18 +118,17 @@
             width: 100%;
             border-radius: 10px;
             margin-bottom: 10px;
-            object-fit: cover; /* Обрезает изображение, чтобы оно заполняло контейнер */
-            aspect-ratio: 16 / 9; /* Сохраняет пропорции 16:9 */
-            display: block; /* Убираем лишние отступы */
+            object-fit: cover;
+            aspect-ratio: 16 / 9;
+            display: block;
         }
-        /* Стили для иконки 75 трюков */
         .card-icon {
             font-size: 3em;
             display: block;
             margin-bottom: 10px;
         }
 
-        /* Стили для страницы списка уроков */
+        /* Стили для списка уроков */
         #lesson-list-view h2 {
             font-family: 'Rubik Marker Hatch', cursive;
             color: var(--primary-color);
@@ -167,7 +166,21 @@
             background-color: #ffe8e8;
         }
         
-        /* СКРЫВАЕМ ВРЕМЯ - оно больше не нужно */
+        /* Превью в списке уроков */
+        .lesson-item-preview {
+            width: 60px;
+            height: 40px;
+            margin-right: 15px;
+            border-radius: 5px;
+            object-fit: cover;
+            flex-shrink: 0; /* Не сжимать изображение */
+        }
+        
+        .lesson-item span {
+            flex-grow: 1;
+        }
+
+        /* СКРЫВАЕМ ВРЕМЯ */
         .lesson-item .duration {
             display: none; 
         }
@@ -188,7 +201,7 @@
             background-color: #2980b9;
         }
 
-        /* Видео-плеер Kinescope */
+        /* Видео-плеер и его Превью */
         .video-player-container-kinescope {
             margin-top: 30px;
             margin-bottom: 30px;
@@ -202,13 +215,25 @@
 
         .video-player-container-kinescope iframe {
             position: absolute;
-            width: 100%;
-            height: 100%;
             top: 0;
             left: 0;
+            width: 100%;
+            height: 100%;
             border: none;
+            z-index: 2; /* Над превью */
         }
 
+        /* Стиль для большого превью, которое показывается, пока видео не запущено */
+        .video-thumbnail-large {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 1; /* Под iframe */
+        }
+        
         /* Скрыть элементы по умолчанию */
         .hidden {
             display: none !important;
@@ -226,7 +251,7 @@
 <body>
 
     <header>
-        <h1>Школа Фокусов Романа magic 🃏</h1>
+        <h1>Школа Фокусов Pro 🃏</h1>
     </header>
 
     <main>
@@ -285,6 +310,7 @@
                     frameborder="0" 
                     allowfullscreen>
                 </iframe>
+                <img id="video-thumbnail-large" class="video-thumbnail-large" src="" alt="Превью урока">
             </div>
         </section>
     </main>
@@ -292,8 +318,9 @@
     <script>
         // 1. ДАННЫЕ О КУРСАХ И ID
         const DEFAULT_KINESCOPE_ID = 'mQEuZrksxN6CtvCggyoCj8'; // Ваш общий ID
+        const IMAGE_BASE_URL = 'images/';
 
-        // ВСЕ УНИКАЛЬНЫЕ ID (77 ШТ.)
+        // --- ID's ---
         const fullLessonIDs = [
             'jpcpPJFxh4HW6Y1D9hHjoL', 'k1JaAhww3pHUX1kTXSpZrS', 'kPfMYDT72KwJZiCaSjLZVf', 'mM5cJcqFQExpJJLdHLeu9F', 'hqmJ7SV2o8t7Wc8kwhCUo6', 'xve7TxMQPXS4oQdtVxoUHA', '6XmcciytVD2jKAaqczNuZF', 'iGZz39Su2HQfvWepfd5qwQ', 'nusJSraxAkMkd5MmWX5cGw', '6SU1iGSa5x2S8eXkMEuJBG', 'iKGjdCgeabcJXDEjQNNAK8', '5xKeaaiLFiuXdLb28bbVfT', '28sD2cfA3UPawSathTuN64', 'gYyruCRJAEJiNTZaYsbad1', '08RWJAGm8LXk1UdRD2pWxL', 'jEehUbqXtXxLGHNfyCzsrq', 'r1gGTMMWgWGk5Ww8aHV2wn', '96weXMNabgpaQ9pNxG3TY7', '2vt9UQyUuWGt4sZZLANxbr', 'ti4JcS84xo3hW4NXsuoCYA', 'tkJUsUoXsmjeKawiSAfYYn', '8aDSJ5BAvkgjudrNJqzFq5', 'nRZJ6Kdj8qLSpkzkEhLJCF', 'eJU4jJANwowgwRyeDeqPvE', 't2JEg9qj1WFsMPbhCuQ2Xo', '2uAfH9TqBSwBuaTQC14WyS', 'akrZp6rNfkZXrzmrk5rLWz', 'bQYvim6wrhBwQLUnMhPtpN', 'b7WySegBP8YkUcEwQ32Efp', 's87JMNTs8xbxfTjtA6DVTw', 'bMhC6r9fNUZxyUrvobuwW6', 'tWcs2E99XBHADSCf2Tqwv8', 'eMonpTCdcKPdmrhxRvKYdu', 'vFvEzxfs6kModJbr54FNBS', 'jHkEc7yG8zzFJHVa8sVuG9', '7igUgoFy146g2tBucd5Fb8', 'gwdrB9BTW6DuVq1cq48E73', 'dPPTunNESfWfnX15j8Vbiu', 'ig5N4nXsGTTP1RAwcAEcSy', 'o5U8BEV3T6AMW4xJntHaJr', 'cmKjSwWfHdfytPRNvPRpCw', 'uZmrePV1oo3f3pKptu75J2', '8VEK2Xt6WisK1ySW781Hfv', 'gXJeau3WGQMCzHe3Wuoc3A', '7a5fGzu4u7hp5r8ZFYEc3M', 'hJkZjbQhJ2HWg4gehq5qga', '9wEgBi4MfeGMdHFXcTEWi6', '9WXoWVDwj2wTUFwurNXM1u', 'gJ6iQcfUjfcnMznVxo2vRj', '4Wy11DZkeswybVRzRLGEzJ', '5uPNcWckVwjmeYHWStnd8Y', 'uV3KfKjTREzfs2V5qVq64w', 'izXRD8iR4NG2EjJmKYQQoP', 'eRVnXbG1n8C2k4f7VQzUe8', 'uDCfpW9XPPLTPdbEjP3gwK', 'eVF5juQSvBy2aaN5yW216A', 'dHbunwLinxFmB1LBU8hkMh', '0svSSpnxeYE5d6BiJM4un5', 'gLVzD5h6qQAPPrgxfww3Fs', 'tgw2iqKswKrf8As1T1jgqd', 'qDv1cRdwcRJgNCXa6mj8ZC', 'tnUdotVehaxeYRgiKiod8e', 'iXSgu2Enr8RSWPbWxr1enr', 'ft5RbmsZmN3BqB9RtoAPVH', 'bh4XHc29jDLcxpb99wk9LB', 'e6X1Cs3zmsHzLY33MMwz8N', 'pgpNvTxQ1FLLP9FM5roxoL', '9jhMogSF59a48Xy7Q8Xm7X', 'fUA3qWb8qTnTvwbomeDogJ', 'qHoLDuyGh55BjM7nu4NvhN', 'u4ac45TBvaaGHSkPPbJqPF', '2quUkxPBwwEjMc8iY46e8K', 'cyCtHcuLRu2RE8PMKkRTGw', '8zLeoK8uM6V8t5LF7SGL22', 'oShURD5ZQHudFUeoiYyk39', '82M4ZLgH1azym4RTPKif3z', 'dihwkyDyTUcF3qTgN4AbS9',
         ];
@@ -303,87 +330,71 @@
             'О наборе', 'Фокус с палочкой и горшочком', 'Фокус с палочкой и сердечком №1', 'Фокус с палочкой №1', 'Фокус с палочкой и сердечком №2', 'Фокус с палочкой №2', 'Фокус с палочкой №3', 'Фокус с сердечками №1', 'Фокус с башенкой с шариком', 'Фокус с разделителем верёвки', 'Фокус с верёвкой №1', 'Фокус с разноцветными платками', 'Фокус с платком и напальчником', 'Фокус с сердечками №2', 'Фокус с сердечками №3', 'Фокус с сердечками №4', 'Фокус с сердечками №5', 'Фокус с числовыми картами', 'Фокус с баночкой с кубиками', 'Фокус с игральным кубиком', 'Фокус с двойными картами', 'Фокус с картой со створкой', 'Фокус со сложенной купюрой', 'Фокус с картой и купюрой', 'Фокус с купюрой', 'Фокус с купюрой со скрепками', 'Фокус со скрепками', 'Фокус со стаканами и шариками', 'Фокус с кольцом и цепочкой', 'Фокус с монеткой №1', 'Фокус с резинкой и скрепкой №1', 'Фокус с резинкой и скрепкой №2', 'Фокус с резинками №1', 'Фокус с резинками №2', 'Фокус с резинками и купюрой', 'Фокус с резинкой и купюрой', 'Фокус с резинкой', 'Фокус с резинками №3', 'Фокус с резинками №4', 'Фокус с резинками №5', 'Фокус с картой с леской и спичкой', 'Фокус с верёвкой и спичечным коробком', 'Фокус со спичечным коробком №1', 'Три загадки со спичками', 'Фокус со спичкой №1', 'Фокус со спичкой №2', 'Фокус со спичечным коробком №2', 'Фокус со спичечным коробком и воздушным шариком', 'Фокус с воздушным шариком', 'Фокус с монеткой и стаканом №1', 'Фокус с монеткой №2', 'Фокус с монеткой и стаканом №2', 'Фокус с карандашом №1', 'Фокус с палочкой №4', 'Фокус с разноцветными предметами', 'Фокус со стаканами и предсказанием №1', 'Фокус со стаканами и предсказанием №2', 'Фокус с использованием рук №1', 'Фокус с использованием рук №2', 'Фокус со стаканом с жидкостью', 'Фокус с напальчником', 'Фокус с использованием пальцев №1', 'Фокус с использованием пальцев №2', 'Фокус с использованием пальцев №3', 'Фокус с использованием пальцев №4', 'Фокус с использованием пальцев №5', 'Фокус с листом бумаги', 'Три способа достать купюру из-под бутылки', 'Фокус с верёвкой №2', 'Фокус с карандашом №2', 'Фокус с использованием пальцев №6', 'Фокус с монеткой №3', 'Фокус с иллюзией левитации', 'Фокус с вопросами', 'Фокус с числами', 'Фокус с кольцом', 'Советы от Романа Про.'
         ];
         
+        // Функция для генерации пути к файлу 01.webp, 02.webp, ...
+        function getFullPathImage(index) {
+            // index 0 (О наборе) -> 01.webp
+            // index 1 (1 урок) -> 02.webp
+            const num = (index + 1).toString().padStart(2, '0');
+            return `${IMAGE_BASE_URL}${num}.webp`;
+        }
+
         // Массив уроков для "75 Трюков (База)"
         const fullLessons = fullLessonNames.map((name, index) => {
             const id = fullLessonIDs[index];
             return {
                 name: name,
-                duration: '', // Убрано из отображения
-                videoId: id
+                duration: '',
+                videoId: id,
+                imageUrl: getFullPathImage(index)
             };
         });
 
         // -----------------------------------------------------
-        // 11 ВЗРЫВНЫХ ФОКУСОВ (Желтый) - С УНИКАЛЬНЫМИ ID
+        // 11 ВЗРЫВНЫХ ФОКУСОВ (Желтый - set2)
         const yellowIDs = [
-            'rcY7WygGSLmXsvmebLWm9c', 'fTQ7fEV63wKcipkWkTT4bp', 'iSEaRT5NGgGdeNM5GRf789', 
-            'jFkrpw1s8DxZoyWrhtcUkx', 'pSGrrMcbxqvb5MCYBct1yK', 'oRsoi13QbGQfRchJyU62g6', 
-            '5XfziUUYTb3csizx33Yrna', 'meeZ2UQ3CuH4EzkRhzXQgL', '2dcywnsds6xx2q9ryJvsqQ', 
-            'nUaLf7h1oaNKNzN4FpzGSV', 'i3gMK3ZGLivgUEFXYYwRJs'
+            'rcY7WygGSLmXsvmebLWm9c', 'fTQ7fEV63wKcipkWkTT4bp', 'iSEaRT5NGgGdeNM5GRf789', 'jFkrpw1s8DxZoyWrhtcUkx', 'pSGrrMcbxqvb5MCYBct1yK', 'oRsoi13QbGQfRchJyU62g6', '5XfziUUYTb3csizx33Yrna', 'meeZ2UQ3CuH4EzkRhzXQgL', '2dcywnsds6xx2q9ryJvsqQ', 'nUaLf7h1oaNKNzN4FpzGSV', 'i3gMK3ZGLivgUEFXYYwRJs'
         ];
         const yellowNames = [
-            'Фокус с разделителем верёвки', 'Фокус с разноцветными платками', 'Фокус с баночкой с кубиками', 
-            'Фокус с купюрой со скрепками', 'Фокус с карточкой клоуна', 'Фокус с резинкой №1', 
-            'Фокус с резинками №1', 'Фокус с калькулятором', 'Фокус с резинкой №2', 
-            'Фокус с резинками №2', 'Фокус с использованием рук'
+            'Фокус с разделителем верёвки', 'Фокус с разноцветными платками', 'Фокус с баночкой с кубиками', 'Фокус с купюрой со скрепками', 'Фокус с карточкой клоуна', 'Фокус с резинкой №1', 'Фокус с резинками №1', 'Фокус с калькулятором', 'Фокус с резинкой №2', 'Фокус с резинками №2', 'Фокус с использованием рук'
         ];
         const yellowLessons = yellowNames.map((name, index) => ({
-            name: name, duration: '', videoId: yellowIDs[index]
+            name: name, duration: '', videoId: yellowIDs[index], imageUrl: `${IMAGE_BASE_URL}set2/20${index + 1}.png`
         }));
 
 
-        // 14 ВЗРЫВНЫХ ФОКУСОВ (Красный) - С УНИКАЛЬНЫМИ ID
+        // 14 ВЗРЫВНЫХ ФОКУСОВ (Красный - set5)
         const redIDs = [
-            'bfXG4Hsx4GTBdMBZ5pZzhi', 'ftyyJjw3VjGxH1tzLYTKP7', '7iPAvaqagVmLZBrcy4X8Lz', 't16wR5XZbrKMNDcnp18Z8M', 
-            'miNAnu4nrb4xK8f8TotuNE', 'hPf3YbSrDjW9dF8axkfcwB', 'wpTA54NpqsBnxgP7AaVfDP', 'caARKsiZGE37YhB8D8tzsh', 
-            '5KmNyHxdAwcVaQ78prrA3c', 'rm7XU87oa2ELb73ZcAhi4p', '5WuEuHkA257U6c7PaggsCt', 'nx7xVFaGAur1jNBFpMBDQk', 
-            'qPS9PbfmepKXUc2n5Vdhpo', '924XDkp7WDxzcciDSpi9v5'
+            'bfXG4Hsx4GTBdMBZ5pZzhi', 'ftyyJjw3VjGxH1tzLYTKP7', '7iPAvaqagVmLZBrcy4X8Lz', 't16wR5XZbrKMNDcnp18Z8M', 'miNAnu4nrb4xK8f8TotuNE', 'hPf3YbSrDjW9dF8axkfcwB', 'wpTA54NpqsBnxgP7AaVfDP', 'caARKsiZGE37YhB8D8tzsh', '5KmNyHxdAwcVaQ78prrA3c', 'rm7XU87oa2ELb73ZcAhi4p', '5WuEuHkA257U6c7PaggsCt', 'nx7xVFaGAur1jNBFpMBDQk', 'qPS9PbfmepKXUc2n5Vdhpo', '924XDkp7WDxzcciDSpi9v5'
         ];
         const redNames = [
-            'Фокус с числовыми картами', 'Фокус с кольцом и цепочкой', 'Фокус с кошельком с картами', 
-            'Фокус с баночкой с кубиком', 'Фокус с поролоновыми шариками и кубиком №1', 'Фокус с поролоновыми шариками №1', 
-            'Фокус с поролоновыми шариками №2', 'Фокус с поролоновыми шариками №3', 'Фокус с поролоновыми шариками и кубиком №2', 
-            'Фокус с выбором предмета', 'Фокус с резинками', 'Фокус с резинками и прищепкой', 
-            'Фокус с кольцом и монеткой', 'Фокус с резинками'
+            'Фокус с числовыми картами', 'Фокус с кольцом и цепочкой', 'Фокус с кошельком с картами', 'Фокус с баночкой с кубиком', 'Фокус с поролоновыми шариками и кубиком №1', 'Фокус с поролоновыми шариками №1', 'Фокус с поролоновыми шариками №2', 'Фокус с поролоновыми шариками №3', 'Фокус с поролоновыми шариками и кубиком №2', 'Фокус с выбором предмета', 'Фокус с резинками', 'Фокус с резинками и прищепкой', 'Фокус с кольцом и монеткой', 'Фокус с резинками'
         ];
         const redLessons = redNames.map((name, index) => ({
-            name: name, duration: '', videoId: redIDs[index]
+            name: name, duration: '', videoId: redIDs[index], imageUrl: `${IMAGE_BASE_URL}set5/50${index + 1}.png`
         }));
 
 
-        // 11 ВЗРЫВНЫХ ФОКУСОВ (Зеленый) - С УНИКАЛЬНЫМИ ID
+        // 11 ВЗРЫВНЫХ ФОКУСОВ (Зеленый - set3)
         const greenIDs = [
-            'cceLzZjuyBVxNmQbyatUH5', 'dJ9PQDBugVGdPgsRLcg1rL', '9tD5m4EzPt6fmZoFtgqTDd', 
-            'vPx1uUNwNJvrDqkyg22uie', '25MUHvgQjdRv2TasmwVNm4', 'aFwyGv6pPnnjnvCLJoMLwN', 
-            'a7fuyhV3ZzVb8GUbRKDHEE', 'dLjJ38gabh1KUrAceTC2JN', 'nUbEA7Tc15ndtLAt2MJrLP', 
-            'ndqN834L3eZCamxj3p7tYq', 'a3CvBZ4AsM45E6DnXDTGzS'
+            'cceLzZjuyBVxNmQbyatUH5', 'dJ9PQDBugVGdPgsRLcg1rL', '9tD5m4EzPt6fmZoFtgqTDd', 'vPx1uUNwNJvrDqkyg22uie', '25MUHvgQjdRv2TasmwVNm4', 'aFwyGv6pPnnjnvCLJoMLwN', 'a7fuyhV3ZzVb8GUbRKDHEE', 'dLjJ38gabh1KUrAceTC2JN', 'nUbEA7Tc15ndtLAt2MJrLP', 'ndqN834L3eZCamxj3p7tYq', 'a3CvBZ4AsM45E6DnXDTGzS'
         ];
         const greenNames = [
-            'Фокус со стаканами и шариками', 'Фокус с картой с леской и спичкой', 'Фокус с печеньем', 
-            'Фокус с тростью', 'Фокус с карточкой сердечка', 'Фокус с резинкой №1', 
-            'Фокус с резинками №1', 'Фокус с резинками №2', 'Фокус с резинкой №2', 
-            'Фокус с использованием рук', 'Фокус с калькулятором'
+            'Фокус со стаканами и шариками', 'Фокус с картой с леской и спичкой', 'Фокус с печеньем', 'Фокус с тростью', 'Фокус с карточкой сердечка', 'Фокус с резинкой №1', 'Фокус с резинками №1', 'Фокус с резинками №2', 'Фокус с резинкой №2', 'Фокус с использованием рук', 'Фокус с калькулятором'
         ];
         const greenLessons = greenNames.map((name, index) => ({
-            name: name, duration: '', videoId: greenIDs[index]
+            name: name, duration: '', videoId: greenIDs[index], imageUrl: `${IMAGE_BASE_URL}set3/30${index + 1}.png`
         }));
 
 
-        // 11 ВЗРЫВНЫХ ФОКУСОВ (Синий) - С УНИКАЛЬНЫМИ ID
+        // 11 ВЗРЫВНЫХ ФОКУСОВ (Синий - set4)
         const blueIDs = [
-            'cYdXWi5A91HXiwLc84agwd', 'exLWcpZ6ahZgkr96vnmc2v', '5wyNGTH37RVEG6f62DmjjA', 
-            '7qsEnkPgEik9Ha2RVTV3aA', 'eAUycLzgfRb9re2cfAJj5j', 'eBG44bnhNC5QqStJEwTEh6', 
-            'p56ktVWncRiBGDHb8DNhir', 'nQFNcp2nuH1EJMwzWzdkXM', 'uVXaTQW4bpW9ThJwvAxdUz', 
-            'ggXGnauUHE9jDYA8NV9Vsv', 'sdv4oUFrxgwqN4SGmBwGpJ'
+            'cYdXWi5A91HXiwLc84agwd', 'exLWcpZ6ahZgkr96vnmc2v', '5wyNGTH37RVEG6f62DmjjA', '7qsEnkPgEik9Ha2RVTV3aA', 'eAUycLzgfRb9re2cfAJj5j', 'eBG44bnhNC5QqStJEwTEh6', 'p56ktVWncRiBGDHb8DNhir', 'nQFNcp2nuH1EJMwzWzdkXM', 'uVXaTQW4bpW9ThJwvAxdUz', 'ggXGnauUHE9jDYA8NV9Vsv', 'sdv4oUFrxgwqN4SGmBwGpJ'
         ];
         const blueNames = [
-            'Фокус с башенкой с шариком', 'Фокус с платком и напальчником', 'Фокус с двойными картами', 
-            'Фокус с карточкой “Дай пять”', 'Фокус с колодой в футляре', 'Фокус с купюрой и бумажкой №1', 
-            'Фокус с купюрой и бумажкой №2', 'Фокус с резинкой №1', 'Фокус с использованием рук', 
-            'Фокус с резинкой №2', 'Фокус с резинкой №3'
+            'Фокус с башенкой с шариком', 'Фокус с платком и напальчником', 'Фокус с двойными картами', 'Фокус с карточкой “Дай пять”', 'Фокус с колодой в футляре', 'Фокус с купюрой и бумажкой №1', 'Фокус с купюрой и бумажкой №2', 'Фокус с резинкой №1', 'Фокус с использованием рук', 'Фокус с резинкой №2', 'Фокус с резинкой №3'
         ];
         const blueLessons = blueNames.map((name, index) => ({
-            name: name, duration: '', videoId: blueIDs[index]
+            name: name, duration: '', videoId: blueIDs[index], imageUrl: `${IMAGE_BASE_URL}set4/40${index + 1}.png`
         }));
 
 
@@ -403,7 +414,8 @@
         let lessonListTitle;
         let currentLessonNameDisplay;
         let kinescopePlayer;
-        let currentCourseId = null; // Храним текущий набор для возврата
+        let currentCourseId = null; 
+        let videoThumbnailLarge; // Добавлен элемент для большого превью
 
         // Инициализация элементов DOM
         function initializeDOMElements() {
@@ -414,6 +426,7 @@
             lessonListTitle = document.getElementById('lesson-list-title');
             currentLessonNameDisplay = document.getElementById('current-lesson-name');
             kinescopePlayer = document.getElementById('kinescope-player');
+            videoThumbnailLarge = document.getElementById('video-thumbnail-large'); // Получаем элемент превью
         }
 
         // 1. Показать главную страницу
@@ -425,7 +438,7 @@
 
         // 2. Показать список уроков для набора
         function showLessonList(courseId) {
-            currentCourseId = courseId; // Сохраняем ID
+            currentCourseId = courseId;
             courseSelectionPage.classList.add('hidden');
             lessonListView.classList.remove('hidden');
             videoPlayerView.classList.add('hidden'); 
@@ -448,16 +461,19 @@
 
             currentLessonNameDisplay.textContent = lesson.name;
             
-            // Загрузка видео
+            // Установка большого превью
+            videoThumbnailLarge.src = lesson.imageUrl;
+
+            // Загрузка видео (через таймаут, чтобы дать превью прогрузиться)
+            // Мы не запускаем его сразу, плеер Kinescope сам должен запуститься при клике
             kinescopePlayer.src = `https://kinescope.io/embed/${lesson.videoId}`;
             
-            // Прокрутка к началу видео
             videoPlayerView.scrollIntoView({ behavior: 'smooth' });
         }
 
         // 4. Вернуться к списку уроков
         function goBackToLessonList() {
-            // !!! ИСПРАВЛЕНИЕ: ОЧИЩАЕМ SRC ПЛЕЕРА, ЧТОБЫ ОСТАНОВИТЬ ВОСПРОИЗВЕДЕНИЕ !!!
+            // ОЧИЩАЕМ SRC ПЛЕЕРА, ЧТОБЫ ОСТАНОВИТЬ ВОСПРОИЗВЕДЕНИЕ
             kinescopePlayer.src = ''; 
             
             if (currentCourseId) {
@@ -474,8 +490,9 @@
             course.lessons.forEach((lesson) => {
                 const li = document.createElement('li');
                 li.className = 'lesson-item';
-                // ВАЖНО: Элемент duration есть в структуре, но скрыт в CSS
+                
                 li.innerHTML = `
+                    <img src="${lesson.imageUrl}" alt="Превью" class="lesson-item-preview">
                     <span>${lesson.name}</span>
                     <span class="duration">${lesson.duration}</span>
                 `;
