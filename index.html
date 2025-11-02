@@ -86,6 +86,9 @@
             transition: all 0.3s ease;
             animation: cardPop 0.5s ease-out;
             border-bottom: 8px solid var(--primary-color);
+            display: flex; /* Для выравнивания содержимого */
+            flex-direction: column;
+            justify-content: space-between;
         }
 
         .course-card:hover {
@@ -99,12 +102,27 @@
             color: var(--primary-color);
             margin-top: 10px;
             margin-bottom: 5px;
+            min-height: 2.5em; /* Обеспечиваем одинаковую высоту заголовков */
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         
         .course-card p {
             color: #7f8c8d;
+            margin-top: auto; /* Прижимает параграф к низу, если заголовок короче */
         }
 
+        /* Стили для изображений в карточках */
+        .card-image {
+            width: 100%;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            object-fit: cover; /* Обрезает изображение, чтобы оно заполняло контейнер */
+            aspect-ratio: 16 / 9; /* Сохраняет пропорции 16:9 */
+            display: block; /* Убираем лишние отступы */
+        }
+        /* Стили для иконки 75 трюков */
         .card-icon {
             font-size: 3em;
             display: block;
@@ -135,7 +153,6 @@
             transition: all 0.2s ease;
             border-left: 8px solid var(--secondary-color);
             display: flex;
-            justify-content: space-between;
             align-items: center;
         }
 
@@ -149,11 +166,10 @@
             font-weight: 700;
             background-color: #ffe8e8;
         }
-
+        
+        /* СКРЫВАЕМ ВРЕМЯ - оно больше не нужно */
         .lesson-item .duration {
-            font-size: 0.9em;
-            color: var(--accent-color);
-            font-weight: 700;
+            display: none; 
         }
 
         /* Кнопка "Назад" */
@@ -223,22 +239,22 @@
                     <p>Стань настоящим мастером иллюзий!</p>
                 </div>
                 <div class="course-card" data-id="set_blue">
-                    <span class="card-icon">🔵</span>
-                    <h3>10 Взрывных Фокусов</h3>
+                    <img src="set4.jpg" alt="Синий набор фокусов" class="card-image">
+                    <h3>11 Взрывных Фокусов</h3>
                     <p>Трюки с платками, картами и купюрами.</p>
                 </div>
                 <div class="course-card" data-id="set_red">
-                    <span class="card-icon">🔴</span>
+                    <img src="set5.jpg" alt="Красный набор фокусов" class="card-image">
                     <h3>14 Взрывных Фокусов</h3>
                     <p>С кольцами, цепочками и шариками.</p>
                 </div>
                 <div class="course-card" data-id="set_yellow">
-                    <span class="card-icon">🟡</span>
+                    <img src="set2.jpg" alt="Желтый набор фокусов" class="card-image">
                     <h3>11 Взрывных Фокусов</h3>
                     <p>Трюки с резинками и предметами.</p>
                 </div>
                 <div class="course-card" data-id="set_green">
-                    <span class="card-icon">🟢</span>
+                    <img src="set3.jpg" alt="Зеленый набор фокусов" class="card-image">
                     <h3>11 Взрывных Фокусов</h3>
                     <p>Фокусы с тростью и использованием рук.</p>
                 </div>
@@ -279,7 +295,7 @@
 
         // ВСЕ УНИКАЛЬНЫЕ ID (77 ШТ.)
         const fullLessonIDs = [
-            'jpcpPJFxh4HW6Y1D9hHjoL', 'k1JaAhww3pHUX1kTXSpZrS', 'kPfMYDT72KwJZiCaSjLZVf', 'mM5cJcqFQExpJJLdHLeu9F', 'hqmJ7SV2o8t7Wc8kwhCUo6', 'xve7TxMQPXS4oQdtVxoUHA', '6XmcciytVD2jKAaqczNuZF', 'iGZz39Su2HQfvWepfd5qwQ', 'nusJSraxAkMkd5MmWX5cGw', '6SU1iGSa5x2S8eXkMEuJBG', 'iKGjdCgeabcJXDEjQNNAK8', '5xKeaaiLFiuXdLb28bbVfT', '28sD2cfA3UPawSathTuN64', 'gYyruCRJAEJiNTZaYsbad1', '08RWJAGm8LXk1UdRD2pWxL', 'jEehUbqXtXxLGHNfyCzsrq', 'r1gGTMMWgWGk5Ww8aHV2wn', '96weXMNabgpaQ9pNxG3TY7', '2vt9UQyUuWGt4sZZLANxbr', 'ti4JcS84xo3hW4NXsuoCYA', 'tkJUsUoXsmjeKawiSAfYYn', '8aDSJ5BAvkgjudrNJqzFq5', 'nRZJ6Kdj8qLSpkzkEhLJCF', 'eJU4jJANwowgwRyeDeqPvE', 't2JEg9qj1WFsMPbhCuQ2Xo', '2uAfH9TqBSwBuaTQC14WyS', 'akrZp6rNfkZXrzmrk5rLWz', 'bQYvim6wrhBwQLUnMhPtpN', 'b7WySegBP8YkUcEwQ32Efp', 's87JMNTs8xbxfTjtA6DVTw', 'bMhC6r9fNUZxyUrvobuwW6', 'tWcs2E99XBHADSCf2Tqwv8', 'eMonpTCdcKPdmrhxRvKYdu', 'vFvEzxfs6kModJbr54FNBS', 'jHkEc7yG8zzFJHVa8sVuG9', '7igUgoFy146g2tBucd5Fb8', 'gwdrB9BTW6DuVq1cq48E73', 'dPPTunNESfWfnX15j8Vbiu', 'ig5N4nXsGTTP1RAwcAEcSy', 'o5U8BEV3T6AMW4xJntHaJr', 'cmKjSwWfHdfytPRNvPRpCw', 'uZmrePV1oo3f3pKptu75J2', '8VEK2Xt6WisK1ySW781Hfv', 'gXJeau3WGQMCzHe3Wuoc3A', '7a5fGzu4u7hp5r8ZFYEc3M', 'hJkZjbQhJ2HWg4gehq5qga', '9wEgBi4MfeGMdHFXcTEWi6', '9WXoWVDwj2wTUFwurNXM1u', 'gJ6iQcfUjfcnMznVxo2vRj', '4Wy11DZkeswybVRzRLGEzJ', '5uPNcWckVwjmeYHWStnd8Y', 'uV3KfKjTREzfs2V5qVq64w', 'izXRD8iR4NG2EjJmKYQQoP', 'eRVnXbG1n8C2k4f7VQzUe8', 'uDCfpW9XPPLTPdbEjP3gwK', 'eVF5juQSvBy2aaN5yW216A', 'dHbunwLinxFmB1LBU8hkMh', '0svSSpnxeYE5d6BiJM4un5', 'gLVzD5h6qQAPPrgxfww3Fs', 'tgw2iqKswKrf8As1T1jgqd', 'qDv1cRdwcRJgNCXa6mj8ZC', 'tnUdotVehaxeYRgiKiod8e', 'iXSgu2Enr8RSWPbWxr1enr', 'ft5RbmsZmN3BqB9RtoAPVH', 'bh4XHc29jDLcxpb99wk9LB', 'e6X1Cs3zmsHzLY33MMwz8N', 'pgpNvTxQ1FLLP9FM5roxoL', '9jhMogSF59a48Xy7Q8Xm7X', 'fUA3qWb8qTnTvwbomeDogJ', 'qHoLDuyGh55BjM7nu4NvhN', 'u4ac45TBvaaGHSkPPbJqPF', '2quUkxPBwwEjMc8iY46e8K', 'cyCtHcuLRu2RE8PMKkRTGw', '8zLeoK8uM6V8t5LF7SGL22', 'oShURD5ZQHudFUeoiYyk39', '82M4ZLgH1azym4RTPKif3z', 'dihwkyDyTUcF3qTgN4AbS9',
+            'jpcpPJFxh4HW6Y1D9hHjoL', 'k1JaAhww3pHUX1kTXSpZrS', 'kPfMYDT72KwJZiCaSjLZVf', 'mM5cJcqFQExpJJLdHLeu9F', 'hqmJ7SV2o8t7Wc8kwhCUo6', 'xve7TxMQPXS4oQdtVxoUHA', '6XmcciytVD2jKAaqczNuZF', 'iGZz39Su2HQfvWepfd5qwQ', 'nusJSraxAkMkd5MmWX5cGw', '6SU1iGSa5x2S8eXkMEuJBG', 'iKGjdCgeabcJXDEjQNNAK8', '5xKeaaiLFiuXdLb28bbVfT', '28sD2cfA3UPawSathTuN64', 'gYyruCRJAEJiNTZaYsbad1', '08RWJAGm8LXk1UdRD2pWxL', 'jEehUbqXtXxLGHNfyCzsrq', 'r1gGTMMWgWGk5Ww8aHV2wn', '96weXMNabgpaQ9pNxG3TY7', '2vt9UQyUuWGt4sZZLANxbr', 'ti4JcS84xo3hW4NXsuoCYA', 'tkJUsUoXsmjeKawiSAfYYn', '8aDSJ5BAvkgjudrNJqzFq5', 'nRZJ6Kdj8qLSpkzkEhLJCF', 'eJU4jJANwowgwRyeDeqPvE', 't2JEg9qj1WFsMPbhCuQ2Xo', '2uAfH9TqBSwBuaTQC14WyS', 'akrZp6rNfkZXrzmrk5rLWz', 'bQYvim6wrhBwQLUnMhPtpN', 'b7WySegBP8YkUcEwQ32Efp', 's87JMNTs8xbxfTjtA6DVTw', 'bMhC6r9fNUZxyUrvobuwW6', 'tWcs2E99XBHADSCf2Tqwv8', 'eMonpTCdcKPdmrhxRvKYdu', 'vFvEzxfs6kModJbr54FNBS', 'jHkEc7yG8zzFJHVa8sVuG9', '7igUgoFy146g2tBucd5Fb8', 'gwdrB9BTW6DuVq1cq48E73', 'dPPTunNESfWfnX15j8Vbiu', 'ig5N4nXsGTTP1RAwcAEcSy', 'o5U8BEV3T6AMW4xJntHaJr', 'cmKjSwWfHdfytPRNvPRpCw', 'uZmrePV1oo3f3pKptu75J2', '8VEK2Xt6WisK1ySW781Hfv', 'gXJeau3WGQMCzHe3Wuoc3A', '7a5fGzu4u7hp5r8ZFYEc3M', 'hJkZjbQhJ2HWg4gehq5qga', '9wEgBi4MfeGMdHFXcTEWi6', '9WXoWVDwj2wTUFwurNXM1u', 'gJ6iQcfUjfcnMznVxo2vRj', '4Wy11DZkeswybVRzRLGEzJ', '5uPNcWckVwjmeYHWStnd8Y', 'uV3KfKjTREzfs2V5qVq64w', 'izXRD8iR4NG2EjJmKYQQoP', 'eRVnXbG1n8C2k4f7VQzUe8', 'uDCfpW9XPPLTPdbEjP3gwK', 'eVF5juQSvBy2aaN5yW216A', 'dHbunwLinxFmB1LBU8hkMh', '0svSSpnxeYE5d6BiJM4un5', 'gLVzD5h6qQAPPrgxfww3Fs', 'tgw2iqKswKrf8As1T1jgqd', 'qDv1cRdwcRJgNCXa6mj8ZC', 'tnUdotVehaxeYRgiKiod8e', 'iXSgu2Enr8RSWPbWxr1enr', 'ft5RbmsZmN3BqB9RtoAPVH', 'bh4XHc29jDLcxpb99wk9LB', 'e6X1Cs3zmsHzLY33MMwz8N', 'pgpNvTxP1FLLP9FM5roxoL', '9jhMogSF59a48Xy7Q8Xm7X', 'fUA3qWb8qTnTvwbomeDogJ', 'qHoLDuyGh55BjM7nu4NvhN', 'u4ac45TBvaaGHSkPPbJqPF', '2quUkxPBwwEjMc8iY46e8K', 'cyCtHcuLRu2RE8PMKkRTGw', '8zLeoK8uM6V8t5LF7SGL22', 'oShURD5ZQHudFUeoiYyk39', '82M4ZLgH1azym4RTPKif3z', 'dihwkyDyTUcF3qTgN4AbS9',
         ];
 
         // Обновленные имена уроков (77 шт.), без "волшебный/магия"
@@ -292,7 +308,7 @@
             const id = fullLessonIDs[index];
             return {
                 name: name,
-                duration: '1:30', // Установлено среднее время для демо
+                duration: '', // Убрано из отображения
                 videoId: id
             };
         });
@@ -312,7 +328,7 @@
             'Фокус с резинками №2', 'Фокус с использованием рук'
         ];
         const yellowLessons = yellowNames.map((name, index) => ({
-            name: name, duration: '1:30', videoId: yellowIDs[index]
+            name: name, duration: '', videoId: yellowIDs[index]
         }));
 
 
@@ -331,7 +347,7 @@
             'Фокус с кольцом и монеткой', 'Фокус с резинками'
         ];
         const redLessons = redNames.map((name, index) => ({
-            name: name, duration: '1:30', videoId: redIDs[index]
+            name: name, duration: '', videoId: redIDs[index]
         }));
 
 
@@ -339,7 +355,7 @@
         const greenIDs = [
             'cceLzZjuyBVxNmQbyatUH5', 'dJ9PQDBugVGdPgsRLcg1rL', '9tD5m4EzPt6fmZoFtgqTDd', 
             'vPx1uUNwNJvrDqkyg22uie', '25MUHvgQjdRv2TasmwVNm4', 'aFwyGv6pPnnjnvCLJoMLwN', 
-            'a7fuyhV3ZzVb8GUbRKDHEE', 'dLjJ38gabh1KUrAceTC2JN', 'nUbEA7Tc15ndtLAt2MJrLP', 
+            'a7fuyhV3ZzVb8GUbRKDHEE', 'dLj38gabh1KUrAceTC2JN', 'nUbEA7Tc15ndtLAt2MJrLP', 
             'ndqN834L3eZCamxj3p7tYq', 'a3CvBZ4AsM45E6DnXDTGzS'
         ];
         const greenNames = [
@@ -349,7 +365,7 @@
             'Фокус с использованием рук', 'Фокус с калькулятором'
         ];
         const greenLessons = greenNames.map((name, index) => ({
-            name: name, duration: '1:30', videoId: greenIDs[index]
+            name: name, duration: '', videoId: greenIDs[index]
         }));
 
 
@@ -367,13 +383,13 @@
             'Фокус с резинкой №2', 'Фокус с резинкой №3'
         ];
         const blueLessons = blueNames.map((name, index) => ({
-            name: name, duration: '1:30', videoId: blueIDs[index]
+            name: name, duration: '', videoId: blueIDs[index]
         }));
 
 
         const courses = {
             set_75: { title: '75 Трюков (База)', lessons: fullLessons },
-            set_blue: { title: '10 Взрывных Фокусов (Синий)', lessons: blueLessons },
+            set_blue: { title: '11 Взрывных Фокусов (Синий)', lessons: blueLessons },
             set_red: { title: '14 Взрывных Фокусов (Красный)', lessons: redLessons }, 
             set_yellow: { title: '11 Взрывных Фокусов (Желтый)', lessons: yellowLessons },
             set_green: { title: '11 Взрывных Фокусов (Зеленый)', lessons: greenLessons },
@@ -455,6 +471,7 @@
             course.lessons.forEach((lesson) => {
                 const li = document.createElement('li');
                 li.className = 'lesson-item';
+                // ВАЖНО: Убрано отображение duration в HTML
                 li.innerHTML = `
                     <span>${lesson.name}</span>
                     <span class="duration">${lesson.duration}</span>
