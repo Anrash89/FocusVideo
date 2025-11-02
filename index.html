@@ -318,7 +318,7 @@
         </section>
     </main>
 
-    <script>
+<script>
         // 1. ДАННЫЕ О КУРСАХ И ID
         const DEFAULT_KINESCOPE_ID = 'mQEuZrksxN6CtvCggyoCj8';
         const IMAGE_BASE_URL = 'images/';
@@ -328,13 +328,14 @@
             'jpcpPJFxh4HW6Y1D9hHjoL', 'k1JaAhww3pHUX1kTXSpZrS', 'kPfMYDT72KwJZiCaSjLZVf', 'mM5cJcqFQExpJJLdHLeu9F', 'hqmJ7SV2o8t7Wc8kwhCUo6', 'xve7TxMQPXS4oQdtVxoUHA', '6XmcciytVD2jKAaqczNuZF', 'iGZz39Su2HQfvWepfd5qwQ', 'nusJSraxAkMkd5MmWX5cGw', '6SU1iGSa5x2S8eXkMEuJBG', 'iKGjdCgeabcJXDEjQNNAK8', '5xKeaaiLFiuXdLb28bbVfT', '28sD2cfA3UPawSathTuN64', 'gYyruCRJAEJiNTZaYsbad1', '08RWJAGm8LXk1UdRD2pWxL', 'jEehUbqXtXxLGHNfyCzsrq', 'r1gGTMMWgWGk5Ww8aHV2wn', '96weXMNabgpaQ9pNxG3TY7', '2vt9UQyUuWGt4sZZLANxbr', 'ti4JcS84xo3hW4NXsuoCYA', 'tkJUsUoXsmjeKawiSAfYYn', '8aDSJ5BAvkgjudrNJqzFq5', 'nRZJ6Kdj8qLSpkzkEhLJCF', 'eJU4jJANwowgwRyeDeqPvE', 't2JEg9qj1WFsMPbhCuQ2Xo', '2uAfH9TqBSwBuaTQC14WyS', 'akrZp6rNfkZXrzmrk5rLWz', 'bQYvim6wrhBwQLUnMhPtpN', 'b7WySegBP8YkUcEwQ32Efp', 's87JMNTs8xbxfTjtA6DVTw', 'bMhC6r9fNUZxyUrvobuwW6', 'tWcs2E99XBHADSCf2Tqwv8', 'eMonpTCdcKPdmrhxRvKYdu', 'vFvEzxfs6kModJbr54FNBS', 'jHkEc7yG8zzFJHVa8sVuG9', '7igUgoFy146g2tBucd5Fb8', 'gwdrB9BTW6DuVq1cq48E73', 'dPPTunNESfWfnX15j8Vbiu', 'ig5N4nXsGTTP1RAwcAEcSy', 'o5U8BEV3T6AMW4xJntHaJr', 'cmKjSwWfHdfytPRNvPRpCw', 'uZmrePV1oo3f3pKptu75J2', '8VEK2Xt6WisK1ySW781Hfv', 'gXJeau3WGQMCzHe3Wuoc3A', '7a5fGzu4u7hp5r8ZFYEc3M', 'hJkZjbQhJ2HWg4gehq5qga', '9wEgBi4MfeGMdHFXcTEWi6', '9WXoWVDwj2wTUFwurNXM1u', 'gJ6iQcfUjfcnMznVxo2vRj', '4Wy11DZkeswybVRzRLGEzJ', '5uPNcWckVwjmeYHWStnd8Y', 'uV3KfKjTREzfs2V5qVq64w', 'izXRD8iR4NG2EjJmKYQQoP', 'eRVnXbG1n8C2k4f7VQzUe8', 'uDCfpW9XPPLTPdbEjP3gwK', 'eVF5juQSvBy2aaN5yW216A', 'dHbunwLinxFmB1LBU8hkMh', '0svSSpnxeYE5d6BiJM4un5', 'gLVzD5h6qQAPPrgxfww3Fs', 'tgw2iqKswKrf8As1T1jgqd', 'qDv1cRdwcRJgNCXa6mj8ZC', 'tnUdotVehaxeYRgiKiod8e', 'iXSgu2Enr8RSWPbWxr1enr', 'ft5RbmsZmN3BqB9RtoAPVH', 'bh4XHc29jDLcxpb99wk9LB', 'e6X1Cs3zmsHzLY33MMwz8N', 'pgpNvTxQ1FLLP9FM5roxoL', '9jhMogSF59a48Xy7Q8Xm7X', 'fUA3qWb8qTnTvwbomeDogJ', 'qHoLDuyGh55BjM7nu4NvhN', 'u4ac45TBvaaGHSkPPbJqPF', '2quUkxPBwwEjMc8iY46e8K', 'cyCtHcuLRu2RE8PMKkRTGw', '8zLeoK8uM6V8t5LF7SGL22', 'oShURD5ZQHudFUeoiYyk39', '82M4ZLgH1azym4RTPKif3z', 'dihwkyDyTUcF3qTgN4AbS9',
         ];
 
-        // Обновленные имена уроков (77 шт.), без "волшебный/магия"
+        // Обновленные имена уроков (77 шт.)
         const fullLessonNames = [
             'О наборе', 'Фокус с палочкой и горшочком', 'Фокус с палочкой и сердечком №1', 'Фокус с палочкой №1', 'Фокус с палочкой и сердечком №2', 'Фокус с палочкой №2', 'Фокус с палочкой №3', 'Фокус с сердечками №1', 'Фокус с башенкой с шариком', 'Фокус с разделителем верёвки', 'Фокус с верёвкой №1', 'Фокус с разноцветными платками', 'Фокус с платком и напальчником', 'Фокус с сердечками №2', 'Фокус с сердечками №3', 'Фокус с сердечками №4', 'Фокус с сердечками №5', 'Фокус с числовыми картами', 'Фокус с баночкой с кубиками', 'Фокус с игральным кубиком', 'Фокус с двойными картами', 'Фокус с картой со створкой', 'Фокус со сложенной купюрой', 'Фокус с картой и купюрой', 'Фокус с купюрой', 'Фокус с купюрой со скрепками', 'Фокус со скрепками', 'Фокус со стаканами и шариками', 'Фокус с кольцом и цепочкой', 'Фокус с монеткой №1', 'Фокус с резинкой и скрепкой №1', 'Фокус с резинкой и скрепкой №2', 'Фокус с резинками №1', 'Фокус с резинками №2', 'Фокус с резинками и купюрой', 'Фокус с резинкой и купюрой', 'Фокус с резинкой', 'Фокус с резинками №3', 'Фокус с резинками №4', 'Фокус с резинками №5', 'Фокус с картой с леской и спичкой', 'Фокус с верёвкой и спичечным коробком', 'Фокус со спичечным коробком №1', 'Три загадки со спичками', 'Фокус со спичкой №1', 'Фокус со спичкой №2', 'Фокус со спичечным коробком №2', 'Фокус со спичечным коробком и воздушным шариком', 'Фокус с воздушным шариком', 'Фокус с монеткой и стаканом №1', 'Фокус с монеткой №2', 'Фокус с монеткой и стаканом №2', 'Фокус с карандашом №1', 'Фокус с палочкой №4', 'Фокус с разноцветными предметами', 'Фокус со стаканами и предсказанием №1', 'Фокус со стаканами и предсказанием №2', 'Фокус с использованием рук №1', 'Фокус с использованием рук №2', 'Фокус со стаканом с жидкостью', 'Фокус с напальчником', 'Фокус с использованием пальцев №1', 'Фокус с использованием пальцев №2', 'Фокус с использованием пальцев №3', 'Фокус с использованием пальцев №4', 'Фокус с использованием пальцев №5', 'Фокус с листом бумаги', 'Три способа достать купюру из-под бутылки', 'Фокус с верёвкой №2', 'Фокус с карандашом №2', 'Фокус с использованием пальцев №6', 'Фокус с монеткой №3', 'Фокус с иллюзией левитации', 'Фокус с вопросами', 'Фокус с числами', 'Фокус с кольцом', 'Советы от Романа Про.'
         ];
         
         // Функция для генерации пути к файлу 01.webp, 02.webp, ...
         function getFullPathImage(index) {
+            // index 0 -> 01.webp, index 1 -> 02.webp, ...
             const num = (index + 1).toString().padStart(2, '0');
             return `${IMAGE_BASE_URL}${num}.webp`;
         }
@@ -350,17 +351,22 @@
             };
         });
 
-        // -----------------------------------------------------
-        // 11 ВЗРЫВНЫХ ФОКУСОВ (Желтый - set2)
+        // --- ГЕНЕРАЦИЯ ДАННЫХ ДЛЯ ЦВЕТНЫХ НАБОРОВ С ИСПРАВЛЕННОЙ НУМЕРАЦИЕЙ ---
+
+        // Набор "11 Взрывных Фокусов" (Желтый - set2)
         const yellowIDs = [
             'rcY7WygGSLmXsvmebLWm9c', 'fTQ7fEV63wKcipkWkTT4bp', 'iSEaRT5NGgGdeNM5GRf789', 'jFkrpw1s8DxZoyWrhtcUkx', 'pSGrrMcbxqvb5MCYBct1yK', 'oRsoi13QbGQfRchJyU62g6', '5XfziUUYTb3csizx33Yrna', 'meeZ2UQ3CuH4EzkRhzXQgL', '2dcywnsds6xx2q9ryJvsqQ', 'nUaLf7h1oaNKNzN4FpzGSV', 'i3gMK3ZGLivgUEFXYYwRJs'
         ];
         const yellowNames = [
             'Фокус с разделителем верёвки', 'Фокус с разноцветными платками', 'Фокус с баночкой с кубиками', 'Фокус с купюрой со скрепками', 'Фокус с карточкой клоуна', 'Фокус с резинкой №1', 'Фокус с резинками №1', 'Фокус с калькулятором', 'Фокус с резинкой №2', 'Фокус с резинками №2', 'Фокус с использованием рук'
         ];
-        const yellowLessons = yellowNames.map((name, index) => ({
-            name: name, duration: '', videoId: yellowIDs[index], imageUrl: `${IMAGE_BASE_URL}set2/20${(index + 1).toString().padStart(2, '0')}.png`
-        }));
+        const yellowLessons = yellowNames.map((name, index) => {
+            // ИСПРАВЛЕНО: num=201, 202, ...
+            const num = (200 + index + 1).toString();
+            return {
+                name: name, duration: '', videoId: yellowIDs[index], imageUrl: `${IMAGE_BASE_URL}set2/${num}.png`
+            };
+        });
 
 
         // 14 ВЗРЫВНЫХ ФОКУСОВ (Красный - set5)
@@ -370,45 +376,45 @@
         const redNames = [
             'Фокус с числовыми картами', 'Фокус с кольцом и цепочкой', 'Фокус с кошельком с картами', 'Фокус с баночкой с кубиком', 'Фокус с поролоновыми шариками и кубиком №1', 'Фокус с поролоновыми шариками №1', 'Фокус с поролоновыми шариками №2', 'Фокус с поролоновыми шариками №3', 'Фокус с поролоновыми шариками и кубиком №2', 'Фокус с выбором предмета', 'Фокус с резинками', 'Фокус с резинками и прищепкой', 'Фокус с кольцом и монеткой', 'Фокус с резинками'
         ];
-        const redLessons = redNames.map((name, index) => ({
-            name: name, duration: '', videoId: redIDs[index], imageUrl: `${IMAGE_BASE_URL}set5/50${(index + 1).toString().padStart(2, '0')}.png`
-        }));
+        const redLessons = redNames.map((name, index) => {
+            // ИСПРАВЛЕНО: num=501, 502, ...
+            const num = (500 + index + 1).toString();
+            return {
+                name: name, duration: '', videoId: redIDs[index], imageUrl: `${IMAGE_BASE_URL}set5/${num}.png`
+            };
+        });
 
 
         // 11 ВЗРЫВНЫХ ФОКУСОВ (Зеленый - set3)
         const greenIDs = [
-            'cceLzZjuyBVxNmQbyatUH5', 'dJ9PQDBugVGdPgsRLcg1rL', '9tD5m4EzPt6fmZoFtgqTDd', 
-            'vPx1uUNwNJvrDqkyg22uie', '25MUHvgQjdRv2TasmwVNm4', 'aFwyGv6pPnnjnvCLJoMLwN', 
-            'a7fuyhV3ZzVb8GUbRKDHEE', 'dLjJ38gabh1KUrAceTC2JN', 'nUbEA7Tc15ndtLAt2MJrLP', 
-            'ndqN834L3eZCamxj3p7tYq', 'a3CvBZ4AsM45E6DnXDTGzS'
+            'cceLzZjuyBVxNmQbyatUH5', 'dJ9PQDBugVGdPgsRLcg1rL', '9tD5m4EzPt6fmZoFtgqTDd', 'vPx1uUNwNJvrDqkyg22uie', '25MUHvgQjdRv2TasmwVNm4', 'aFwyGv6pPnnjnvCLJoMLwN', 'a7fuyhV3ZzVb8GUbRKDHEE', 'dLjJ38gabh1KUrAceTC2JN', 'nUbEA7Tc15ndtLAt2MJrLP', 'ndqN834L3eZCamxj3p7tYq', 'a3CvBZ4AsM45E6DnXDTGzS'
         ];
         const greenNames = [
-            'Фокус со стаканами и шариками', 'Фокус с картой с леской и спичкой', 'Фокус с печеньем', 
-            'Фокус с тростью', 'Фокус с карточкой сердечка', 'Фокус с резинкой №1', 
-            'Фокус с резинками №1', 'Фокус с резинками №2', 'Фокус с резинкой №2', 
-            'Фокус с использованием рук', 'Фокус с калькулятором'
+            'Фокус со стаканами и шариками', 'Фокус с картой с леской и спичкой', 'Фокус с печеньем', 'Фокус с тростью', 'Фокус с карточкой сердечка', 'Фокус с резинкой №1', 'Фокус с резинками №1', 'Фокус с резинками №2', 'Фокус с резинкой №2', 'Фокус с использованием рук', 'Фокус с калькулятором'
         ];
-        const greenLessons = greenNames.map((name, index) => ({
-            name: name, duration: '', videoId: greenIDs[index], imageUrl: `${IMAGE_BASE_URL}set3/30${(index + 1).toString().padStart(2, '0')}.png`
-        }));
+        const greenLessons = greenNames.map((name, index) => {
+            // ИСПРАВЛЕНО: num=301, 302, ...
+            const num = (300 + index + 1).toString();
+            return {
+                name: name, duration: '', videoId: greenIDs[index], imageUrl: `${IMAGE_BASE_URL}set3/${num}.png`
+            };
+        });
 
 
         // 11 ВЗРЫВНЫХ ФОКУСОВ (Синий - set4)
         const blueIDs = [
-            'cYdXWi5A91HXiwLc84agwd', 'exLWcpZ6ahZgkr96vnmc2v', '5wyNGTH37RVEG6f62DmjjA', 
-            '7qsEnkPgEik9Ha2RVTV3aA', 'eAUycLzgfRb9re2cfAJj5j', 'eBG44bnhNC5QqStJEwTEh6', 
-            'p56ktVWncRiBGDHb8DNhir', 'nQFNcp2nuH1EJMwzWzdkXM', 'uVXaTQW4bpW9ThJwvAxdUz', 
-            'ggXGnauUHE9jDYA8NV9Vsv', 'sdv4oUFrxgwqN4SGmBwGpJ'
+            'cYdXWi5A91HXiwLc84agwd', 'exLWcpZ6ahZgkr96vnmc2v', '5wyNGTH37RVEG6f62DmjjA', '7qsEnkPgEik9Ha2RVTV3aA', 'eAUycLzgfRb9re2cfAJj5j', 'eBG44bnhNC5QqStJEwTEh6', 'p56ktVWncRiBGDHb8DNhir', 'nQFNcp2nuH1EJMwzWzdkXM', 'uVXaTQW4bpW9ThJwvAxdUz', 'ggXGnauUHE9jDYA8NV9Vsv', 'sdv4oUFrxgwqN4SGmBwGpJ'
         ];
         const blueNames = [
-            'Фокус с башенкой с шариком', 'Фокус с платком и напальчником', 'Фокус с двойными картами', 
-            'Фокус с карточкой “Дай пять”', 'Фокус с колодой в футляре', 'Фокус с купюрой и бумажкой №1', 
-            'Фокус с купюрой и бумажкой №2', 'Фокус с резинкой №1', 'Фокус с использованием рук', 
-            'Фокус с резинкой №2', 'Фокус с резинкой №3'
+            'Фокус с башенкой с шариком', 'Фокус с платком и напальчником', 'Фокус с двойными картами', 'Фокус с карточкой “Дай пять”', 'Фокус с колодой в футляре', 'Фокус с купюрой и бумажкой №1', 'Фокус с купюрой и бумажкой №2', 'Фокус с резинкой №1', 'Фокус с использованием рук', 'Фокус с резинкой №2', 'Фокус с резинкой №3'
         ];
-        const blueLessons = blueNames.map((name, index) => ({
-            name: name, duration: '', videoId: blueIDs[index], imageUrl: `${IMAGE_BASE_URL}set4/40${(index + 1).toString().padStart(2, '0')}.png`
-        }));
+        const blueLessons = blueNames.map((name, index) => {
+            // ИСПРАВЛЕНО: num=401, 402, ...
+            const num = (400 + index + 1).toString();
+            return {
+                name: name, duration: '', videoId: blueIDs[index], imageUrl: `${IMAGE_BASE_URL}set4/${num}.png`
+            };
+        });
 
 
         const courses = {
@@ -474,18 +480,18 @@
 
             currentLessonNameDisplay.textContent = lesson.name;
             
-            // Установка большого превью и мгновенное скрытие плеера, чтобы не было "белого" кадра
+            // Установка большого превью перед загрузкой видео
             videoThumbnailLarge.src = lesson.imageUrl;
             videoThumbnailLarge.style.opacity = 1;
 
             // Загрузка видео
             kinescopePlayer.src = `https://kinescope.io/embed/${lesson.videoId}`;
 
-            // !!! ИСПРАВЛЕНИЕ: Скрываем наше большое превью через короткий таймаут
+            // Скрываем наше большое превью через короткий таймаут (100ms)
             // чтобы Kinescope успел проинициализироваться и показать своё превью/видео.
             setTimeout(() => {
                  videoThumbnailLarge.style.opacity = 0; 
-            }, 100); // 100ms обычно достаточно для инициализации
+            }, 100); 
 
             videoPlayerView.scrollIntoView({ behavior: 'smooth' });
         }
