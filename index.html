@@ -536,8 +536,7 @@
                         <button id="read-policy-btn" class="form-button">Прочитать Политику</button>
                         <button id="agree-and-continue-btn" class="form-button">Согласиться и продолжить</button>
                     </div>
-                    <button id="skip-registration-btn" class="hidden">Продолжить без регистрации</button>
-                </div>
+                    </div>
 
                 <div id="policy-full-view" class="hidden">
                     <p class="font-bold">Дата публикации действующей редакции: 1 сентября 2025 года</p>
@@ -593,8 +592,7 @@
                         
                         <button type="submit" id="submit-reg-btn" class="form-button">Зарегистрироваться и начать</button>
                     </form>
-                    <button id="skip-registration-btn-final" class="hidden">Продолжить без регистрации</button>
-                </div>
+                    </div>
                 
                 <div id="success-view" class="hidden" style="text-align: center;">
                     <h3 style="color: green;">🎉 Успешно!</h3>
@@ -613,7 +611,7 @@
 
 <script>
     // --- 0. КОНСТАНТЫ И URL СЕРВЕРА ---
-    // !!! ВСТАВЬТЕ СЮДА ВАШ URL, ПОЛУЧЕННЫЙ В GOOGLE APPS SCRIPT !!!
+    // !!! ВАШ URL GOOGLE APPS SCRIPT !!!
     const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycby2R4j1aBQ2zmybXyqjVhgFntoduCYYX6AuZ8kMmRUWdF8ZQCNTTpPij0kmxaSxAZmjvg/exec'; 
 
     const IMAGE_BASE_URL = 'images/';
@@ -718,8 +716,11 @@
         document.getElementById('read-policy-btn').addEventListener('click', showPolicyFullView);
         document.getElementById('agree-and-continue-btn').addEventListener('click', showRegistrationForm);
         document.getElementById('agree-final-btn').addEventListener('click', showRegistrationForm);
-        document.getElementById('skip-registration-btn').addEventListener('click', () => handleSkipRegistration(true));
-        document.getElementById('skip-registration-btn-final').addEventListener('click', () => handleSkipRegistration(true));
+        
+        // Кнопки пропуска удалены, обработчики не нужны
+        // document.getElementById('skip-registration-btn').addEventListener('click', () => handleSkipRegistration(true));
+        // document.getElementById('skip-registration-btn-final').addEventListener('click', () => handleSkipRegistration(true));
+        
         registrationForm.addEventListener('submit', handleRegistrationSubmit);
     }
 
@@ -848,7 +849,7 @@
         });
     }
 
-    // --- 5. ЛОГИКА РЕГИСТРАЦИИ ---
+    // --- 5. ЛОГИКА ОБЯЗАТЕЛЬНОЙ РЕГИСТРАЦИИ (ИСПРАВЛЕНО) ---
 
     function getTelegramIdFromContext() {
         const urlParams = new URLSearchParams(window.location.search);
@@ -860,23 +861,36 @@
         const registered = localStorage.getItem(USER_STORAGE_KEY);
         const tgId = getTelegramIdFromContext();
         
-        if (registered === 'true' || (registered === 'skipped') || (tgId && tgId !== 'null')) {
+        // Проверка: Если пользователь зарегистрирован (registered === 'true'), даем доступ.
+        // Иначе (не зарегистрирован или пришел из ТГ впервые) - показываем модальное окно.
+        if (registered === 'true') {
              hideRegistrationModal();
         } else {
-            showRegistrationModal();
+            // Если есть tgId, заполняем его в форме перед показом
+            if (tgId && tgId !== 'null') {
+                document.getElementById('reg-tg-id').value = tgId;
+                showRegistrationModal(true); // Запуск с ID, сразу к форме
+            } else {
+                showRegistrationModal(false); // Запуск без ID, начинаем с Политики
+            }
         }
     }
 
-    function showRegistrationModal() {
+    // Обновленная функция showRegistrationModal
+    function showRegistrationModal(skipPolicy = false) {
         registrationOverlay.classList.remove('hidden');
-        policyInitialView.classList.remove('hidden');
         loadingSpinner.classList.add('hidden');
         
         [policyFullView, registrationFormView, successView].forEach(view => view.classList.add('hidden'));
 
-        document.getElementById('skip-registration-btn').classList.remove('hidden'); 
-        document.getElementById('skip-registration-btn-final').classList.add('hidden');
-        document.getElementById('modal-title').textContent = "Добро пожаловать!";
+        if (skipPolicy) {
+            // Если есть ID из ТГ, сразу показываем форму
+            showRegistrationForm();
+        } else {
+            // Начинаем с соглашения (для прямого захода с сайта)
+            policyInitialView.classList.remove('hidden');
+            document.getElementById('modal-title').textContent = "Добро пожаловать!";
+        }
     }
 
     function hideRegistrationModal() {
@@ -888,7 +902,6 @@
         policyInitialView.classList.add('hidden');
         policyFullView.classList.remove('hidden');
         document.getElementById('modal-title').textContent = "Политика конфиденциальности";
-        document.getElementById('skip-registration-btn').classList.add('hidden');
     }
 
     function showRegistrationForm() {
@@ -898,11 +911,11 @@
         registrationFormView.classList.remove('hidden');
         document.getElementById('modal-title').textContent = "Регистрация";
         
-        document.getElementById('skip-registration-btn').classList.add('hidden'); 
-        document.getElementById('skip-registration-btn-final').classList.remove('hidden'); 
-
+        // Кнопки пропуска удалены, логика упрощена
         const tgId = getTelegramIdFromContext();
-        document.getElementById('reg-tg-id').value = tgId === 'null' ? '' : tgId;
+        if (tgId && tgId !== 'null') {
+             document.getElementById('reg-tg-id').value = tgId;
+        }
     }
 
     function showSuccessView() {
@@ -912,15 +925,8 @@
         document.getElementById('modal-title').textContent = "Готово!";
     }
 
-    function handleSkipRegistration(isFinal = false) {
-        playClickSound();
-        localStorage.setItem(USER_STORAGE_KEY, 'skipped');
-        hideRegistrationModal();
-        if (isFinal) {
-            showCourseSelection();
-        }
-    }
-    
+    // Функция handleSkipRegistration удалена
+
     function showLoadingSpinner() {
         [policyInitialView, policyFullView, registrationFormView, successView].forEach(view => view.classList.add('hidden'));
         loadingSpinner.classList.remove('hidden');
@@ -935,6 +941,13 @@
         const formData = new FormData(registrationForm);
         const data = Object.fromEntries(formData.entries());
         
+        // Добавляем источник, если ID есть, то это Telegram, иначе - Сайт
+        if (data.tg_id) {
+            data.source = "Телеграм";
+        } else {
+            data.source = "Сайт";
+        }
+        
         console.log("Отправка данных на Google Sheets:", data);
 
         try {
@@ -947,9 +960,7 @@
                 body: JSON.stringify(data),
             });
             
-            // Поскольку mode: 'no-cors' не позволяет читать ответ,
-            // мы считаем, что если нет сетевой ошибки, то запрос отправлен.
-            
+            // Считаем, что запрос отправлен, так как mode: 'no-cors'
             localStorage.setItem(USER_STORAGE_KEY, 'true'); 
             if (data.tg_id) {
                 localStorage.setItem(TG_ID_STORAGE_KEY, data.tg_id);
@@ -959,11 +970,12 @@
 
         } catch (error) {
             console.error("Ошибка при отправке данных в Google Sheets:", error);
-            // Если произошла ошибка, показываем форму снова или сообщение об ошибке
+            // Если произошла ошибка, уведомляем пользователя
             document.getElementById('modal-title').textContent = "Ошибка!";
-            loadingSpinner.textContent = "Ошибка при сохранении данных. Проверьте URL скрипта.";
-            // Для простоты, оставим спиннер с сообщением об ошибке
-            setTimeout(showRegistrationModal, 3000); // Попробуем снова через 3 секунды
+            loadingSpinner.textContent = "Ошибка при сохранении данных. Попробуйте позже.";
+            setTimeout(() => {
+                showRegistrationModal(true); // Возвращаемся к форме через 3 секунды
+            }, 3000); 
         }
     }
 
