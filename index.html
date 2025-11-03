@@ -183,8 +183,10 @@
             cursor: pointer;
             transition: all 0.2s ease;
             border-left: 8px solid var(--secondary-color);
+            /* Изменено: Используем flex-start для превью и center для текста */
             display: flex;
-            align-items: center;
+            align-items: center; 
+            flex-wrap: nowrap; /* Предотвращаем перенос элементов */
         }
 
         .lesson-item:hover {
@@ -198,18 +200,33 @@
             background-color: #ffe8e8;
         }
         
-        /* Превью в списке уроков */
+        /* --- УВЕЛИЧЕННОЕ ПРЕВЬЮ В СПИСКЕ УРОКОВ --- */
         .lesson-item-preview {
-            width: 60px;
-            height: 40px;
+            width: 100px; /* Увеличено */
+            height: 60px; /* Увеличено */
             margin-right: 15px;
             border-radius: 5px;
             object-fit: cover;
-            flex-shrink: 0;
+            flex-shrink: 0; /* Не сжимается */
         }
         
         .lesson-item span {
             flex-grow: 1;
+            /* Убедимся, что текст занимает многострочное пространство */
+            line-height: 1.3; 
+        }
+        
+        /* Для мобильных устройств делаем превью немного меньше, чтобы название поместилось */
+        @media (max-width: 450px) {
+            .lesson-item-preview {
+                width: 80px;
+                height: 50px;
+                margin-right: 10px;
+            }
+            .lesson-item {
+                padding: 10px 15px;
+                font-size: 0.9em;
+            }
         }
 
         /* СКРЫВАЕМ ВРЕМЯ */
@@ -242,7 +259,6 @@
             border-radius: 15px;
             overflow: hidden;
             position: relative; 
-            /* 177.34% - это 16/9 на боку, то есть 9:16 (вертикально) */
             padding-top: 177.34%; 
             width: 100%;
         }
@@ -613,26 +629,21 @@
         return { name: name, duration: '', videoId: id, imageUrl: getFullPathImage(index) };
     });
     
-    // Взрывные наборы (теперь все по 10)
+    // Все наборы, кроме 75, теперь по 10 фокусов
     const yellowLessons = yellowNames.map((name, index) => {
         const num = (200 + index + 1).toString();
-        // ВАЖНО: Мы используем желтый набор с 11 ID (yellowIDs)
-        // Но в названии и описании будет 10, как вы просили.
         return { name: name, duration: '', videoId: yellowIDs[index], imageUrl: `${IMAGE_BASE_URL}set2/${num}.png` };
     });
     const redLessons = redNames.map((name, index) => {
         const num = (500 + index + 1).toString();
-        // Красный набор 14 ID
         return { name: name, duration: '', videoId: redIDs[index], imageUrl: `${IMAGE_BASE_URL}set5/${num}.png` };
     });
     const greenLessons = greenNames.map((name, index) => {
         const num = (300 + index + 1).toString();
-        // Зеленый набор 11 ID
         return { name: name, duration: '', videoId: greenIDs[index], imageUrl: `${IMAGE_BASE_URL}set3/${num}.png` };
     });
     const blueLessons = blueNames.map((name, index) => {
         const num = (400 + index + 1).toString();
-        // Синий набор 11 ID
         return { name: name, duration: '', videoId: blueIDs[index], imageUrl: `${IMAGE_BASE_URL}set4/${num}.png` };
     });
 
@@ -799,7 +810,6 @@
         document.getElementById('video-thumbnail-large').style.opacity = 0;
         resumeMusicAfterVideo(); // Возобновление музыки
         
-        // Кнопка "Назад" в плеере всегда возвращает к списку уроков
         if (currentCourseId) {
             showLessonList(currentCourseId);
         } else {
