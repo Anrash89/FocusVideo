@@ -234,7 +234,7 @@
             background-color: #2980b9;
         }
 
-        /* Видео-плеер и его Превью */
+        /* --- НАСТРОЙКА ВЕРТИКАЛЬНОГО ПЛЕЕРА 9:16 --- */
         .video-player-container-kinescope {
             margin-top: 30px;
             margin-bottom: 30px;
@@ -242,8 +242,18 @@
             border-radius: 15px;
             overflow: hidden;
             position: relative; 
-            padding-top: 56.25%; /* 16:9 соотношение */
+            /* 177.34% - это 16/9 на боку, то есть 9:16 (вертикально) */
+            padding-top: 177.34%; 
             width: 100%;
+        }
+
+        /* Ограничиваем вертикальный плеер по ширине на больших экранах */
+        @media (min-width: 600px) {
+            .video-player-container-kinescope {
+                max-width: 450px; /* Ограничиваем ширину для ПК */
+                margin-left: auto;
+                margin-right: auto;
+            }
         }
 
         .video-player-container-kinescope iframe {
@@ -274,42 +284,7 @@
             display: none !important;
         }
 
-        /* --- СТИЛИ ДЛЯ ИНТРО --- */
-        #intro-video-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: #000;
-            z-index: 300;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        #intro-video-overlay video {
-            max-width: 100%;
-            max-height: 100%;
-        }
-        #skip-intro-button {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background-color: rgba(255, 255, 255, 0.3);
-            color: white;
-            padding: 8px 15px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 0.9em;
-            transition: background-color 0.2s;
-            z-index: 301;
-        }
-        #skip-intro-button:hover {
-            background-color: rgba(255, 255, 255, 0.5);
-        }
-
-        /* --- СТИЛИ ДЛЯ РЕГИСТРАЦИИ И СОГЛАШЕНИЯ --- */
+        /* --- СТИЛИ ДЛЯ РЕГИСТРАЦИИ И СОГЛАШЕНИЯ --- (Оставлены без изменений) */
         .registration-overlay {
             position: fixed;
             top: 0;
@@ -336,7 +311,6 @@
         }
 
         .modal-content-container {
-            /* Контейнер для формы/контента, чтобы не удалять .registration-modal */
             position: relative;
         }
         
@@ -455,20 +429,13 @@
             header h1 { font-size: 2em; }
             #course-selection h2 { font-size: 2em; }
             main { padding: 20px; }
-            .course-grid { grid-template-columns: 1fr; }
+            .course-grid { flex-direction: column; }
             .registration-modal { padding: 20px; }
             .action-buttons { flex-direction: column; }
         }
     </style>
 </head>
 <body>
-
-    <div id="intro-video-overlay">
-        <button id="skip-intro-button">Пропустить &rarr;</button>
-        <video id="intro-video" src="intro.mp4" playsinline muted poster="intro_preview.jpg">
-            Ваш браузер не поддерживает видео HTML5.
-        </video>
-    </div>
 
     <div id="audio-controls">
         <audio id="bg-music" src="background_music.mp3" loop preload="auto"></audio>
@@ -491,29 +458,29 @@
                 </div>
                 <div class="course-card" data-id="set_blue">
                     <img src="images/set4.jpg" alt="Синий набор фокусов" class="card-image">
-                    <h3>11 Взрывных Фокусов</h3>
+                    <h3>10 Взрывных Фокусов</h3>
                     <p>Трюки с платками, картами и купюрами.</p>
                 </div>
                 <div class="course-card" data-id="set_red">
                     <img src="images/set5.jpg" alt="Красный набор фокусов" class="card-image">
-                    <h3>14 Взрывных Фокусов</h3>
+                    <h3>10 Взрывных Фокусов</h3>
                     <p>С кольцами, цепочками и шариками.</p>
                 </div>
                 <div class="course-card" data-id="set_yellow">
                     <img src="images/set2.jpg" alt="Желтый набор фокусов" class="card-image">
-                    <h3>11 Взрывных Фокусов</h3>
+                    <h3>10 Взрывных Фокусов</h3>
                     <p>Трюки с резинками и предметами.</p>
                 </div>
                 <div class="course-card" data-id="set_green">
                     <img src="images/set3.jpg" alt="Зеленый набор фокусов" class="card-image">
-                    <h3>11 Взрывных Фокусов</h3>
+                    <h3>10 Взрывных Фокусов</h3>
                     <p>Фокусы с тростью и использованием рук.</p>
                 </div>
             </div>
         </section>
 
         <section id="lesson-list-view" class="hidden">
-            <button class="back-button" onclick="goBackToLessonList(false)">
+            <button class="back-button" onclick="showCourseSelection()">
                 &larr; Назад к выбору наборов
             </button>
             <h2 id="lesson-list-title">Набор:</h2>
@@ -523,7 +490,7 @@
         </section>
 
         <section id="video-player-view" class="hidden">
-            <button class="back-button" onclick="goBackToLessonList(true)">
+            <button class="back-button" onclick="goBackToLessonList()">
                 &larr; Назад к списку уроков
             </button>
             
@@ -633,8 +600,7 @@
     const IMAGE_BASE_URL = 'images/';
     const USER_STORAGE_KEY = 'magic_course_user_registered';
     const TG_ID_STORAGE_KEY = 'magic_course_tg_id';
-    const INTRO_SHOWN_KEY = 'magic_course_intro_shown';
-
+    
     // 77 Трюков (База)
     const fullLessonIDs = ['jpcpPJFxh4HW6Y1D9hHjoL', 'k1JaAhww3pHUX1kTXSpZrS', 'kPfMYDT72KwJZiCaSjLZVf', 'mM5cJcqFQExpJJLdHLeu9F', 'hqmJ7SV2o8t7Wc8kwhCUo6', 'xve7TxMQPXS4oQdtVxoUHA', '6XmcciytVD2jKAaqczNuZF', 'iGZz39Su2HQfvWepfd5qwQ', 'nusJSraxAkMkd5MmWX5cGw', '6SU1iGSa5x2S8eXkMEuJBG', 'iKGjdCgeabcJXDEjQNNAK8', '5xKeaaiLFiuXdLb28bbVfT', '28sD2cfA3UPawSathTuN64', 'gYyruCRJAEJiNTZaYsbad1', '08RWJAGm8LXk1UdRD2pWxL', 'jEehUbqXtXxLGHNfyCzsrq', 'r1gGTMMWgWGk5Ww8aHV2wn', '96weXMNabgpaQ9pNxG3TY7', '2vt9UQyUuWGt4sZZLANxbr', 'ti4JcS84xo3hW4NXsuoCYA', 'tkJUsUoXsmjeKawiSAfYYn', '8aDSJ5BAvkgjudrNJqzFq5', 'nRZJ6Kdj8qLSpkzkEhLJCF', 'eJU4jJANwowgwRyeDeqPvE', 't2JEg9qj1WFsMPbhCuQ2Xo', '2uAfH9TqBSwBuaTQC14WyS', 'akrZp6rNfkZXrzmrk5rLWz', 'bQYvim6wrhBwQLUnMhPtpN', 'b7WySegBP8YkUcEwQ32Efp', 's87JMNTs8xbxfTjtA6DVTw', 'bMhC6r9fNUZxyUrvobuwW6', 'tWcs2E99XBHADSCf2Tqwv8', 'eMonpTCdcKPdmrhxRvKYdu', 'vFvEzxfs6kModJbr54FNBS', 'jHkEc7yG8zzFJHVa8sVuG9', '7igUgoFy146g2tBucd5Fb8', 'gwdrB9BTW6DuVq1cq48E73', 'dPPTunNESfWfnX15j8Vbiu', 'ig5N4nXsGTTP1RAwcAEcSy', 'o5U8BEV3T6AMW4xJntHaJr', 'cmKjSwWfHdfytPRNvPRpCw', 'uZmrePV1oo3f3pKptu75J2', '8VEK2Xt6WisK1ySW781Hfv', 'gXJeau3WGQMCyHe3Wuoc3A', '7a5fGzu4u7hp5r8ZFYEc3M', 'hJkZjbQhJ2HWg4gehq5qga', '9wEgBi4MfeGMdHFXcTEWi6', '9WXoWVDwj2wTUFwurNXM1u', 'gJ6iQcfUjfcnMznVxo2vRj', '4Wy11DZkeswybVRzRLGEzJ', '5uPNcWckVwjmeYHWStnd8Y', 'uV3KfKjTREzfs2V5qVq64w', 'izXRD8iR4NG2EjJmKYQQoP', 'eRVnXbG1n8C2k4f7VQzUe8', 'uDCfpW9XPPLTPdbEjP3gwK', 'eVF5juQSvBy2aaN5yW216A', 'dHbunwLinxFmB1LBU8hkMh', '0svSSpnxeYE5d6BiJM4un5', 'gLVzD5h6qQAPPrgxfww3Fs', 'tgw2iqKswKrf8As1T1jgqd', 'qDv1cRdwcRJgNCXa6mj8ZC', 'tnUdotVehaxeYRgiKiod8e', 'iXSgu2Enr8RSWPbWxr1enr', 'ft5RbmsZmN3BqB9RtoAPVH', 'bh4XHc29jDLcxpb99wk9LB', 'e6X1Cs3zmsHzLY33MMwz8N', 'pgpNvTxQ1FLLP9FM5roxoL', '9jhMogSF59a48Xy7Q8Xm7X', 'fUA3qWb8qTnTvwbomeDogJ', 'qHoLDuyGh55BjM7nu4NvhN', 'u4ac45TBvaaGHSkPPbJqPF', '2quUkxPBwwEjMc8iY46e8K', 'cyCtHcuLRu2RE8PMKkRTGw', '8zLeoK8uM6V8t5LF7SGL22', 'oShURD5ZQHudFUeoiYyk39', '82M4ZLgH1azym4RTPKif3z', 'dihwkyDyTUcF3qTgN4AbS9',];
     const fullLessonNames = ['О наборе', 'Фокус с палочкой и горшочком', 'Фокус с палочкой и сердечком №1', 'Фокус с палочкой №1', 'Фокус с палочкой и сердечком №2', 'Фокус с палочкой №2', 'Фокус с палочкой №3', 'Фокус с сердечками №1', 'Фокус с башенкой с шариком', 'Фокус с разделителем верёвки', 'Фокус с верёвкой №1', 'Фокус с разноцветными платками', 'Фокус с платком и напальчником', 'Фокус с сердечками №2', 'Фокус с сердечками №3', 'Фокус с сердечками №4', 'Фокус с сердечками №5', 'Фокус с числовыми картами', 'Фокус с баночкой с кубиками', 'Фокус с игральным кубиком', 'Фокус с двойными картами', 'Фокус с картой со створкой', 'Фокус со сложенной купюрой', 'Фокус с картой и купюрой', 'Фокус с купюрой', 'Фокус с купюрой со скрепками', 'Фокус со скрепками', 'Фокус со стаканами и шариками', 'Фокус с кольцом и цепочкой', 'Фокус с монеткой №1', 'Фокус с резинкой и скрепкой №1', 'Фокус с резинкой и скрепкой №2', 'Фокус с резинками №1', 'Фокус с резинками №2', 'Фокус с резинками и купюрой', 'Фокус с резинкой и купюрой', 'Фокус с резинкой', 'Фокус с резинками №3', 'Фокус с резинками №4', 'Фокус с резинками №5', 'Фокус с картой с леской и спичкой', 'Фокус с верёвкой и спичечным коробком', 'Фокус со спичечным коробком №1', 'Три загадки со спичками', 'Фокус со спичкой №1', 'Фокус со спичкой №2', 'Фокус со спичечным коробком №2', 'Фокус со спичечным коробком и воздушным шариком', 'Фокус с воздушным шариком', 'Фокус с монеткой и стаканом №1', 'Фокус с монеткой №2', 'Фокус с монеткой и стаканом №2', 'Фокус с карандашом №1', 'Фокус с палочкой №4', 'Фокус с разноцветными предметами', 'Фокус со стаканами и предсказанием №1', 'Фокус со стаканами и предсказанием №2', 'Фокус с использованием рук №1', 'Фокус с использованием рук №2', 'Фокус со стаканом с жидкостью', 'Фокус с напальчником', 'Фокус с использованием пальцев №1', 'Фокус с использованием пальцев №2', 'Фокус с использованием пальцев №3', 'Фокус с использованием пальцев №4', 'Фокус с использованием пальцев №5', 'Фокус с листом бумаги', 'Три способа достать купюру из-под бутылки', 'Фокус с верёвкой №2', 'Фокус с карандашом №2', 'Фокус с использованием пальцев №6', 'Фокус с монеткой №3', 'Фокус с иллюзией левитации', 'Фокус с вопросами', 'Фокус с числами', 'Фокус с кольцом', 'Советы от Романа Про.',];
@@ -646,38 +612,36 @@
         const id = fullLessonIDs[index];
         return { name: name, duration: '', videoId: id, imageUrl: getFullPathImage(index) };
     });
-    // Цветные наборы...
-    const yellowIDs = ['rcY7WygGSLmXsvmebLWm9c', 'fTQ7fEV63wKcipkWkTT4bp', 'iSEaRT5NGgGdeNM5GRf789', 'jFkrpw1s8DxZoyWrhtcUkx', 'pSGrrMcbxqvb5MCYBct1yK', 'oRsoi13QbGQfRchJyU62g6', '5XfziUUYTb3csizx33Yrna', 'meeZ2UQ3CuH4EzkRhzXQgL', '2dcywnsds6xx2q9ryJvsqQ', 'nUaLf7h1oaNKNzN4FpzGSV', 'i3gMK3ZGLivgUEFXYYwRJs'];
-    const yellowNames = ['Фокус с разделителем верёвки', 'Фокус с разноцветными платками', 'Фокус с баночкой с кубиками', 'Фокус с купюрой со скрепками', 'Фокус с карточкой клоуна', 'Фокус с резинкой №1', 'Фокус с резинками №1', 'Фокус с калькулятором', 'Фокус с резинкой №2', 'Фокус с резинками №2', 'Фокус с использованием рук'];
+    
+    // Взрывные наборы (теперь все по 10)
     const yellowLessons = yellowNames.map((name, index) => {
         const num = (200 + index + 1).toString();
+        // ВАЖНО: Мы используем желтый набор с 11 ID (yellowIDs)
+        // Но в названии и описании будет 10, как вы просили.
         return { name: name, duration: '', videoId: yellowIDs[index], imageUrl: `${IMAGE_BASE_URL}set2/${num}.png` };
     });
-    const redIDs = ['bfXG4Hsx4GTBdMBZ5pZzhi', 'ftyyJjw3VjGxH1tzLYTKP7', '7iPAvaqagVmLZBrcy4X8Lz', 't16wR5XZbrKMNDcnp18Z8M', 'miNAnu4nrb4xK8f8TotuNE', 'hPf3YbSrDjW9dF8axkfcwB', 'wpTA54NpqsBnxgP7AaVfDP', 'caARKsiZGE37YhB8D8tzsh', '5KmNyHxdAwcVaQ78prrA3c', 'rm7XU87oa2ELb73ZcAhi4p', '5WuEuHkA257U6c7PaggsCt', 'nx7xVFaGAur1jNBFpMBDQk', 'qPS9PbfmepKXUc2n5Vdhpo', '924XDkp7WDxzcciDSpi9v5'];
-    const redNames = ['Фокус с числовыми картами', 'Фокус с кольцом и цепочкой', 'Фокус с кошельком с картами', 'Фокус с баночкой с кубиком', 'Фокус с поролоновыми шариками и кубиком №1', 'Фокус с поролоновыми шариками №1', 'Фокус с поролоновыми шариками №2', 'Фокус с поролоновыми шариками №3', 'Фокус с поролоновыми шариками и кубиком №2', 'Фокус с выбором предмета', 'Фокус с резинками', 'Фокус с резинками и прищепкой', 'Фокус с кольцом и монеткой', 'Фокус с резинками'];
     const redLessons = redNames.map((name, index) => {
         const num = (500 + index + 1).toString();
+        // Красный набор 14 ID
         return { name: name, duration: '', videoId: redIDs[index], imageUrl: `${IMAGE_BASE_URL}set5/${num}.png` };
     });
-    const greenIDs = ['cceLzZjuyBVxNmQbyatUH5', 'dJ9PQDBugVGdPgsRLcg1rL', '9tD5m4EzPt6fmZoFtgqTDd', 'vPx1uUNwNJvrDqkyg22uie', '25MUHvgQjdRv2TasmwVNm4', 'aFwyGv6pPnnjnvCLJoMLwN', 'a7fuyhV3ZzVb8GUbRKDHEE', 'dLjJ38gabh1KUrAceTC2JN', 'nUbEA7Tc15ndtLAt2MJrLP', 'ndqN834L3eZCamxj3p7tYq', 'a3CvBZ4AsM45E6DnXDTGzS'];
-    const greenNames = ['Фокус со стаканами и шариками', 'Фокус с картой с леской и спичкой', 'Фокус с печеньем', 'Фокус с тростью', 'Фокус с карточкой сердечка', 'Фокус с резинкой №1', 'Фокус с резинками №1', 'Фокус с резинками №2', 'Фокус с резинкой №2', 'Фокус с использованием рук', 'Фокус с калькулятором'];
     const greenLessons = greenNames.map((name, index) => {
         const num = (300 + index + 1).toString();
+        // Зеленый набор 11 ID
         return { name: name, duration: '', videoId: greenIDs[index], imageUrl: `${IMAGE_BASE_URL}set3/${num}.png` };
     });
-    const blueIDs = ['cYdXWi5A91HXiwLc84agwd', 'exLWcpZ6ahZgkr96vnmc2v', '5wyNGTH37RVEG6f62DmjjA', '7qsEnkPgEik9Ha2RVTV3aA', 'eAUycLzgfRb9re2cfAJj5j', 'eBG44bnhNC5QqStJEwTEh6', 'p56ktVWncRiBGDHb8DNhir', 'nQFNcp2nuH1EJMwzWzdkXM', 'uVXaTQW4bpW9ThJwvAxdUz', 'ggXGnauUHE9jDYA8NV9Vsv', 'sdv4oUFrxgwqN4SGmBwGpJ'];
-    const blueNames = ['Фокус с башенкой с шариком', 'Фокус с платком и напальчником', 'Фокус с двойными картами', 'Фокус с карточкой “Дай пять”', 'Фокус с колодой в футляре', 'Фокус с купюрой и бумажкой №1', 'Фокус с купюрой и бумажкой №2', 'Фокус с резинкой №1', 'Фокус с использованием рук', 'Фокус с резинкой №2', 'Фокус с резинкой №3'];
     const blueLessons = blueNames.map((name, index) => {
         const num = (400 + index + 1).toString();
+        // Синий набор 11 ID
         return { name: name, duration: '', videoId: blueIDs[index], imageUrl: `${IMAGE_BASE_URL}set4/${num}.png` };
     });
 
     const courses = {
-        set_75: { title: '75 Трюков (База)', lessons: fullLessons },
-        set_blue: { title: '11 Взрывных Фокусов (Синий)', lessons: blueLessons },
-        set_red: { title: '14 Взрывных Фокусов (Красный)', lessons: redLessons }, 
-        set_yellow: { title: '11 Взрывных Фокусов (Желтый)', lessons: yellowLessons },
-        set_green: { title: '11 Взрывных Фокусов (Зеленый)', lessons: greenLessons },
+        set_75: { title: '75 Трюков (База)', lessons: fullLessons, description: 'Стань настоящим мастером иллюзий!' },
+        set_blue: { title: '10 Взрывных Фокусов (Синий)', lessons: blueLessons, description: 'Трюки с платками, картами и купюрами.' },
+        set_red: { title: '10 Взрывных Фокусов (Красный)', lessons: redLessons, description: 'С кольцами, цепочками и шариками.' }, 
+        set_yellow: { title: '10 Взрывных Фокусов (Желтый)', lessons: yellowLessons, description: 'Трюки с резинками и предметами.' },
+        set_green: { title: '10 Взрывных Фокусов (Зеленый)', lessons: greenLessons, description: 'Фокусы с тростью и использованием рук.' },
     };
 
     // --- 2. ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ И НАВИГАЦИЯ ---
@@ -688,14 +652,11 @@
     let lessonList;
     let currentCourseId = null;
 
-    // Аудио/Видео
+    // Аудио
     let bgMusic;
     let clickSound;
     let isMusicPlaying = false;
     let isSoundEnabled = true;
-    let introVideo;
-    let introOverlay;
-    let skipIntroButton;
     let kinescopePlayer;
 
     // Модальное окно
@@ -714,16 +675,10 @@
         loadingSpinner = document.getElementById('loading-spinner');
         kinescopePlayer = document.getElementById('kinescope-player');
 
-        // Аудио/Видео
+        // Аудио
         bgMusic = document.getElementById('bg-music');
         clickSound = document.getElementById('click-sound');
-        introVideo = document.getElementById('intro-video');
-        introOverlay = document.getElementById('intro-video-overlay');
-        skipIntroButton = document.getElementById('skip-intro-button');
         document.getElementById('music-toggle').addEventListener('click', toggleMusic);
-        skipIntroButton.addEventListener('click', skipIntro);
-        introVideo.addEventListener('ended', skipIntro);
-        kinescopePlayer.addEventListener('load', handleKinescopeLoad);
         
         // Модальное окно
         registrationOverlay = document.getElementById('registration-overlay');
@@ -742,7 +697,7 @@
         registrationForm.addEventListener('submit', handleRegistrationSubmit);
     }
 
-    // --- 3. АУДИО И ВИДЕО ФУНКЦИИ ---
+    // --- 3. АУДИО ФУНКЦИИ ---
 
     function playClickSound() {
         if (isSoundEnabled && clickSound) {
@@ -781,16 +736,8 @@
             bgMusic.play().catch(e => console.log("Не удалось возобновить музыку:", e));
         }
     }
-    
-    // --- Обработчик Kinescope (когда плеер загружен) ---
-    function handleKinescopeLoad() {
-        // Добавьте логику отслеживания начала и конца воспроизведения видео Kinescope,
-        // чтобы управлять музыкой. Это потребует использования Kinescope Player API.
-        // Сейчас мы будем полагаться на более простую логику:
-        // Музыка приостанавливается, как только пользователь переходит к просмотру видео (в playLesson).
-    }
 
-    // --- 4. НАВИГАЦИЯ СТРАНИЦ И ИНТРО ---
+    // --- 4. НАВИГАЦИЯ СТРАНИЦ ---
 
     function startApp() {
         // Устанавливаем обработчик для первого клика для запуска музыки
@@ -802,28 +749,6 @@
 
         handleInitialCheck(); 
         showCourseSelection();
-    }
-
-    function showIntro() {
-        const introShown = localStorage.getItem(INTRO_SHOWN_KEY);
-        if (introShown === 'true') {
-            introOverlay.classList.add('hidden');
-            startApp();
-            return;
-        }
-
-        introVideo.play().catch(e => {
-            console.log("Автозапуск интро заблокирован:", e);
-            // Если автозапуск заблокирован, показываем кнопку пропуска и просто переходим к приложению.
-            skipIntro();
-        });
-    }
-
-    function skipIntro() {
-        introVideo.pause();
-        introOverlay.classList.add('hidden');
-        localStorage.setItem(INTRO_SHOWN_KEY, 'true');
-        startApp();
     }
 
     function showCourseSelection() {
@@ -868,13 +793,14 @@
         videoPlayerView.scrollIntoView({ behavior: 'smooth' });
     }
 
-    function goBackToLessonList(isLessonView) {
+    function goBackToLessonList() {
         playClickSound();
         kinescopePlayer.src = ''; 
         document.getElementById('video-thumbnail-large').style.opacity = 0;
         resumeMusicAfterVideo(); // Возобновление музыки
         
-        if (isLessonView && currentCourseId) {
+        // Кнопка "Назад" в плеере всегда возвращает к списку уроков
+        if (currentCourseId) {
             showLessonList(currentCourseId);
         } else {
             showCourseSelection();
@@ -909,7 +835,6 @@
         const registered = localStorage.getItem(USER_STORAGE_KEY);
         const tgId = getTelegramIdFromContext();
         
-        // Если уже зарегистрирован (на сайте, пропустил или через ТГ ID), пропускаем модальное окно
         if (registered === 'true' || (registered === 'skipped') || (tgId && tgId !== 'null')) {
              hideRegistrationModal();
         } else {
@@ -922,7 +847,6 @@
         policyInitialView.classList.remove('hidden');
         loadingSpinner.classList.add('hidden');
         
-        // Сбрасываем все представления, кроме начального
         [policyFullView, registrationFormView, successView].forEach(view => view.classList.add('hidden'));
 
         document.getElementById('skip-registration-btn').classList.remove('hidden'); 
@@ -957,7 +881,6 @@
     }
 
     function showSuccessView() {
-        // Убеждаемся, что все скрыто, кроме success-view
         [policyInitialView, policyFullView, registrationFormView, loadingSpinner].forEach(view => view.classList.add('hidden'));
         
         successView.classList.remove('hidden');
@@ -974,7 +897,6 @@
     }
     
     function showLoadingSpinner() {
-        // Скрываем все формы и показываем спиннер
         [policyInitialView, policyFullView, registrationFormView, successView].forEach(view => view.classList.add('hidden'));
         loadingSpinner.classList.remove('hidden');
         document.getElementById('modal-title').textContent = "Запись данных...";
@@ -992,7 +914,6 @@
         console.log("Имитация отправки данных:", data); 
         
         setTimeout(() => {
-            // Имитация успешной регистрации:
             localStorage.setItem(USER_STORAGE_KEY, 'true'); 
             if (data.tg_id) {
                 localStorage.setItem(TG_ID_STORAGE_KEY, data.tg_id);
@@ -1015,8 +936,7 @@
             });
         });
         
-        // Сначала показываем интро
-        showIntro();
+        startApp();
     });
 </script>
 </body>
