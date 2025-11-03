@@ -612,7 +612,10 @@
 
 
 <script>
-    // --- 1. ДАННЫЕ О КУРСАХ И ID ---
+    // --- 0. КОНСТАНТЫ И URL СЕРВЕРА ---
+    // !!! ВСТАВЬТЕ СЮДА ВАШ URL, ПОЛУЧЕННЫЙ В GOOGLE APPS SCRIPT !!!
+    const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycby2R4j1aBQ2zmybXyqjVhgFntoduCYYX6AuZ8kMmRUWdF8ZQCNTTpPij0kmxaSxAZmjvg/exec'; 
+
     const IMAGE_BASE_URL = 'images/';
     const USER_STORAGE_KEY = 'magic_course_user_registered';
     const TG_ID_STORAGE_KEY = 'magic_course_tg_id';
@@ -631,7 +634,6 @@
     
     // --- ВОССТАНОВЛЕННЫЕ ДАННЫЕ ДЛЯ ЦВЕТНЫХ НАБОРОВ ---
 
-    // 11 ВЗРЫВНЫХ ФОКУСОВ (Желтый - set2)
     const yellowIDs = ['rcY7WygGSLmXsvmebLWm9c', 'fTQ7fEV63wKcipkWkTT4bp', 'iSEaRT5NGgGdeNM5GRf789', 'jFkrpw1s8DxZoyWrhtcUkx', 'pSGrrMcbxqvb5MCYBct1yK', 'oRsoi13QbGQfRchJyU62g6', '5XfziUUYTb3csizx33Yrna', 'meeZ2UQ3CuH4EzkRhzXQgL', '2dcywnsds6xx2q9ryJvsqQ', 'nUaLf7h1oaNKNzN4FpzGSV', 'i3gMK3ZGLivgUEFXYYwRJs'];
     const yellowNames = ['Фокус с разделителем верёвки', 'Фокус с разноцветными платками', 'Фокус с баночкой с кубиками', 'Фокус с купюрой со скрепками', 'Фокус с карточкой клоуна', 'Фокус с резинкой №1', 'Фокус с резинками №1', 'Фокус с калькулятором', 'Фокус с резинкой №2', 'Фокус с резинками №2', 'Фокус с использованием рук'];
     const yellowLessons = yellowNames.map((name, index) => {
@@ -639,7 +641,6 @@
         return { name: name, duration: '', videoId: yellowIDs[index], imageUrl: `${IMAGE_BASE_URL}set2/${num}.png` };
     });
 
-    // 14 ВЗРЫВНЫХ ФОКУСОВ (Красный - set5)
     const redIDs = ['bfXG4Hsx4GTBdMBZ5pZzhi', 'ftyyJjw3VjGxH1tzLYTKP7', '7iPAvaqagVmLZBrcy4X8Lz', 't16wR5XZbrKMNDcnp18Z8M', 'miNAnu4nrb4xK8f8TotuNE', 'hPf3YbSrDjW9dF8axkfcwB', 'wpTA54NpqsBnxgP7AaVfDP', 'caARKsiZGE37YhB8D8tzsh', '5KmNyHxdAwcVaQ78prrA3c', 'rm7XU87oa2ELb73ZcAhi4p', '5WuEuHkA257U6c7PaggsCt', 'nx7xVFaGAur1jNBFpMBDQk', 'qPS9PbfmepKXUc2n5Vdhpo', '924XDkp7WDxzcciDSpi9v5'];
     const redNames = ['Фокус с числовыми картами', 'Фокус с кольцом и цепочкой', 'Фокус с кошельком с картами', 'Фокус с баночкой с кубиком', 'Фокус с поролоновыми шариками и кубиком №1', 'Фокус с поролоновыми шариками №1', 'Фокус с поролоновыми шариками №2', 'Фокус с поролоновыми шариками №3', 'Фокус с поролоновыми шариками и кубиком №2', 'Фокус с выбором предмета', 'Фокус с резинками', 'Фокус с резинками и прищепкой', 'Фокус с кольцом и монеткой', 'Фокус с резинками'];
     const redLessons = redNames.map((name, index) => {
@@ -647,7 +648,6 @@
         return { name: name, duration: '', videoId: redIDs[index], imageUrl: `${IMAGE_BASE_URL}set5/${num}.png` };
     });
 
-    // 11 ВЗРЫВНЫХ ФОКУСОВ (Зеленый - set3)
     const greenIDs = ['cceLzZjuyBVxNmQbyatUH5', 'dJ9PQDBugVGdPgsRLcg1rL', '9tD5m4EzPt6fmZoFtgqTDd', 'vPx1uUNwNJvrDqkyg22uie', '25MUHvgQjdRv2TasmwVNm4', 'aFwyGv6pPnnjnvCLJoMLwN', 'a7fuyhV3ZzVb8GUbRKDHEE', 'dLjJ38gabh1KUrAceTC2JN', 'nUbEA7Tc15ndtLAt2MJrLP', 'ndqN834L3eZCamxj3p7tYq', 'a3CvBZ4AsM45E6DnXDTGzS'];
     const greenNames = ['Фокус со стаканами и шариками', 'Фокус с картой с леской и спичкой', 'Фокус с печеньем', 'Фокус с тростью', 'Фокус с карточкой сердечка', 'Фокус с резинкой №1', 'Фокус с резинками №1', 'Фокус с резинками №2', 'Фокус с резинкой №2', 'Фокус с использованием рук', 'Фокус с калькулятором'];
     const greenLessons = greenNames.map((name, index) => {
@@ -655,7 +655,6 @@
         return { name: name, duration: '', videoId: greenIDs[index], imageUrl: `${IMAGE_BASE_URL}set3/${num}.png` };
     });
 
-    // 11 ВЗРЫВНЫХ ФОКУСОВ (Синий - set4)
     const blueIDs = ['cYdXWi5A91HXiwLc84agwd', 'exLWcpZ6ahZgkr96vnmc2v', '5wyNGTH37RVEG6f62DmjjA', '7qsEnkPgEik9Ha2RVTV3aA', 'eAUycLzgfRb9re2cfAJj5j', 'eBG44bnhNC5QqStJEwTEh6', 'p56ktVWncRiBGDHb8DNhir', 'nQFNcp2nuH1EJMwzWzdkXM', 'uVXaTQW4bpW9ThJwvAxdUz', 'ggXGnauUHE9jDYA8NV9Vsv', 'sdv4oUFrxgwqN4SGmBwGpJ'];
     const blueNames = ['Фокус с башенкой с шариком', 'Фокус с платком и напальчником', 'Фокус с двойными картами', 'Фокус с карточкой “Дай пять”', 'Фокус с колодой в футляре', 'Фокус с купюрой и бумажкой №1', 'Фокус с купюрой и бумажкой №2', 'Фокус с резинкой №1', 'Фокус с использованием рук', 'Фокус с резинкой №2', 'Фокус с резинкой №3'];
     const blueLessons = blueNames.map((name, index) => {
@@ -663,7 +662,6 @@
         return { name: name, duration: '', videoId: blueIDs[index], imageUrl: `${IMAGE_BASE_URL}set4/${num}.png` };
     });
     
-    // Объекты курсов
     const courses = {
         set_75: { title: '75 Трюков (База)', lessons: fullLessons, description: 'Стань настоящим мастером иллюзий!' },
         set_blue: { title: '10 Взрывных Фокусов (Синий)', lessons: blueLessons, description: 'Трюки с платками, картами и купюрами.' },
@@ -929,7 +927,7 @@
         document.getElementById('modal-title').textContent = "Запись данных...";
     }
 
-    function handleRegistrationSubmit(event) {
+    async function handleRegistrationSubmit(event) {
         event.preventDefault();
         playClickSound();
         showLoadingSpinner();
@@ -937,17 +935,36 @@
         const formData = new FormData(registrationForm);
         const data = Object.fromEntries(formData.entries());
         
-        // *** ЗАГЛУШКА ДЛЯ ОТПРАВКИ ДАННЫХ ***
-        console.log("Имитация отправки данных:", data); 
-        
-        setTimeout(() => {
+        console.log("Отправка данных на Google Sheets:", data);
+
+        try {
+            const response = await fetch(WEB_APP_URL, {
+                method: 'POST',
+                mode: 'no-cors', // Важно для Apps Script
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            });
+            
+            // Поскольку mode: 'no-cors' не позволяет читать ответ,
+            // мы считаем, что если нет сетевой ошибки, то запрос отправлен.
+            
             localStorage.setItem(USER_STORAGE_KEY, 'true'); 
             if (data.tg_id) {
                 localStorage.setItem(TG_ID_STORAGE_KEY, data.tg_id);
             }
             
             showSuccessView();
-        }, 2000); 
+
+        } catch (error) {
+            console.error("Ошибка при отправке данных в Google Sheets:", error);
+            // Если произошла ошибка, показываем форму снова или сообщение об ошибке
+            document.getElementById('modal-title').textContent = "Ошибка!";
+            loadingSpinner.textContent = "Ошибка при сохранении данных. Проверьте URL скрипта.";
+            // Для простоты, оставим спиннер с сообщением об ошибке
+            setTimeout(showRegistrationModal, 3000); // Попробуем снова через 3 секунды
+        }
     }
 
     // --- 6. ИНИЦИАЛИЗАЦИЯ ---
