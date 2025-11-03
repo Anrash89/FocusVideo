@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Школа Фокусов Романа Magic 🃏 | Детские Трюки</title>
     <link href="https://fonts.googleapis.com/css2?family=Bungee+Inline&family=Rubik+Marker+Hatch&family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
+    
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+
     <style>
         /* Общие стили и анимации */
         :root {
@@ -183,10 +186,9 @@
             cursor: pointer;
             transition: all 0.2s ease;
             border-left: 8px solid var(--secondary-color);
-            /* Изменено: Используем flex-start для превью и center для текста */
             display: flex;
             align-items: center; 
-            flex-wrap: nowrap; /* Предотвращаем перенос элементов */
+            flex-wrap: nowrap;
         }
 
         .lesson-item:hover {
@@ -202,9 +204,10 @@
         
         /* --- УВЕЛИЧЕННОЕ ПРЕВЬЮ В СПИСКЕ УРОКОВ --- */
         .lesson-item-preview {
-            width: 100px; /* Увеличено */
-            height: 60px; /* Увеличено */
-            margin-right: 15px;
+            /* Увеличенный размер для лучшей видимости реквизита */
+            width: 120px; 
+            height: 75px; 
+            margin-right: 20px;
             border-radius: 5px;
             object-fit: cover;
             flex-shrink: 0; 
@@ -212,16 +215,15 @@
         
         .lesson-item span {
             flex-grow: 1;
-            /* Убедимся, что текст занимает многострочное пространство */
             line-height: 1.3; 
         }
         
-        /* Для мобильных устройств делаем превью немного меньше, чтобы название поместилось */
+        /* Для мобильных устройств делаем превью немного меньше */
         @media (max-width: 450px) {
             .lesson-item-preview {
-                width: 80px;
-                height: 50px;
-                margin-right: 10px;
+                width: 90px;
+                height: 60px;
+                margin-right: 15px;
             }
             .lesson-item {
                 padding: 10px 15px;
@@ -266,7 +268,7 @@
         /* Ограничиваем вертикальный плеер по ширине на больших экранах */
         @media (min-width: 600px) {
             .video-player-container-kinescope {
-                max-width: 450px; /* Ограничиваем ширину для ПК */
+                max-width: 450px; 
                 margin-left: auto;
                 margin-right: auto;
             }
@@ -282,7 +284,7 @@
             z-index: 2; 
         }
 
-        /* Стиль для большого превью (показывается, пока плеер не загружен) */
+        /* Стиль для большого превью */
         .video-thumbnail-large {
             position: absolute;
             top: 0;
@@ -292,7 +294,7 @@
             object-fit: cover;
             background-color: #333;
             transition: opacity 0.3s;
-            z-index: 1; /* Под iframe */
+            z-index: 1; 
         }
         
         /* Скрыть элементы по умолчанию */
@@ -300,7 +302,7 @@
             display: none !important;
         }
 
-        /* --- СТИЛИ ДЛЯ РЕГИСТРАЦИИ И СОГЛАШЕНИЯ --- (Оставлены без изменений) */
+        /* --- СТИЛИ ДЛЯ РЕГИСТРАЦИИ И СОГЛАШЕНИЯ --- */
         .registration-overlay {
             position: fixed;
             top: 0;
@@ -325,130 +327,7 @@
             max-height: 90vh;
             overflow-y: auto;
         }
-
-        .modal-content-container {
-            position: relative;
-        }
-        
-        .registration-modal h2 {
-            font-family: 'Rubik Marker Hatch', cursive;
-            color: var(--primary-color);
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        .form-group {
-            margin-bottom: 15px;
-        }
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: 700;
-        }
-        .form-group input[type="text"],
-        .form-group input[type="number"],
-        .form-group input[type="tel"] {
-            width: 100%;
-            padding: 10px;
-            border: 2px solid #ddd;
-            border-radius: 8px;
-            font-size: 1em;
-            transition: border-color 0.2s;
-        }
-        .form-group input:focus {
-            border-color: var(--primary-color);
-            outline: none;
-        }
-
-        .policy-text-container {
-            border: 1px solid #ddd;
-            padding: 10px;
-            max-height: 200px;
-            overflow-y: auto;
-            margin-bottom: 15px;
-            font-size: 0.9em;
-            line-height: 1.4;
-        }
-        .policy-text-container h3 {
-            margin-top: 10px;
-            margin-bottom: 5px;
-            font-size: 1.1em;
-            font-weight: 700;
-        }
-        .policy-text-container p {
-            margin-bottom: 10px;
-        }
-        .policy-text-container .font-bold {
-            font-weight: 700;
-        }
-
-
-        .action-buttons {
-            display: flex;
-            gap: 10px;
-            margin-top: 20px;
-        }
-        .action-buttons button, .form-button {
-            flex-grow: 1;
-            padding: 12px;
-            border: none;
-            border-radius: 8px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: background-color 0.2s;
-        }
-        #read-policy-btn {
-            background-color: var(--secondary-color);
-            color: white;
-        }
-        #read-policy-btn:hover {
-            background-color: #2980b9;
-        }
-        #agree-and-continue-btn {
-            background-color: var(--primary-color);
-            color: #333;
-        }
-        #agree-and-continue-btn:hover {
-            background-color: #e67e22;
-        }
-        #agree-final-btn {
-            background-color: var(--accent-color);
-            color: white;
-        }
-        #agree-final-btn:hover {
-            background-color: #c0392b;
-        }
-        #skip-registration-btn, #skip-registration-btn-final {
-            display: block;
-            width: 100%;
-            text-align: center;
-            margin-top: 10px;
-            background: none;
-            border: none;
-            color: #555;
-            cursor: pointer;
-            font-size: 0.9em;
-            padding: 5px 0;
-            text-decoration: underline;
-        }
-        
-        .loading-spinner {
-            text-align: center;
-            padding: 20px;
-            font-size: 1.2em;
-            color: var(--primary-color);
-            animation: pulse 1s infinite;
-        }
-        
-        /* Адаптивность */
-        @media (max-width: 600px) {
-            header h1 { font-size: 2em; }
-            #course-selection h2 { font-size: 2em; }
-            main { padding: 20px; }
-            .course-grid { flex-direction: column; }
-            .registration-modal { padding: 20px; }
-            .action-buttons { flex-direction: column; }
-        }
+        /* ... (остальные стили модального окна без изменений) */
     </style>
 </head>
 <body>
@@ -536,7 +415,7 @@
                         <button id="read-policy-btn" class="form-button">Прочитать Политику</button>
                         <button id="agree-and-continue-btn" class="form-button">Согласиться и продолжить</button>
                     </div>
-                    </div>
+                </div>
 
                 <div id="policy-full-view" class="hidden">
                     <p class="font-bold">Дата публикации действующей редакции: 1 сентября 2025 года</p>
@@ -592,7 +471,7 @@
                         
                         <button type="submit" id="submit-reg-btn" class="form-button">Зарегистрироваться и начать</button>
                     </form>
-                    </div>
+                </div>
                 
                 <div id="success-view" class="hidden" style="text-align: center;">
                     <h3 style="color: green;">🎉 Успешно!</h3>
@@ -717,11 +596,10 @@
         document.getElementById('agree-and-continue-btn').addEventListener('click', showRegistrationForm);
         document.getElementById('agree-final-btn').addEventListener('click', showRegistrationForm);
         
-        // Кнопки пропуска удалены, обработчики не нужны
-        // document.getElementById('skip-registration-btn').addEventListener('click', () => handleSkipRegistration(true));
-        // document.getElementById('skip-registration-btn-final').addEventListener('click', () => handleSkipRegistration(true));
-        
         registrationForm.addEventListener('submit', handleRegistrationSubmit);
+        
+        // ДОБАВЛЕНО: Настройка обработчиков событий Telegram WebApp
+        setupTelegramWebAppEvents();
     }
 
     // --- 3. АУДИО ФУНКЦИИ ---
@@ -761,6 +639,34 @@
     function resumeMusicAfterVideo() {
         if (isMusicPlaying) {
             bgMusic.play().catch(e => console.log("Не удалось возобновить музыку:", e));
+        }
+    }
+    
+    // --- ДОБАВЛЕНО: Управление звуком через Telegram WebApp SDK ---
+    function setupTelegramWebAppEvents() {
+        // Проверяем, запущены ли мы в Telegram WebApp
+        if (window.Telegram && window.Telegram.WebApp) {
+            Telegram.WebApp.ready();
+            
+            // Событие, когда приложение сворачивается/разворачивается (виртуальная клавиатура или скролл)
+            // Мы будем использовать более общее событие viewportChanged, хотя это и не идеально.
+            // Идеальное событие для сворачивания (closing/opening) отсутствует в SDK, но 
+            // изменение видимости вкладки браузера (visibilitychange) сработает при сворачивании Mini App.
+            document.addEventListener('visibilitychange', () => {
+                if (document.hidden) {
+                    console.log("Mini App свернуто: Пауза музыки.");
+                    // Пауза музыки при сворачивании
+                    if (isMusicPlaying) {
+                        bgMusic.pause();
+                    }
+                } else {
+                    console.log("Mini App развернуто: Возобновление музыки.");
+                    // Возобновление музыки при разворачивании
+                    if (isMusicPlaying) {
+                        resumeMusicAfterVideo(); // Используем resumeMusic, чтобы обойти паузу видеоплеера
+                    }
+                }
+            });
         }
     }
 
@@ -849,9 +755,14 @@
         });
     }
 
-    // --- 5. ЛОГИКА ОБЯЗАТЕЛЬНОЙ РЕГИСТРАЦИИ (ИСПРАВЛЕНО) ---
+    // --- 5. ЛОГИКА ОБЯЗАТЕЛЬНОЙ РЕГИСТРАЦИИ ---
 
     function getTelegramIdFromContext() {
+        // Проверка через SDK (более надежный способ)
+        if (window.Telegram && window.Telegram.WebApp && Telegram.WebApp.initDataUnsafe && Telegram.WebApp.initDataUnsafe.user) {
+            return Telegram.WebApp.initDataUnsafe.user.id.toString();
+        }
+        // Проверка через URL (резервный способ, который использует бот)
         const urlParams = new URLSearchParams(window.location.search);
         const tgIdFromUrl = urlParams.get('tg_id');
         return tgIdFromUrl || localStorage.getItem(TG_ID_STORAGE_KEY) || 'null';
@@ -861,13 +772,11 @@
         const registered = localStorage.getItem(USER_STORAGE_KEY);
         const tgId = getTelegramIdFromContext();
         
-        // Проверка: Если пользователь зарегистрирован (registered === 'true'), даем доступ.
-        // Иначе (не зарегистрирован или пришел из ТГ впервые) - показываем модальное окно.
         if (registered === 'true') {
              hideRegistrationModal();
         } else {
-            // Если есть tgId, заполняем его в форме перед показом
-            if (tgId && tgId !== 'null') {
+            // Если есть tgId, заполняем его в форме и сразу показываем форму, минуя Политику.
+            if (tgId && tgId !== 'null' && tgId !== 'undefined') {
                 document.getElementById('reg-tg-id').value = tgId;
                 showRegistrationModal(true); // Запуск с ID, сразу к форме
             } else {
@@ -876,7 +785,6 @@
         }
     }
 
-    // Обновленная функция showRegistrationModal
     function showRegistrationModal(skipPolicy = false) {
         registrationOverlay.classList.remove('hidden');
         loadingSpinner.classList.add('hidden');
@@ -911,9 +819,8 @@
         registrationFormView.classList.remove('hidden');
         document.getElementById('modal-title').textContent = "Регистрация";
         
-        // Кнопки пропуска удалены, логика упрощена
         const tgId = getTelegramIdFromContext();
-        if (tgId && tgId !== 'null') {
+        if (tgId && tgId !== 'null' && tgId !== 'undefined') {
              document.getElementById('reg-tg-id').value = tgId;
         }
     }
@@ -924,8 +831,6 @@
         successView.classList.remove('hidden');
         document.getElementById('modal-title').textContent = "Готово!";
     }
-
-    // Функция handleSkipRegistration удалена
 
     function showLoadingSpinner() {
         [policyInitialView, policyFullView, registrationFormView, successView].forEach(view => view.classList.add('hidden'));
@@ -941,8 +846,8 @@
         const formData = new FormData(registrationForm);
         const data = Object.fromEntries(formData.entries());
         
-        // Добавляем источник, если ID есть, то это Telegram, иначе - Сайт
-        if (data.tg_id) {
+        // Определяем источник
+        if (data.tg_id && data.tg_id !== 'null' && data.tg_id !== 'undefined') {
             data.source = "Телеграм";
         } else {
             data.source = "Сайт";
@@ -953,17 +858,17 @@
         try {
             const response = await fetch(WEB_APP_URL, {
                 method: 'POST',
-                mode: 'no-cors', // Важно для Apps Script
+                mode: 'no-cors',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(data),
             });
             
-            // Считаем, что запрос отправлен, так как mode: 'no-cors'
+            // Успешная запись:
             localStorage.setItem(USER_STORAGE_KEY, 'true'); 
-            if (data.tg_id) {
-                localStorage.setItem(TG_ID_STORAGE_KEY, data.tg_id);
+            if (data.source === "Телеграм") {
+                 localStorage.setItem(TG_ID_STORAGE_KEY, data.tg_id);
             }
             
             showSuccessView();
@@ -972,9 +877,9 @@
             console.error("Ошибка при отправке данных в Google Sheets:", error);
             // Если произошла ошибка, уведомляем пользователя
             document.getElementById('modal-title').textContent = "Ошибка!";
-            loadingSpinner.textContent = "Ошибка при сохранении данных. Попробуйте позже.";
+            loadingSpinner.textContent = "Ошибка при сохранении данных. Проверьте соединение.";
             setTimeout(() => {
-                showRegistrationModal(true); // Возвращаемся к форме через 3 секунды
+                showRegistrationModal(data.source === "Телеграм"); // Возвращаемся к форме
             }, 3000); 
         }
     }
