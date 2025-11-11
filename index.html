@@ -848,9 +848,9 @@
         
         // Определяем источник
         if (data.tg_id && data.tg_id !== 'null' && data.tg_id !== 'undefined') {
-            data.source = "Телеграм";
+            data.source = "Телеграм Роман";
         } else {
-            data.source = "Сайт";
+            data.source = "Сайт Роман";
         }
         
         console.log("Отправка данных на Google Sheets:", data);
@@ -867,7 +867,7 @@
             
             // Успешная запись:
             localStorage.setItem(USER_STORAGE_KEY, 'true'); 
-            if (data.source === "Телеграм") {
+            if (data.source === "Телеграм Роман") {
                  localStorage.setItem(TG_ID_STORAGE_KEY, data.tg_id);
             }
             
@@ -879,7 +879,7 @@
             document.getElementById('modal-title').textContent = "Ошибка!";
             loadingSpinner.textContent = "Ошибка при сохранении данных. Проверьте соединение.";
             setTimeout(() => {
-                showRegistrationModal(data.source === "Телеграм"); // Возвращаемся к форме
+                showRegistrationModal(data.source === "Телеграм Роман"); // Возвращаемся к форме
             }, 3000); 
         }
     }
