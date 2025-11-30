@@ -422,6 +422,19 @@
                     <h3>75 Лучших Фокусов</h3>
                     <p>Стань настоящим мастером иллюзий!</p>
                 </div>
+
+                <div class="course-card" data-id="set_100">
+                    <img src="images/set100.png" alt="100 фокусов" class="card-image">
+                    <h3>100 Супер Фокусов</h3>
+                    <p>Самая большая коллекция магии!</p>
+                </div>
+
+                <div class="course-card" data-id="set_50">
+                    <img src="images/set50.png" alt="50 фокусов" class="card-image">
+                    <h3>50 Классных Трюков</h3>
+                    <p>Отличный старт для юного мага.</p>
+                </div>
+
                 <div class="course-card" data-id="set_blue">
                     <img src="images/set4.jpg" alt="Синий набор фокусов" class="card-image">
                     <h3>10 Взрывных Фокусов</h3>
@@ -977,7 +990,6 @@
             data.source = "Сайт Роман";
         }
         
-        // Меняем поле age на dob для отправки (хотя имя поля уже dob в форме)
         console.log("Отправка данных:", data);
 
         try {
@@ -1015,6 +1027,19 @@
             card.addEventListener('click', (event) => {
                 playClickSound();
                 const courseId = event.currentTarget.getAttribute('data-id');
+                
+                // ЛОГИКА ДЛЯ НОВЫХ НАБОРОВ (ЯНДЕКС ДИСК)
+                if (courseId === 'set_100') {
+                    window.open('https://disk.yandex.ru/d/Zh6sd4-OoYnQhg', '_blank');
+                    return; // Прерываем выполнение, чтобы не открывать список уроков
+                }
+                
+                if (courseId === 'set_50') {
+                    window.open('https://disk.yandex.ru/d/R9ONalXRNhvHXA', '_blank');
+                    return; // Прерываем выполнение
+                }
+
+                // Стандартная логика для остальных наборов
                 showLessonList(courseId);
             });
         });
