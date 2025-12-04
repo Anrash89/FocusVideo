@@ -498,7 +498,7 @@
             <h2 style="text-align: center; color: var(--detective-color); font-family: 'Rubik Marker Hatch'; font-size: 2.2em;">Секретные Материалы 🕵️‍♂️</h2>
             
             <div class="course-grid" style="margin-top: 30px;">
-                <div class="course-card" onclick="showDetectiveInvestigationsList()" style="border-bottom-color: var(--detective-color);">
+                <div class="course-card" onclick="openImageViewer('images/detective/1.jpg', 'Ответы на расследования')" style="border-bottom-color: var(--detective-color);">
                     <div style="font-size: 4em;">🔍</div>
                     <h3 style="color: var(--detective-color);">Ответы на 10 Расследований</h3>
                     <p>Проверь свои догадки!</p>
@@ -512,18 +512,11 @@
             </div>
         </section>
 
-        <section id="detective-list-view" class="list-view-container hidden">
-            <button class="back-button" onclick="showDetectiveMenu()">
-                &larr; Назад к выбору
-            </button>
-            <h2 style="color: var(--detective-color);">Выберите дело:</h2>
-            <ul id="detective-list" class="item-list">
-                </ul>
-        </section>
+        <section id="detective-list-view" class="list-view-container hidden"></section>
 
         <section id="image-viewer-view" class="hidden">
-            <button class="back-button" onclick="showDetectiveInvestigationsList()">
-                &larr; Назад к списку дел
+            <button class="back-button" onclick="showDetectiveMenu()">
+                &larr; Назад к меню детектива
             </button>
             <h2 id="image-view-title" style="text-align: center; margin-bottom: 15px;"></h2>
             <div class="viewer-container" style="background: transparent; box-shadow: none;">
@@ -749,16 +742,6 @@
         return { name: name, duration: '', videoId: blueIDs[index], imageUrl: `${IMAGE_BASE_URL}set4/${num}.png` };
     });
 
-    // --- 2. ДАННЫЕ ДЛЯ ДЕТЕКТИВА (10 Расследований) ---
-    const detectiveInvestigations = [];
-    for (let i = 1; i <= 10; i++) {
-        detectiveInvestigations.push({
-            name: `Дело №${i}: Ответ`,
-            // Ссылка на картинку: images/detective/1.jpg, 2.jpg...
-            imageUrl: `images/detective/${i}.jpg`
-        });
-    }
-
     const courses = {
         set_75: { title: '75 Трюков', lessons: fullLessons },
         set_blue: { title: 'Синий набор', lessons: blueLessons },
@@ -783,9 +766,8 @@
         views.lessonList = document.getElementById('lesson-list-view');
         views.videoPlayer = document.getElementById('video-player-view');
         views.detectiveMenu = document.getElementById('detective-menu-view');
-        views.detectiveList = document.getElementById('detective-list-view');
         views.imageViewer = document.getElementById('image-viewer-view');
-        views.bookViewer = document.getElementById('book-viewer-view'); // Изменено с pdfViewer
+        views.bookViewer = document.getElementById('book-viewer-view');
 
         loadingSpinner = document.getElementById('loading-spinner');
         kinescopePlayer = document.getElementById('kinescope-player');
@@ -813,7 +795,11 @@
 
     // --- 4. УПРАВЛЕНИЕ ВИДИМОСТЬЮ (РОУТЕР) ---
     function hideAllViews() {
-        Object.values(views).forEach(el => el.classList.add('hidden'));
+        Object.values(views).forEach(el => {
+            if(el) el.classList.add('hidden');
+        });
+        // Дополнительная очистка для безопасности
+        document.getElementById('detective-list-view').classList.add('hidden');
     }
 
     function showCourseSelection() {
@@ -881,29 +867,6 @@
     function showDetectiveMenu() {
         hideAllViews();
         views.detectiveMenu.classList.remove('hidden');
-    }
-
-    function showDetectiveInvestigationsList() {
-        playClickSound();
-        hideAllViews();
-        views.detectiveList.classList.remove('hidden');
-
-        const list = document.getElementById('detective-list');
-        list.innerHTML = '';
-
-        detectiveInvestigations.forEach((item, index) => {
-            const li = document.createElement('li');
-            li.className = 'list-item';
-            li.style.borderLeftColor = 'var(--detective-color)';
-            li.innerHTML = `
-                <div style="width: 50px; font-size: 24px; text-align: center; margin-right: 15px;">🕵️‍♂️</div>
-                <span>${item.name}</span>
-            `;
-            li.addEventListener('click', () => { 
-                openImageViewer(item.imageUrl, item.name); 
-            });
-            list.appendChild(li);
-        });
     }
 
     // --- 7. ПРОСМОТРЩИК КАРТИНОК (JPG) ---
