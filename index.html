@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Школа Волшебства и Науки 🎓</title>
+    <link rel="icon" href="data:;base64,=">
     <link href="https://fonts.googleapis.com/css2?family=Bungee+Inline&family=Rubik+Marker+Hatch&family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
     
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
@@ -265,20 +266,28 @@
             transition: opacity 0.3s; z-index: 1; 
         }
 
-        /* PDF Viewer */
-        .pdf-frame {
-            width: 100%;
-            height: 80vh; /* Высота почти во весь экран */
-            border: none;
-            background: #fff;
-        }
-
         /* Image Viewer (Detective Answers) */
         .image-viewer-content {
             width: 100%;
             height: auto;
             display: block;
             background: #fff;
+        }
+
+        /* --- Стили для "Книжного" просмотра (Замена PDF) --- */
+        .book-container {
+            width: 100%;
+            max-width: 700px;
+            margin: 0 auto;
+            background: transparent;
+        }
+        .book-page {
+            width: 100%;
+            height: auto;
+            display: block;
+            margin-bottom: 10px; /* Отступ между страницами */
+            border-radius: 10px;
+            box-shadow: var(--card-shadow);
         }
 
         .hidden { display: none !important; }
@@ -495,10 +504,10 @@
                     <p>Проверь свои догадки!</p>
                 </div>
 
-                <div class="course-card" onclick="openPdfViewer('files/detective_tasks.pdf', '20 Секретных Заданий', 'detective')" style="border-bottom-color: var(--detective-color);">
+                <div class="course-card" onclick="openBookViewer('detective_tasks', 20, '20 Секретных Заданий', 'detective')" style="border-bottom-color: var(--detective-color);">
                     <div style="font-size: 4em;">📁</div>
                     <h3 style="color: var(--detective-color);">20 Секретных Заданий</h3>
-                    <p>Открыть секретное досье (PDF).</p>
+                    <p>Открыть секретное досье</p>
                 </div>
             </div>
         </section>
@@ -522,14 +531,13 @@
             </div>
         </section>
 
-        <section id="pdf-viewer-view" class="hidden">
-            <button class="back-button" id="pdf-back-btn" onclick="showCourseSelection()">
+        <section id="book-viewer-view" class="hidden">
+            <button class="back-button" id="book-back-btn">
                 &larr; Назад
             </button>
-            <h2 id="pdf-view-title" style="text-align: center; margin-bottom: 15px; color: var(--secondary-color);"></h2>
-            <div class="viewer-container" style="background: #fff;">
-                <iframe id="pdf-frame" class="pdf-frame" src=""></iframe>
-            </div>
+            <h2 id="book-view-title" style="text-align: center; margin-bottom: 20px; color: var(--secondary-color);"></h2>
+            <div id="book-content" class="book-container">
+                </div>
         </section>
 
     </main>
@@ -693,7 +701,7 @@
     const USER_STORAGE_KEY = 'magic_course_user_registered';
     const TG_ID_STORAGE_KEY = 'magic_course_tg_id';
     
-    // --- 1. ВСЕ ДАННЫЕ УРОКОВ (ПОЛНЫЙ СПИСОК ВОССТАНОВЛЕН) ---
+    // --- 1. ВСЕ ДАННЫЕ УРОКОВ (ПОЛНЫЙ СПИСОК) ---
     
     // НАБОР 75
     const fullLessonIDs = ['jpcpPJFxh4HW6Y1D9hHjoL', 'k1JaAhww3pHUX1kTXSpZrS', 'kPfMYDT72KwJZiCaSjLZVf', 'mM5cJcqFQExpJJLdHLeu9F', 'hqmJ7SV2o8t7Wc8kwhCUo6', 'xve7TxMQPXS4oQdtVxoUHA', '6XmcciytVD2jKAaqczNuZF', 'iGZz39Su2HQfvWepfd5qwQ', 'nusJSraxAkMkd5MmWX5cGw', '6SU1iGSa5x2S8eXkMEuJBG', 'iKGjdCgeabcJXDEjQNNAK8', '5xKeaaiLFiuXdLb28bbVfT', '28sD2cfA3UPawSathTuN64', 'gYyruCRJAEJiNTZaYsbad1', '08RWJAGm8LXk1UdRD2pWxL', 'jEehUbqXtXxLGHNfyCzsrq', 'r1gGTMMWgWGk5Ww8aHV2wn', '96weXMNabgpaQ9pNxG3TY7', '2vt9UQyUuWGt4sZZLANxbr', 'ti4JcS84xo3hW4NXsuoCYA', 'tkJUsUoXsmjeKawiSAfYYn', '8aDSJ5BAvkgjudrNJqzFq5', 'nRZJ6Kdj8qLSpkzkEhLJCF', 'eJU4jJANwowgwRyeDeqPvE', 't2JEg9qj1WFsMPbhCuQ2Xo', '2uAfH9TqBSwBuaTQC14WyS', 'akrZp6rNfkZXrzmrk5rLWz', 'bQYvim6wrhBwQLUnMhPtpN', 'b7WySegBP8YkUcEwQ32Efp', 's87JMNTs8xbxfTjtA6DVTw', 'bMhC6r9fNUZxyUrvobuwW6', 'tWcs2E99XBHADSCf2Tqwv8', 'eMonpTCdcKPdmrhxRvKYdu', 'vFvEzxfs6kModJbr54FNBS', 'jHkEc7yG8zzFJHVa8sVuG9', '7igUgoFy146g2tBucd5Fb8', 'gwdrB9BTW6DuVq1cq48E73', 'dPPTunNESfWfnX15j8Vbiu', 'ig5N4nXsGTTP1RAwcAEcSy', 'o5U8BEV3T6AMW4xJntHaJr', 'cmKjSwWfHdfytPRNvPRpCw', 'uZmrePV1oo3f3pKptu75J2', '8VEK2Xt6WisK1ySW781Hfv', 'gXJeau3WGQMCzHe3Wuoc3A', '7a5fGzu4u7hp5r8ZFYEc3M', 'hJkZjbQhJ2HWg4gehq5qga', '9wEgBi4MfeGMdHFXcTEWi6', '9WXoWVDwj2wTUFwurNXM1u', 'gJ6iQcfUjfcnMznVxo2vRj', '4Wy11DZkeswybVRzRLGEzJ', '5uPNcWckVwjmeYHWStnd8Y', 'uV3KfKjTREzfs2V5qVq64w', 'izXRD8iR4NG2EjJmKYQQoP', 'eRVnXbG1n8C2k4f7VQzUe8', 'uDCfpW9XPPLTPdbEjP3gwK', 'eVF5juQSvBy2aaN5yW216A', 'dHbunwLinxFmB1LBU8hkMh', '0svSSpnxeYE5d6BiJM4un5', 'gLVzD5h6qQAPPrgxfww3Fs', 'tgw2iqKswKrf8As1T1jgqd', 'qDv1cRdwcRJgNCXa6mj8ZC', 'tnUdotVehaxeYRgiKiod8e', 'iXSgu2Enr8RSWPbWxr1enr', 'ft5RbmsZmN3BqB9RtoAPVH', 'bh4XHc29jDLcxpb99wk9LB', 'e6X1Cs3zmsHzLY33MMwz8N', 'pgpNvTxQ1FLLP9FM5roxoL', '9jhMogSF59a48Xy7Q8Xm7X', 'fUA3qWb8qTnTvwbomeDogJ', 'qHoLDuyGh55BjM7nu4NvhN', 'u4ac45TBvaaGHSkPPbJqPF', '2quUkxPBwwEjMc8iY46e8K', 'cyCtHcuLRu2RE8PMKkRTGw', '8zLeoK8uM6V8t5LF7SGL22', 'oShURD5ZQHudFUeoiYyk39', '82M4ZLgH1azym4RTPKif3z', 'dihwkyDyTUcF3qTgN4AbS9',];
@@ -742,7 +750,6 @@
     });
 
     // --- 2. ДАННЫЕ ДЛЯ ДЕТЕКТИВА (10 Расследований) ---
-    // Формируем список из 10 дел
     const detectiveInvestigations = [];
     for (let i = 1; i <= 10; i++) {
         detectiveInvestigations.push({
@@ -778,7 +785,7 @@
         views.detectiveMenu = document.getElementById('detective-menu-view');
         views.detectiveList = document.getElementById('detective-list-view');
         views.imageViewer = document.getElementById('image-viewer-view');
-        views.pdfViewer = document.getElementById('pdf-viewer-view');
+        views.bookViewer = document.getElementById('book-viewer-view'); // Изменено с pdfViewer
 
         loadingSpinner = document.getElementById('loading-spinner');
         kinescopePlayer = document.getElementById('kinescope-player');
@@ -887,7 +894,6 @@
         detectiveInvestigations.forEach((item, index) => {
             const li = document.createElement('li');
             li.className = 'list-item';
-            // Добавим стиль для детектива (темно-синяя полоска)
             li.style.borderLeftColor = 'var(--detective-color)';
             li.innerHTML = `
                 <div style="width: 50px; font-size: 24px; text-align: center; margin-right: 15px;">🕵️‍♂️</div>
@@ -911,17 +917,30 @@
         window.scrollTo(0, 0);
     }
 
-    // --- 8. ПРОСМОТРЩИК PDF (Химия и Детектив) ---
-    function openPdfViewer(src, title, type) {
+    // --- 8. ПРОСМОТРЩИК КНИГИ (Вместо PDF) ---
+    // folder: имя папки внутри images/ (например, 'chemistry' или 'detective_tasks')
+    // count: количество страниц
+    function openBookViewer(folder, count, title, type) {
         playClickSound();
         hideAllViews();
-        views.pdfViewer.classList.remove('hidden');
+        views.bookViewer.classList.remove('hidden');
 
-        document.getElementById('pdf-view-title').textContent = title;
-        document.getElementById('pdf-frame').src = src;
+        document.getElementById('book-view-title').textContent = title;
+        const container = document.getElementById('book-content');
+        container.innerHTML = ''; // Очистка старого контента
 
-        // Настройка кнопки назад в зависимости от того, откуда пришли
-        const backBtn = document.getElementById('pdf-back-btn');
+        // Генерация картинок страниц
+        for (let i = 1; i <= count; i++) {
+            const img = document.createElement('img');
+            img.src = `images/${folder}/${i}.jpg`; // Пример: images/chemistry/1.jpg
+            img.className = 'book-page';
+            img.alt = `Страница ${i}`;
+            img.onerror = function() { this.style.display = 'none'; }; // Скрыть, если картинки нет
+            container.appendChild(img);
+        }
+
+        // Настройка кнопки назад
+        const backBtn = document.getElementById('book-back-btn');
         if (type === 'detective') {
             backBtn.onclick = showDetectiveMenu;
             backBtn.innerHTML = '&larr; Назад к делам';
@@ -1062,23 +1081,27 @@
                     return;
                 }
 
-                // 2. ДЕТЕКТИВНЫЙ НАБОР (Новая логика)
+                // 2. ДЕТЕКТИВНЫЙ НАБОР
                 if (courseId === 'set_detective') {
                     playClickSound();
                     showDetectiveMenu();
                     return;
                 }
 
-                // 3. ХИМИЧЕСКИЙ НАБОР (Новая логика)
+                // 3. ХИМИЧЕСКИЙ НАБОР (НОВАЯ ЛОГИКА - КНИГА)
                 if (courseId === 'set_chemistry') {
                     playClickSound();
-                    // Замени путь на свой PDF файл
-                    openPdfViewer('files/chemistry_manual.pdf', 'Инструкция Юного Химика', 'chemistry');
+                    // Открываем 24 страницы из папки images/chemistry/
+                    openBookViewer('chemistry', 24, 'Инструкция Юного Химика', 'chemistry');
                     return;
                 }
 
                 // 4. ОБЫЧНЫЕ НАБОРЫ ФОКУСОВ
-                showLessonList(courseId);
+                if (courses[courseId]) {
+                   showLessonList(courseId);
+                } else {
+                   console.error("Курс не найден:", courseId);
+                }
             });
         });
 
