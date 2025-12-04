@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Школа Фокусов Романа Magic 🃏 | Детские Трюки</title>
+    <title>Школа Волшебства и Науки 🎓</title>
     <link href="https://fonts.googleapis.com/css2?family=Bungee+Inline&family=Rubik+Marker+Hatch&family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
     
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
@@ -14,6 +14,8 @@
             --primary-color: #f39c12; /* Оранжевый */
             --secondary-color: #3498db; /* Голубой */
             --accent-color: #e74c3c; /* Красный */
+            --detective-color: #2c3e50; /* Темно-синий для детектива */
+            --chemistry-color: #27ae60; /* Зеленый для химии */
             --bg-light: #ecf0f1;
             --card-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
         }
@@ -74,15 +76,16 @@
             font-family: 'Bungee Inline', cursive;
         }
         header h1 {
-            font-size: 2.5em;
+            font-size: 2.2em;
             text-shadow: 3px 3px 0 #c0392b;
+            line-height: 1.2;
         }
 
         /* Основное содержание */
         main {
             padding: 30px;
             flex-grow: 1;
-            max-width: 800px;
+            max-width: 900px;
             width: 100%;
             margin: 0 auto;
         }
@@ -151,21 +154,28 @@
             display: block;
         }
 
-        /* Список уроков */
-        #lesson-list-view h2 {
+        /* --- Стили для Детектива и Химии --- */
+        .course-card[data-id="set_detective"] { border-bottom-color: var(--detective-color); }
+        .course-card[data-id="set_detective"] h3 { color: var(--detective-color); }
+        
+        .course-card[data-id="set_chemistry"] { border-bottom-color: var(--chemistry-color); }
+        .course-card[data-id="set_chemistry"] h3 { color: var(--chemistry-color); }
+
+        /* Список уроков / расследований */
+        .list-view-container h2 {
             font-family: 'Rubik Marker Hatch', cursive;
             color: var(--primary-color);
             font-size: 2em;
             margin-bottom: 20px;
         }
 
-        #lesson-list {
+        .item-list {
             list-style: none;
             padding: 0;
             margin-bottom: 30px;
         }
 
-        .lesson-item {
+        .list-item {
             background-color: #fff;
             border-radius: 10px;
             padding: 15px 25px;
@@ -179,38 +189,33 @@
             flex-wrap: nowrap;
         }
 
-        .lesson-item:hover {
+        .list-item:hover {
             transform: translateX(5px);
             background-color: #f8f8f8;
         }
-
-        .lesson-item.active {
+        
+        .list-item.active {
             border-left: 8px solid var(--accent-color);
             font-weight: 700;
             background-color: #ffe8e8;
         }
-        
-        .lesson-item-preview {
-            width: 120px; 
-            height: 75px; 
+
+        .list-item-preview {
+            width: 80px; 
+            height: 80px; 
             margin-right: 20px;
             border-radius: 5px;
             object-fit: cover;
             flex-shrink: 0; 
         }
         
-        .lesson-item span {
+        .list-item span {
             flex-grow: 1;
             line-height: 1.3; 
-        }
-        
-        @media (max-width: 450px) {
-            .lesson-item-preview { width: 90px; height: 60px; margin-right: 15px; }
-            .lesson-item { padding: 10px 15px; font-size: 0.9em; }
+            font-weight: 700;
         }
 
-        .lesson-item .duration { display: none; }
-
+        /* Кнопка назад */
         .back-button {
             background-color: var(--secondary-color);
             color: #fff;
@@ -222,44 +227,63 @@
             font-weight: 700;
             transition: background-color 0.2s;
             display: inline-block;
+            box-shadow: 0 4px 0 #2980b9;
         }
         .back-button:hover { background-color: #2980b9; }
+        .back-button:active { transform: translateY(4px); box-shadow: none; }
 
-        /* Плеер */
-        .video-player-container-kinescope {
-            margin-top: 30px;
+        /* Плеер / Просмотрщик */
+        .viewer-container {
+            margin-top: 10px;
             margin-bottom: 30px;
             box-shadow: var(--card-shadow);
             border-radius: 15px;
             overflow: hidden;
-            position: relative; 
-            padding-top: 177.34%; 
-            width: 100%;
             background: #000;
+            position: relative;
         }
 
+        /* Видео (Kinescope) */
+        .video-container {
+            padding-top: 177.34%; 
+            width: 100%;
+        }
         @media (min-width: 600px) {
-            .video-player-container-kinescope {
+            .video-container {
                 max-width: 450px; 
                 margin-left: auto;
                 margin-right: auto;
             }
         }
-
-        .video-player-container-kinescope iframe {
+        .video-container iframe {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             border: none; z-index: 2; 
         }
-
         .video-thumbnail-large {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             object-fit: cover; background-color: #333;
             transition: opacity 0.3s; z-index: 1; 
         }
-        
+
+        /* PDF Viewer */
+        .pdf-frame {
+            width: 100%;
+            height: 80vh; /* Высота почти во весь экран */
+            border: none;
+            background: #fff;
+        }
+
+        /* Image Viewer (Detective Answers) */
+        .image-viewer-content {
+            width: 100%;
+            height: auto;
+            display: block;
+            background: #fff;
+        }
+
         .hidden { display: none !important; }
 
-        /* --- НОВЫЙ ДИЗАЙН РЕГИСТРАЦИИ И ПОЛИТИКИ --- */
+        /* --- РЕГИСТРАЦИЯ И МОДАЛКИ (Оставлено как было) --- */
         .registration-overlay {
             position: fixed;
             top: 0;
@@ -277,18 +301,16 @@
         .registration-modal {
             background: #fff;
             padding: 30px;
-            border-radius: 25px; /* Сильное скругление */
+            border-radius: 25px; 
             max-width: 450px;
             width: 90%;
             box-shadow: 0 20px 50px rgba(0,0,0,0.5);
             animation: cardPop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             max-height: 90vh;
             overflow-y: auto;
-            border: 5px solid var(--primary-color); /* Жирная рамка в цвет сайта */
-            position: relative;
+            border: 5px solid var(--primary-color);
         }
         
-        /* Заголовки модалки */
         .registration-modal h2 {
             font-family: 'Rubik Marker Hatch', cursive;
             color: var(--secondary-color);
@@ -298,14 +320,6 @@
             text-shadow: 2px 2px 0 #eee;
         }
 
-        .registration-modal p {
-            color: #555;
-            line-height: 1.5;
-            margin-bottom: 20px;
-            font-size: 1rem;
-        }
-
-        /* Формы */
         .form-group { margin-bottom: 15px; }
         .form-group label {
             display: block;
@@ -313,56 +327,38 @@
             font-weight: 800;
             color: var(--primary-color);
             font-size: 1em;
-            font-family: 'Nunito', sans-serif;
         }
         .form-group input {
             width: 100%;
             padding: 12px 15px;
             border: 3px solid #eee;
             border-radius: 12px;
-            font-family: 'Nunito', sans-serif;
             font-size: 1.1em;
-            transition: all 0.3s;
             background-color: #fcfcfc;
         }
         .form-group input:focus {
             border-color: var(--secondary-color);
-            background-color: #fff;
             outline: none;
-            box-shadow: 0 0 0 4px rgba(52, 152, 219, 0.1);
         }
 
-        /* Кнопки в стиле сайта */
         .form-button {
             background-color: var(--primary-color);
             color: white;
             border: none;
             padding: 14px 20px;
             border-radius: 12px;
-            font-family: 'Nunito', sans-serif;
             font-weight: 900;
             font-size: 1.2em;
             width: 100%;
             cursor: pointer;
-            box-shadow: 0 5px 0 #d35400; /* 3D эффект */
-            transition: all 0.1s;
+            box-shadow: 0 5px 0 #d35400;
             margin-top: 10px;
             margin-bottom: 10px;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
         }
+        .form-button:active { transform: translateY(5px); box-shadow: none; }
+        .form-button:hover { filter: brightness(1.1); }
 
-        .form-button:active {
-            transform: translateY(5px);
-            box-shadow: none;
-        }
-
-        .form-button:hover {
-            background-color: #f39c12;
-            filter: brightness(1.1);
-        }
-
-        /* Контейнер текста политики */
         .policy-text-container {
             font-size: 0.85em;
             background: #f9f9f9;
@@ -374,22 +370,6 @@
             border: 2px solid #eee;
             color: #444;
         }
-        .policy-text-container h3 {
-            color: var(--secondary-color);
-            margin-top: 15px;
-            margin-bottom: 5px;
-            font-weight: 800;
-        }
-        .policy-text-container ul {
-            padding-left: 20px;
-            margin-bottom: 10px;
-        }
-        
-        .action-buttons {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
         
         .loading-spinner {
             text-align: center;
@@ -397,6 +377,12 @@
             font-weight: bold;
             color: var(--secondary-color);
             font-size: 1.2em;
+        }
+        
+        .action-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
         }
 
     </style>
@@ -410,12 +396,12 @@
     </div>
 
     <header>
-        <h1>Школа Фокусов Романа Magic 🃏</h1>
+        <h1>Школа Романа Magic 🃏🔬🕵️‍♂️</h1>
     </header>
 
     <main>
         <section id="course-selection">
-            <h2>✨ Выберите свой набор трюков! ✨</h2>
+            <h2>✨ Выберите свой набор! ✨</h2>
             <div class="course-grid">
                 <div class="course-card" data-id="set_75">
                     <img src="images/set1.png" alt="75 фокусов" class="card-image">
@@ -436,55 +422,116 @@
                 </div>
 
                 <div class="course-card" data-id="set_blue">
-                    <img src="images/set4.jpg" alt="Синий набор фокусов" class="card-image">
-                    <h3>10 Взрывных Фокусов</h3>
-                    <p>Трюки с платками, картами и купюрами.</p>
+                    <img src="images/set4.jpg" alt="Синий набор" class="card-image">
+                    <h3>10 Взрывных (Синий)</h3>
+                    <p>Трюки с платками и картами.</p>
                 </div>
                 <div class="course-card" data-id="set_red">
-                    <img src="images/set5.jpg" alt="Красный набор фокусов" class="card-image">
-                    <h3>10 Взрывных Фокусов</h3>
-                    <p>С кольцами, цепочками и шариками.</p>
+                    <img src="images/set5.jpg" alt="Красный набор" class="card-image">
+                    <h3>10 Взрывных (Красный)</h3>
+                    <p>С кольцами и шариками.</p>
                 </div>
                 <div class="course-card" data-id="set_yellow">
-                    <img src="images/set2.jpg" alt="Желтый набор фокусов" class="card-image">
-                    <h3>10 Взрывных Фокусов</h3>
-                    <p>Трюки с резинками и предметами.</p>
+                    <img src="images/set2.jpg" alt="Желтый набор" class="card-image">
+                    <h3>10 Взрывных (Желтый)</h3>
+                    <p>Трюки с резинками.</p>
                 </div>
                 <div class="course-card" data-id="set_green">
-                    <img src="images/set3.jpg" alt="Зеленый набор фокусов" class="card-image">
-                    <h3>10 Взрывных Фокусов</h3>
-                    <p>Фокусы с тростью и использованием рук.</p>
+                    <img src="images/set3.jpg" alt="Зеленый набор" class="card-image">
+                    <h3>10 Взрывных (Зеленый)</h3>
+                    <p>Трость и ловкость рук.</p>
                 </div>
+
+                <div class="course-card" data-id="set_detective">
+                    <img src="images/set_detective.png" onerror="this.src='https://via.placeholder.com/300x200?text=Детектив'" alt="Детективный набор" class="card-image">
+                    <h3>Детективный Набор 🕵️‍♂️</h3>
+                    <p>Расследования и секретные задания!</p>
+                </div>
+
+                <div class="course-card" data-id="set_chemistry">
+                    <img src="images/set_chemistry.png" onerror="this.src='https://via.placeholder.com/300x200?text=Химия'" alt="Химический набор" class="card-image">
+                    <h3>Химический Набор 🧪</h3>
+                    <p>Опыты и эксперименты дома.</p>
+                </div>
+
             </div>
         </section>
 
-        <section id="lesson-list-view" class="hidden">
+        <section id="lesson-list-view" class="list-view-container hidden">
             <button class="back-button" onclick="showCourseSelection()">
-                &larr; Назад к выбору наборов
+                &larr; Назад к наборам
             </button>
             <h2 id="lesson-list-title">Набор:</h2>
-
-            <ul id="lesson-list">
-            </ul>
+            <ul id="lesson-list" class="item-list"></ul>
         </section>
 
         <section id="video-player-view" class="hidden">
             <button class="back-button" onclick="goBackToLessonList()">
-                &larr; Назад к списку уроков
+                &larr; Назад к урокам
             </button>
-            
-            <p style="margin-top: 20px; font-weight: 700;">Смотрим урок: <span id="current-lesson-name" style="color: var(--accent-color);"></span></p>
-            <div class="video-player-container-kinescope">
+            <p style="margin-top: 20px; font-weight: 700; text-align: center;">Смотрим: <span id="current-lesson-name" style="color: var(--accent-color);"></span></p>
+            <div class="viewer-container video-container">
                 <iframe 
                     id="kinescope-player"
                     src="" 
-                    allow="autoplay; fullscreen; picture-in-picture; encrypted-media; gyroscope; accelerometer; clipboard-write; screen-wake-lock;" 
+                    allow="autoplay; fullscreen; picture-in-picture; encrypted-media;" 
                     frameborder="0" 
                     allowfullscreen>
                 </iframe>
                 <img id="video-thumbnail-large" class="video-thumbnail-large" src="" alt="Превью урока">
             </div>
         </section>
+
+        <section id="detective-menu-view" class="hidden">
+            <button class="back-button" onclick="showCourseSelection()">
+                &larr; Назад к наборам
+            </button>
+            <h2 style="text-align: center; color: var(--detective-color); font-family: 'Rubik Marker Hatch'; font-size: 2.2em;">Секретные Материалы 🕵️‍♂️</h2>
+            
+            <div class="course-grid" style="margin-top: 30px;">
+                <div class="course-card" onclick="showDetectiveInvestigationsList()" style="border-bottom-color: var(--detective-color);">
+                    <div style="font-size: 4em;">🔍</div>
+                    <h3 style="color: var(--detective-color);">Ответы на 10 Расследований</h3>
+                    <p>Проверь свои догадки!</p>
+                </div>
+
+                <div class="course-card" onclick="openPdfViewer('files/detective_tasks.pdf', '20 Секретных Заданий', 'detective')" style="border-bottom-color: var(--detective-color);">
+                    <div style="font-size: 4em;">📁</div>
+                    <h3 style="color: var(--detective-color);">20 Секретных Заданий</h3>
+                    <p>Открыть секретное досье (PDF).</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="detective-list-view" class="list-view-container hidden">
+            <button class="back-button" onclick="showDetectiveMenu()">
+                &larr; Назад к выбору
+            </button>
+            <h2 style="color: var(--detective-color);">Выберите дело:</h2>
+            <ul id="detective-list" class="item-list">
+                </ul>
+        </section>
+
+        <section id="image-viewer-view" class="hidden">
+            <button class="back-button" onclick="showDetectiveInvestigationsList()">
+                &larr; Назад к списку дел
+            </button>
+            <h2 id="image-view-title" style="text-align: center; margin-bottom: 15px;"></h2>
+            <div class="viewer-container" style="background: transparent; box-shadow: none;">
+                <img id="image-viewer-content" class="image-viewer-content" src="" alt="Ответ">
+            </div>
+        </section>
+
+        <section id="pdf-viewer-view" class="hidden">
+            <button class="back-button" id="pdf-back-btn" onclick="showCourseSelection()">
+                &larr; Назад
+            </button>
+            <h2 id="pdf-view-title" style="text-align: center; margin-bottom: 15px; color: var(--secondary-color);"></h2>
+            <div class="viewer-container" style="background: #fff;">
+                <iframe id="pdf-frame" class="pdf-frame" src=""></iframe>
+            </div>
+        </section>
+
     </main>
 
     <div id="registration-overlay" class="registration-overlay hidden">
@@ -504,8 +551,6 @@
 
                 <div id="policy-full-view" class="hidden">
                     <p class="font-bold">📄 Политика конфиденциальности и обработки персональных данных проекта «Тайник»</p>
-                    <p><b>Дата публикации действующей редакции: 1 сентября 2025 года</b></p>
-                    
                     <div class="policy-text-container">
                         <h3>1. Общие положения, стороны, цель документа</h3>
                         <p>1.1. Настоящая Политика конфиденциальности и обработки персональных данных (далее – «Политика») определяет порядок и условия обработки индивидуальным предпринимателем Таранюком Русланом Жановичем, действующим по законодательству Российской Федерации (далее – «Оператор» либо «Мы»), информации о физическом лице, которая может быть получена Оператором от этого физического лица либо его законного представителя (далее – «Пользователь», «Субъект персональных данных» либо «Вы»).</p>
@@ -603,7 +648,7 @@
                 </div>
 
                 <div id="registration-form-view" class="hidden">
-                    <p style="text-align: center; margin-bottom: 20px;">Давай знакомиться, Фокусник!</p>
+                    <p style="text-align: center; margin-bottom: 20px;">Давай знакомиться!</p>
                     <form id="registration-form">
                         <div class="form-group">
                             <label for="reg-name">Имя и Фамилия:</label>
@@ -618,11 +663,10 @@
                             <input type="tel" id="reg-phone" name="phone" pattern="\+?[0-9]{10,15}" required placeholder="+79123456789">
                         </div>
                         <div class="form-group hidden"> 
-                            <label for="reg-tg-id">Telegram ID (Скрыто):</label>
+                            <label for="reg-tg-id">Telegram ID:</label>
                             <input type="text" id="reg-tg-id" name="tg_id">
                         </div>
-                        
-                        <button type="submit" id="submit-reg-btn" class="form-button">🎩 Вступить в клуб!</button>
+                        <button type="submit" id="submit-reg-btn" class="form-button">🚀 Вступить в клуб!</button>
                     </form>
                 </div>
                 
@@ -643,27 +687,29 @@
 
 
 <script>
-    // --- 0. КОНСТАНТЫ И URL СЕРВЕРА ---
-    // !!! УБЕДИТЕСЬ, ЧТО URL GOOGLE SCRIPT АКТУАЛЕН !!!
+    // --- 0. КОНСТАНТЫ И URL ---
     const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycby2R4j1aBQ2zmybXyqjVhgFntoduCYYX6AuZ8kMmRUWdF8ZQCNTTpPij0kmxaSxAZmjvg/exec';
-
     const IMAGE_BASE_URL = 'images/';
     const USER_STORAGE_KEY = 'magic_course_user_registered';
     const TG_ID_STORAGE_KEY = 'magic_course_tg_id';
     
-    // --- ДАННЫЕ УРОКОВ ---
+    // --- 1. ВСЕ ДАННЫЕ УРОКОВ (ПОЛНЫЙ СПИСОК ВОССТАНОВЛЕН) ---
+    
+    // НАБОР 75
     const fullLessonIDs = ['jpcpPJFxh4HW6Y1D9hHjoL', 'k1JaAhww3pHUX1kTXSpZrS', 'kPfMYDT72KwJZiCaSjLZVf', 'mM5cJcqFQExpJJLdHLeu9F', 'hqmJ7SV2o8t7Wc8kwhCUo6', 'xve7TxMQPXS4oQdtVxoUHA', '6XmcciytVD2jKAaqczNuZF', 'iGZz39Su2HQfvWepfd5qwQ', 'nusJSraxAkMkd5MmWX5cGw', '6SU1iGSa5x2S8eXkMEuJBG', 'iKGjdCgeabcJXDEjQNNAK8', '5xKeaaiLFiuXdLb28bbVfT', '28sD2cfA3UPawSathTuN64', 'gYyruCRJAEJiNTZaYsbad1', '08RWJAGm8LXk1UdRD2pWxL', 'jEehUbqXtXxLGHNfyCzsrq', 'r1gGTMMWgWGk5Ww8aHV2wn', '96weXMNabgpaQ9pNxG3TY7', '2vt9UQyUuWGt4sZZLANxbr', 'ti4JcS84xo3hW4NXsuoCYA', 'tkJUsUoXsmjeKawiSAfYYn', '8aDSJ5BAvkgjudrNJqzFq5', 'nRZJ6Kdj8qLSpkzkEhLJCF', 'eJU4jJANwowgwRyeDeqPvE', 't2JEg9qj1WFsMPbhCuQ2Xo', '2uAfH9TqBSwBuaTQC14WyS', 'akrZp6rNfkZXrzmrk5rLWz', 'bQYvim6wrhBwQLUnMhPtpN', 'b7WySegBP8YkUcEwQ32Efp', 's87JMNTs8xbxfTjtA6DVTw', 'bMhC6r9fNUZxyUrvobuwW6', 'tWcs2E99XBHADSCf2Tqwv8', 'eMonpTCdcKPdmrhxRvKYdu', 'vFvEzxfs6kModJbr54FNBS', 'jHkEc7yG8zzFJHVa8sVuG9', '7igUgoFy146g2tBucd5Fb8', 'gwdrB9BTW6DuVq1cq48E73', 'dPPTunNESfWfnX15j8Vbiu', 'ig5N4nXsGTTP1RAwcAEcSy', 'o5U8BEV3T6AMW4xJntHaJr', 'cmKjSwWfHdfytPRNvPRpCw', 'uZmrePV1oo3f3pKptu75J2', '8VEK2Xt6WisK1ySW781Hfv', 'gXJeau3WGQMCzHe3Wuoc3A', '7a5fGzu4u7hp5r8ZFYEc3M', 'hJkZjbQhJ2HWg4gehq5qga', '9wEgBi4MfeGMdHFXcTEWi6', '9WXoWVDwj2wTUFwurNXM1u', 'gJ6iQcfUjfcnMznVxo2vRj', '4Wy11DZkeswybVRzRLGEzJ', '5uPNcWckVwjmeYHWStnd8Y', 'uV3KfKjTREzfs2V5qVq64w', 'izXRD8iR4NG2EjJmKYQQoP', 'eRVnXbG1n8C2k4f7VQzUe8', 'uDCfpW9XPPLTPdbEjP3gwK', 'eVF5juQSvBy2aaN5yW216A', 'dHbunwLinxFmB1LBU8hkMh', '0svSSpnxeYE5d6BiJM4un5', 'gLVzD5h6qQAPPrgxfww3Fs', 'tgw2iqKswKrf8As1T1jgqd', 'qDv1cRdwcRJgNCXa6mj8ZC', 'tnUdotVehaxeYRgiKiod8e', 'iXSgu2Enr8RSWPbWxr1enr', 'ft5RbmsZmN3BqB9RtoAPVH', 'bh4XHc29jDLcxpb99wk9LB', 'e6X1Cs3zmsHzLY33MMwz8N', 'pgpNvTxQ1FLLP9FM5roxoL', '9jhMogSF59a48Xy7Q8Xm7X', 'fUA3qWb8qTnTvwbomeDogJ', 'qHoLDuyGh55BjM7nu4NvhN', 'u4ac45TBvaaGHSkPPbJqPF', '2quUkxPBwwEjMc8iY46e8K', 'cyCtHcuLRu2RE8PMKkRTGw', '8zLeoK8uM6V8t5LF7SGL22', 'oShURD5ZQHudFUeoiYyk39', '82M4ZLgH1azym4RTPKif3z', 'dihwkyDyTUcF3qTgN4AbS9',];
     const fullLessonNames = ['О наборе', 'Фокус с палочкой и горшочком', 'Фокус с палочкой и сердечком №1', 'Фокус с палочкой №1', 'Фокус с палочкой и сердечком №2', 'Фокус с палочкой №2', 'Фокус с палочкой №3', 'Фокус с сердечками №1', 'Фокус с башенкой с шариком', 'Фокус с разделителем верёвки', 'Фокус с верёвкой №1', 'Фокус с разноцветными платками', 'Фокус с платком и напальчником', 'Фокус с сердечками №2', 'Фокус с сердечками №3', 'Фокус с сердечками №4', 'Фокус с сердечками №5', 'Фокус с числовыми картами', 'Фокус с баночкой с кубиками', 'Фокус с игральным кубиком', 'Фокус с двойными картами', 'Фокус с картой со створкой', 'Фокус со сложенной купюрой', 'Фокус с картой и купюрой', 'Фокус с купюрой', 'Фокус с купюрой со скрепками', 'Фокус со скрепками', 'Фокус со стаканами и шариками', 'Фокус с кольцом и цепочкой', 'Фокус с монеткой №1', 'Фокус с резинкой и скрепкой №1', 'Фокус с резинкой и скрепкой №2', 'Фокус с резинками №1', 'Фокус с резинками №2', 'Фокус с резинками и купюрой', 'Фокус с резинкой и купюрой', 'Фокус с резинкой', 'Фокус с резинками №3', 'Фокус с резинками №4', 'Фокус с резинками №5', 'Фокус с картой с леской и спичкой', 'Фокус с верёвкой и спичечным коробком', 'Фокус со спичечным коробком №1', 'Три загадки со спичками', 'Фокус со спичкой №1', 'Фокус со спичкой №2', 'Фокус со спичечным коробком №2', 'Фокус со спичечным коробком и воздушным шариком', 'Фокус с воздушным шариком', 'Фокус с монеткой и стаканом №1', 'Фокус с монеткой №2', 'Фокус с монеткой и стаканом №2', 'Фокус с карандашом №1', 'Фокус с палочкой №4', 'Фокус с разноцветными предметами', 'Фокус со стаканами и предсказанием №1', 'Фокус со стаканами и предсказанием №2', 'Фокус с использованием рук №1', 'Фокус с использованием рук №2', 'Фокус со стаканом с жидкостью', 'Фокус с напальчником', 'Фокус с использованием пальцев №1', 'Фокус с использованием пальцев №2', 'Фокус с использованием пальцев №3', 'Фокус с использованием пальцев №4', 'Фокус с использованием пальцев №5', 'Фокус с листом бумаги', 'Три способа достать купюру из-под бутылки', 'Фокус с верёвкой №2', 'Фокус с карандашом №2', 'Фокус с использованием пальцев №6', 'Фокус с монеткой №3', 'Фокус с иллюзией левитации', 'Фокус с вопросами', 'Фокус с числами', 'Фокус с кольцом', 'Советы от Романа Magic.',];
+    
     function getFullPathImage(index) {
         const num = (index + 1).toString().padStart(2, '0');
         return `${IMAGE_BASE_URL}${num}.webp`;
     }
+    
     const fullLessons = fullLessonNames.map((name, index) => {
-        const id = fullLessonIDs[index];
+        const id = fullLessonIDs[index] || '';
         return { name: name, duration: '', videoId: id, imageUrl: getFullPathImage(index) };
     });
     
-    // Цветные наборы
+    // ЖЕЛТЫЙ
     const yellowIDs = ['rcY7WygGSLmXsvmebLWm9c', 'fTQ7fEV63wKcipkWkTT4bp', 'iSEaRT5NGgGdeNM5GRf789', 'jFkrpw1s8DxZoyWrhtcUkx', 'pSGrrMcbxqvb5MCYBct1yK', 'oRsoi13QbGQfRchJyU62g6', '5XfziUUYTb3csizx33Yrna', 'meeZ2UQ3CuH4EzkRhzXQgL', '2dcywnsds6xx2q9ryJvsqQ', 'nUaLf7h1oaNKNzN4FpzGSV', 'i3gMK3ZGLivgUEFXYYwRJs'];
     const yellowNames = ['Фокус с разделителем верёвки', 'Фокус с разноцветными платками', 'Фокус с баночкой с кубиками', 'Фокус с купюрой со скрепками', 'Фокус с карточкой клоуна', 'Фокус с резинкой №1', 'Фокус с резинками №1', 'Фокус с калькулятором', 'Фокус с резинкой №2', 'Фокус с резинками №2'];
     const yellowLessons = yellowNames.map((name, index) => {
@@ -671,6 +717,7 @@
         return { name: name, duration: '', videoId: yellowIDs[index], imageUrl: `${IMAGE_BASE_URL}set2/${num}.png` };
     });
 
+    // КРАСНЫЙ
     const redIDs = ['bfXG4Hsx4GTBdMBZ5pZzhi', 'ftyyJjw3VjGxH1tzLYTKP7', '7iPAvaqagVmLZBrcy4X8Lz', 't16wR5XZbrKMNDcnp18Z8M', 'miNAnu4nrb4xK8f8TotuNE', 'hPf3YbSrDjW9dF8axkfcwB', 'wpTA54NpqsBnxgP7AaVfDP', 'caARKsiZGE37YhB8D8tzsh', '5KmNyHxdAwcVaQ78prrA3c', 'rm7XU87oa2ELb73ZcAhi4p', '5WuEuHkA257U6c7PaggsCt', 'nx7xVFaGAur1jNBFpMBDQk', 'qPS9PbfmepKXUc2n5Vdhpo', '924XDkp7WDxzcciDSpi9v5'];
     const redNames = ['Фокус с числовыми картами', 'Фокус с кольцом и цепочкой', 'Фокус с кошельком с картами', 'Фокус с баночкой с кубиком', 'Фокус с поролоновыми шариками и кубиком №1', 'Фокус с поролоновыми шариками №1', 'Фокус с поролоновыми шариками №2', 'Фокус с поролоновыми шариками №3', 'Фокус с поролоновыми шариками и кубиком №2', 'Фокус с выбором предмета', 'Фокус с резинками', 'Фокус с резинками и прищепкой', 'Фокус с кольцом и монеткой', 'Фокус с резинками'];
     const redLessons = redNames.map((name, index) => {
@@ -678,6 +725,7 @@
         return { name: name, duration: '', videoId: redIDs[index], imageUrl: `${IMAGE_BASE_URL}set5/${num}.png` };
     });
 
+    // ЗЕЛЕНЫЙ
     const greenIDs = ['cceLzZjuyBVxNmQbyatUH5', 'dJ9PQDBugVGdPgsRLcg1rL', '9tD5m4EzPt6fmZoFtgqTDd', 'vPx1uUNwNJvrDqkyg22uie', '25MUHvgQjdRv2TasmwVNm4', 'aFwyGv6pPnnjnvCLJoMLwN', 'a7fuyhV3ZzVb8GUbRKDHEE', 'dLjJ38gabh1KUrAceTC2JN', 'nUbEA7Tc15ndtLAt2MJrLP', 'ndqN834L3eZCamxj3p7tYq', 'a3CvBZ4AsM45E6DnXDTGzS'];
     const greenNames = ['Фокус со стаканами и шариками', 'Фокус с картой с леской и спичкой', 'Фокус с печеньем', 'Фокус с тростью', 'Фокус с карточкой сердечка', 'Фокус с резинкой №1', 'Фокус с резинками №1', 'Фокус с резинками №2', 'Фокус с резинкой №2', 'Фокус с использованием рук', 'Фокус с калькулятором'];
     const greenLessons = greenNames.map((name, index) => {
@@ -685,49 +733,53 @@
         return { name: name, duration: '', videoId: greenIDs[index], imageUrl: `${IMAGE_BASE_URL}set3/${num}.png` };
     });
 
+    // СИНИЙ
     const blueIDs = ['cYdXWi5A91HXiwLc84agwd', 'exLWcpZ6ahZgkr96vnmc2v', '5wyNGTH37RVEG6f62DmjjA', '7qsEnkPgEik9Ha2RVTV3aA', 'eAUycLzgfRb9re2cfAJj5j', 'eBG44bnhNC5QqStJEwTEh6', 'p56ktVWncRiBGDHb8DNhir', 'nQFNcp2nuH1EJMwzWzdkXM', 'uVXaTQW4bpW9ThJwvAxdUz', 'ggXGnauUHE9jDYA8NV9Vsv', 'sdv4oUFrxgwqN4SGmBwGpJ'];
     const blueNames = ['Фокус с башенкой с шариком', 'Фокус с платком и напальчником', 'Фокус с двойными картами', 'Фокус с карточкой “Дай пять”', 'Фокус с колодой в футляре', 'Фокус с купюрой и бумажкой №1', 'Фокус с купюрой и бумажкой №2', 'Фокус с резинкой №1', 'Фокус с использованием рук', 'Фокус с резинкой №2', 'Фокус с резинкой №3'];
     const blueLessons = blueNames.map((name, index) => {
         const num = (400 + index + 1).toString();
         return { name: name, duration: '', videoId: blueIDs[index], imageUrl: `${IMAGE_BASE_URL}set4/${num}.png` };
     });
-    
+
+    // --- 2. ДАННЫЕ ДЛЯ ДЕТЕКТИВА (10 Расследований) ---
+    // Формируем список из 10 дел
+    const detectiveInvestigations = [];
+    for (let i = 1; i <= 10; i++) {
+        detectiveInvestigations.push({
+            name: `Дело №${i}: Ответ`,
+            // Ссылка на картинку: images/detective/1.jpg, 2.jpg...
+            imageUrl: `images/detective/${i}.jpg`
+        });
+    }
+
     const courses = {
-        set_75: { title: '75 Трюков (База)', lessons: fullLessons, description: 'Стань настоящим мастером иллюзий!' },
-        set_blue: { title: '10 Взрывных Фокусов (Синий)', lessons: blueLessons, description: 'Трюки с платками, картами и купюрами.' },
-        set_red: { title: '10 Взрывных Фокусов (Красный)', lessons: redLessons, description: 'С кольцами, цепочками и шариками.' }, 
-        set_yellow: { title: '10 Взрывных Фокусов (Желтый)', lessons: yellowLessons, description: 'Трюки с резинками и предметами.' },
-        set_green: { title: '10 Взрывных Фокусов (Зеленый)', lessons: greenLessons, description: 'Фокусы с тростью и использованием рук.' },
+        set_75: { title: '75 Трюков', lessons: fullLessons },
+        set_blue: { title: 'Синий набор', lessons: blueLessons },
+        set_red: { title: 'Красный набор', lessons: redLessons }, 
+        set_yellow: { title: 'Желтый набор', lessons: yellowLessons },
+        set_green: { title: 'Зеленый набор', lessons: greenLessons },
     };
 
-    // --- 2. ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ И НАВИГАЦИЯ ---
-
-    let courseSelectionPage;
-    let lessonListView;
-    let videoPlayerView;
-    let lessonList;
+    // --- 3. ПЕРЕМЕННЫЕ И ЭЛЕМЕНТЫ ---
+    let views = {}; // Объект для хранения ссылок на все экраны
     let currentCourseId = null;
 
-    // Аудио
-    let bgMusic;
-    let clickSound;
+    let bgMusic, clickSound;
     let isMusicPlaying = false;
-    let isSoundEnabled = true;
     let kinescopePlayer;
 
-    // Модальное окно
-    let registrationOverlay;
-    let policyInitialView, policyFullView, registrationFormView, successView;
-    let registrationForm;
-    let loadingSpinner;
+    let registrationOverlay, policyInitialView, policyFullView, registrationFormView, successView, registrationForm, loadingSpinner;
 
-
-    // Инициализация элементов DOM
     function initializeDOMElements() {
-        courseSelectionPage = document.getElementById('course-selection');
-        lessonListView = document.getElementById('lesson-list-view');
-        videoPlayerView = document.getElementById('video-player-view');
-        lessonList = document.getElementById('lesson-list');
+        // Экраны
+        views.selection = document.getElementById('course-selection');
+        views.lessonList = document.getElementById('lesson-list-view');
+        views.videoPlayer = document.getElementById('video-player-view');
+        views.detectiveMenu = document.getElementById('detective-menu-view');
+        views.detectiveList = document.getElementById('detective-list-view');
+        views.imageViewer = document.getElementById('image-viewer-view');
+        views.pdfViewer = document.getElementById('pdf-viewer-view');
+
         loadingSpinner = document.getElementById('loading-spinner');
         kinescopePlayer = document.getElementById('kinescope-player');
 
@@ -736,7 +788,7 @@
         clickSound = document.getElementById('click-sound');
         document.getElementById('music-toggle').addEventListener('click', toggleMusic);
         
-        // Модальное окно
+        // Регистрация
         registrationOverlay = document.getElementById('registration-overlay');
         policyInitialView = document.getElementById('policy-initial-view');
         policyFullView = document.getElementById('policy-full-view');
@@ -744,22 +796,146 @@
         successView = document.getElementById('success-view');
         registrationForm = document.getElementById('registration-form');
 
-        // Настройка обработчиков модального окна
         document.getElementById('read-policy-btn').addEventListener('click', showPolicyFullView);
         document.getElementById('agree-and-continue-btn').addEventListener('click', showRegistrationForm);
         document.getElementById('agree-final-btn').addEventListener('click', showRegistrationForm);
-        
         registrationForm.addEventListener('submit', handleRegistrationSubmit);
         
         setupTelegramWebAppEvents();
     }
 
-    // --- 3. АУДИО ФУНКЦИИ ---
+    // --- 4. УПРАВЛЕНИЕ ВИДИМОСТЬЮ (РОУТЕР) ---
+    function hideAllViews() {
+        Object.values(views).forEach(el => el.classList.add('hidden'));
+    }
 
+    function showCourseSelection() {
+        hideAllViews();
+        views.selection.classList.remove('hidden');
+    }
+
+    // --- 5. ЛОГИКА ФОКУСОВ ---
+    function showLessonList(courseId) {
+        currentCourseId = courseId;
+        hideAllViews();
+        views.lessonList.classList.remove('hidden');
+        
+        const course = courses[courseId];
+        document.getElementById('lesson-list-title').textContent = `Набор: ${course.title}`;
+        
+        const list = document.getElementById('lesson-list');
+        list.innerHTML = '';
+        
+        course.lessons.forEach((lesson) => {
+            const li = document.createElement('li');
+            li.className = 'list-item';
+            li.innerHTML = `
+                <img src="${lesson.imageUrl}" onerror="this.src='https://via.placeholder.com/120x75?text=Magic'" class="list-item-preview">
+                <span>${lesson.name}</span>
+            `;
+            li.addEventListener('click', () => { playLesson(lesson, li); });
+            list.appendChild(li);
+        });
+        window.scrollTo(0, 0);
+    }
+
+    function playLesson(lesson, clickedElement) {
+        playClickSound();
+        pauseMusicForVideo();
+        
+        document.querySelectorAll('.list-item').forEach(item => item.classList.remove('active'));
+        if(clickedElement) clickedElement.classList.add('active');
+
+        hideAllViews();
+        views.videoPlayer.classList.remove('hidden');
+
+        document.getElementById('current-lesson-name').textContent = lesson.name;
+        const thumb = document.getElementById('video-thumbnail-large');
+        thumb.src = lesson.imageUrl;
+        thumb.style.opacity = 1;
+
+        kinescopePlayer.src = `https://kinescope.io/embed/${lesson.videoId}`;
+        setTimeout(() => { thumb.style.opacity = 0; }, 500);
+    }
+
+    function goBackToLessonList() {
+        playClickSound();
+        kinescopePlayer.src = ''; 
+        resumeMusicAfterVideo();
+        
+        if (currentCourseId) {
+            showLessonList(currentCourseId);
+        } else {
+            showCourseSelection();
+        }
+    }
+
+    // --- 6. ЛОГИКА ДЕТЕКТИВА ---
+    function showDetectiveMenu() {
+        hideAllViews();
+        views.detectiveMenu.classList.remove('hidden');
+    }
+
+    function showDetectiveInvestigationsList() {
+        playClickSound();
+        hideAllViews();
+        views.detectiveList.classList.remove('hidden');
+
+        const list = document.getElementById('detective-list');
+        list.innerHTML = '';
+
+        detectiveInvestigations.forEach((item, index) => {
+            const li = document.createElement('li');
+            li.className = 'list-item';
+            // Добавим стиль для детектива (темно-синяя полоска)
+            li.style.borderLeftColor = 'var(--detective-color)';
+            li.innerHTML = `
+                <div style="width: 50px; font-size: 24px; text-align: center; margin-right: 15px;">🕵️‍♂️</div>
+                <span>${item.name}</span>
+            `;
+            li.addEventListener('click', () => { 
+                openImageViewer(item.imageUrl, item.name); 
+            });
+            list.appendChild(li);
+        });
+    }
+
+    // --- 7. ПРОСМОТРЩИК КАРТИНОК (JPG) ---
+    function openImageViewer(src, title) {
+        playClickSound();
+        hideAllViews();
+        views.imageViewer.classList.remove('hidden');
+        
+        document.getElementById('image-view-title').textContent = title;
+        document.getElementById('image-viewer-content').src = src;
+        window.scrollTo(0, 0);
+    }
+
+    // --- 8. ПРОСМОТРЩИК PDF (Химия и Детектив) ---
+    function openPdfViewer(src, title, type) {
+        playClickSound();
+        hideAllViews();
+        views.pdfViewer.classList.remove('hidden');
+
+        document.getElementById('pdf-view-title').textContent = title;
+        document.getElementById('pdf-frame').src = src;
+
+        // Настройка кнопки назад в зависимости от того, откуда пришли
+        const backBtn = document.getElementById('pdf-back-btn');
+        if (type === 'detective') {
+            backBtn.onclick = showDetectiveMenu;
+            backBtn.innerHTML = '&larr; Назад к делам';
+        } else {
+            backBtn.onclick = showCourseSelection;
+            backBtn.innerHTML = '&larr; Назад к наборам';
+        }
+    }
+
+    // --- 9. АУДИО И СИСТЕМНЫЕ ФУНКЦИИ ---
     function playClickSound() {
-        if (isSoundEnabled && clickSound) {
+        if (clickSound) {
             clickSound.currentTime = 0;
-            clickSound.play().catch(e => console.log("Ошибка воспроизведения звука клика:", e));
+            clickSound.play().catch(e => {});
         }
     }
 
@@ -769,166 +945,39 @@
             bgMusic.pause();
             isMusicPlaying = false;
             btn.textContent = '▶️';
-            btn.title = 'Фоновая музыка';
         } else {
             bgMusic.play().then(() => {
                 isMusicPlaying = true;
                 btn.textContent = '⏸️';
-                btn.title = 'Пауза';
-            }).catch(e => {
-                isMusicPlaying = false;
-                btn.textContent = '▶️';
-            });
+            }).catch(e => { isMusicPlaying = false; });
         }
     }
 
-    function pauseMusicForVideo() {
-        if (isMusicPlaying) {
-            bgMusic.pause();
-        }
-    }
+    function pauseMusicForVideo() { if (isMusicPlaying) bgMusic.pause(); }
+    function resumeMusicAfterVideo() { if (isMusicPlaying) bgMusic.play().catch(e => {}); }
 
-    function resumeMusicAfterVideo() {
-        if (isMusicPlaying) {
-            bgMusic.play().catch(e => console.log("Не удалось возобновить музыку:", e));
-        }
-    }
-    
-    // --- Telegram WebApp ---
-    function setupTelegramWebAppEvents() {
-        if (window.Telegram && window.Telegram.WebApp) {
-            Telegram.WebApp.ready();
-            Telegram.WebApp.expand(); // Развернуть на весь экран
-            
-            document.addEventListener('visibilitychange', () => {
-                if (document.hidden) {
-                    if (isMusicPlaying) {
-                        bgMusic.pause();
-                    }
-                } else {
-                    if (isMusicPlaying) {
-                        resumeMusicAfterVideo(); 
-                    }
-                }
-            });
-        }
-    }
-
-    // --- 4. НАВИГАЦИЯ СТРАНИЦ ---
-
-    function startApp() {
-        document.body.addEventListener('click', () => {
-            if (!isMusicPlaying && bgMusic.paused) {
-                toggleMusic();
-            }
-        }, { once: true });
-
-        handleInitialCheck(); 
-        showCourseSelection();
-    }
-
-    function showCourseSelection() {
-        courseSelectionPage.classList.remove('hidden');
-        lessonListView.classList.add('hidden');
-        videoPlayerView.classList.add('hidden'); 
-    }
-
-    function showLessonList(courseId) {
-        currentCourseId = courseId;
-        courseSelectionPage.classList.add('hidden');
-        lessonListView.classList.remove('hidden');
-        videoPlayerView.classList.add('hidden'); 
-        
-        const course = courses[courseId];
-        document.getElementById('lesson-list-title').textContent = `Набор: ${course.title}`;
-        renderLessonList(course);
-        lessonListView.scrollIntoView({ behavior: 'smooth' });
-    }
-
-    function playLesson(lesson, clickedElement) {
-        playClickSound();
-        pauseMusicForVideo(); 
-        
-        document.querySelectorAll('.lesson-item').forEach(item => {
-            item.classList.remove('active');
-        });
-        clickedElement.classList.add('active');
-
-        lessonListView.classList.add('hidden');
-        videoPlayerView.classList.remove('hidden');
-
-        document.getElementById('current-lesson-name').textContent = lesson.name;
-        
-        const videoThumbnailLarge = document.getElementById('video-thumbnail-large');
-        videoThumbnailLarge.src = lesson.imageUrl;
-        videoThumbnailLarge.style.opacity = 1;
-
-        kinescopePlayer.src = `https://kinescope.io/embed/${lesson.videoId}`;
-
-        setTimeout(() => { videoThumbnailLarge.style.opacity = 0; }, 100); 
-        videoPlayerView.scrollIntoView({ behavior: 'smooth' });
-    }
-
-    function goBackToLessonList() {
-        playClickSound();
-        kinescopePlayer.src = ''; 
-        document.getElementById('video-thumbnail-large').style.opacity = 0;
-        resumeMusicAfterVideo(); 
-        
-        if (currentCourseId) {
-            showLessonList(currentCourseId);
-        } else {
-            showCourseSelection();
-        }
-    }
-
-    function renderLessonList(course) {
-        lessonList.innerHTML = '';
-        
-        course.lessons.forEach((lesson) => {
-            const li = document.createElement('li');
-            li.className = 'lesson-item';
-            li.innerHTML = `
-                <img src="${lesson.imageUrl}" alt="Превью" class="lesson-item-preview">
-                <span>${lesson.name}</span>
-                <span class="duration">${lesson.duration}</span>
-            `;
-            li.addEventListener('click', () => { playLesson(lesson, li); });
-            lessonList.appendChild(li);
-        });
-    }
-
-    // --- 5. ЛОГИКА ОБЯЗАТЕЛЬНОЙ РЕГИСТРАЦИИ ---
-
+    // --- 10. РЕГИСТРАЦИЯ (ЛОГИКА) ---
     function getTelegramIdFromContext() {
         if (window.Telegram && window.Telegram.WebApp && Telegram.WebApp.initDataUnsafe && Telegram.WebApp.initDataUnsafe.user) {
             return Telegram.WebApp.initDataUnsafe.user.id.toString();
         }
-        const urlParams = new URLSearchParams(window.location.search);
-        const tgIdFromUrl = urlParams.get('tg_id');
-        return tgIdFromUrl || localStorage.getItem(TG_ID_STORAGE_KEY) || 'null';
+        return localStorage.getItem(TG_ID_STORAGE_KEY);
     }
 
     function handleInitialCheck() {
         const registered = localStorage.getItem(USER_STORAGE_KEY);
-        const tgId = getTelegramIdFromContext();
-        
         if (registered === 'true') {
-             hideRegistrationModal();
+            hideRegistrationModal();
         } else {
-            if (tgId && tgId !== 'null' && tgId !== 'undefined') {
-                document.getElementById('reg-tg-id').value = tgId;
-                showRegistrationModal(true); 
-            } else {
-                showRegistrationModal(false); 
-            }
+            const tgId = getTelegramIdFromContext();
+            if (tgId) document.getElementById('reg-tg-id').value = tgId;
+            showRegistrationModal(true);
         }
     }
 
     function showRegistrationModal(skipPolicy = false) {
         registrationOverlay.classList.remove('hidden');
         loadingSpinner.classList.add('hidden');
-        
         [policyFullView, registrationFormView, successView].forEach(view => view.classList.add('hidden'));
 
         if (skipPolicy) {
@@ -939,15 +988,13 @@
         }
     }
 
-    function hideRegistrationModal() {
-        registrationOverlay.classList.add('hidden');
-    }
+    function hideRegistrationModal() { registrationOverlay.classList.add('hidden'); }
     
     function showPolicyFullView() {
         playClickSound();
         policyInitialView.classList.add('hidden');
         policyFullView.classList.remove('hidden');
-        document.getElementById('modal-title').textContent = "Конфиденциальность";
+        document.getElementById('modal-title').textContent = "Правила";
     }
 
     function showRegistrationForm() {
@@ -956,95 +1003,91 @@
         policyFullView.classList.add('hidden');
         registrationFormView.classList.remove('hidden');
         document.getElementById('modal-title').textContent = "Знакомство";
-        
-        const tgId = getTelegramIdFromContext();
-        if (tgId && tgId !== 'null' && tgId !== 'undefined') {
-             document.getElementById('reg-tg-id').value = tgId;
-        }
     }
 
     function showSuccessView() {
         [policyInitialView, policyFullView, registrationFormView, loadingSpinner].forEach(view => view.classList.add('hidden'));
-        
         successView.classList.remove('hidden');
-        document.getElementById('modal-title').textContent = "";
-    }
-
-    function showLoadingSpinner() {
-        [policyInitialView, policyFullView, registrationFormView, successView].forEach(view => view.classList.add('hidden'));
-        loadingSpinner.classList.remove('hidden');
         document.getElementById('modal-title').textContent = "";
     }
 
     async function handleRegistrationSubmit(event) {
         event.preventDefault();
         playClickSound();
-        showLoadingSpinner();
+        [policyInitialView, policyFullView, registrationFormView, successView].forEach(view => view.classList.add('hidden'));
+        loadingSpinner.classList.remove('hidden');
 
         const formData = new FormData(registrationForm);
         const data = Object.fromEntries(formData.entries());
-        
-        if (data.tg_id && data.tg_id !== 'null' && data.tg_id !== 'undefined') {
-            data.source = "Телеграм Роман";
-        } else {
-            data.source = "Сайт Роман";
-        }
-        
-        console.log("Отправка данных:", data);
+        data.source = data.tg_id ? "Телеграм Роман" : "Сайт Роман";
 
         try {
-            const response = await fetch(WEB_APP_URL, {
+            await fetch(WEB_APP_URL, {
                 method: 'POST',
                 mode: 'no-cors',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(data),
             });
-            
-            localStorage.setItem(USER_STORAGE_KEY, 'true'); 
-            if (data.source === "Телеграм Роман") {
-                 localStorage.setItem(TG_ID_STORAGE_KEY, data.tg_id);
-            }
-            
+            localStorage.setItem(USER_STORAGE_KEY, 'true');
+            if (data.source === "Телеграм Роман") localStorage.setItem(TG_ID_STORAGE_KEY, data.tg_id);
             showSuccessView();
-
         } catch (error) {
-            console.error("Ошибка при отправке:", error);
-            document.getElementById('modal-title').textContent = "Упс!";
-            loadingSpinner.textContent = "Ошибка соединения. Попробуй еще раз.";
-            setTimeout(() => {
-                showRegistrationModal(data.source === "Телеграм Роман"); 
-            }, 3000); 
+            loadingSpinner.textContent = "Ошибка. Попробуй еще раз.";
+            setTimeout(() => showRegistrationForm(), 2000);
         }
     }
 
-    // --- 6. ИНИЦИАЛИЗАЦИЯ ---
+    function setupTelegramWebAppEvents() {
+        if (window.Telegram && window.Telegram.WebApp) {
+            Telegram.WebApp.ready();
+            Telegram.WebApp.expand();
+        }
+    }
+
+    // --- 11. ЗАПУСК ---
     document.addEventListener('DOMContentLoaded', () => {
-        initializeDOMElements(); 
+        initializeDOMElements();
         
         document.querySelectorAll('.course-card').forEach(card => {
             card.addEventListener('click', (event) => {
-                playClickSound();
                 const courseId = event.currentTarget.getAttribute('data-id');
                 
-                // ЛОГИКА ДЛЯ НОВЫХ НАБОРОВ (ЯНДЕКС ДИСК)
+                // 1. ССЫЛКИ НА ЯНДЕКС ДИСК
                 if (courseId === 'set_100') {
                     window.open('https://disk.yandex.ru/d/Zh6sd4-OoYnQhg', '_blank');
-                    return; // Прерываем выполнение, чтобы не открывать список уроков
+                    return;
                 }
-                
                 if (courseId === 'set_50') {
                     window.open('https://disk.yandex.ru/d/R9ONalXRNhvHXA', '_blank');
-                    return; // Прерываем выполнение
+                    return;
                 }
 
-                // Стандартная логика для остальных наборов
+                // 2. ДЕТЕКТИВНЫЙ НАБОР (Новая логика)
+                if (courseId === 'set_detective') {
+                    playClickSound();
+                    showDetectiveMenu();
+                    return;
+                }
+
+                // 3. ХИМИЧЕСКИЙ НАБОР (Новая логика)
+                if (courseId === 'set_chemistry') {
+                    playClickSound();
+                    // Замени путь на свой PDF файл
+                    openPdfViewer('files/chemistry_manual.pdf', 'Инструкция Юного Химика', 'chemistry');
+                    return;
+                }
+
+                // 4. ОБЫЧНЫЕ НАБОРЫ ФОКУСОВ
                 showLessonList(courseId);
             });
         });
-        
-        startApp();
+
+        document.body.addEventListener('click', () => {
+            if (!isMusicPlaying && bgMusic.paused) toggleMusic();
+        }, { once: true });
+
+        handleInitialCheck();
+        showCourseSelection();
     });
 </script>
 </body>
